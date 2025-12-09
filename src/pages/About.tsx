@@ -12,38 +12,38 @@ import {
   MapPin,
   ChevronRight,
 } from "lucide-react";
-
-const coreValues = [
-  { icon: Heart, title: "Dignity", description: "Every person deserves respect and fair treatment." },
-  { icon: Scale, title: "Rule of Law", description: "We uphold legal processes and due rights." },
-  { icon: Eye, title: "Transparency", description: "Open governance and accountable operations." },
-  { icon: Users, title: "Solidarity", description: "Community support and mutual assistance." },
-  { icon: Shield, title: "Non-violence", description: "Peaceful advocacy and education." },
-];
-
-const boardPositions = [
-  "President",
-  "Vice President",
-  "Secretary-Treasurer",
-  "Director of Public Relations",
-  "Board Member (Vocal) 1",
-  "Board Member (Vocal) 2",
-  "Board Member (Vocal) 3",
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function About() {
+  const { t } = useLanguage();
+
+  const coreValues = [
+    { icon: Heart, title: t("about.value.dignity"), description: t("about.value.dignityDesc") },
+    { icon: Scale, title: t("about.value.law"), description: t("about.value.lawDesc") },
+    { icon: Eye, title: t("about.value.transparency"), description: t("about.value.transparencyDesc") },
+    { icon: Users, title: t("about.value.solidarity"), description: t("about.value.solidarityDesc") },
+    { icon: Shield, title: t("about.value.nonviolence"), description: t("about.value.nonviolenceDesc") },
+  ];
+
+  const boardPositions = [
+    t("about.governance.president"),
+    t("about.governance.vp"),
+    t("about.governance.secretary"),
+    t("about.governance.pr"),
+    t("about.governance.vocal1"),
+    t("about.governance.vocal2"),
+    t("about.governance.vocal3"),
+  ];
+
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background section-padding">
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
-            <h1 className="heading-1 text-foreground mb-6">About Us</h1>
+            <h1 className="heading-1 text-foreground mb-6">{t("about.title")}</h1>
             <p className="text-xl text-muted-foreground">
-              Defenders of the CAA and Freedom, Inc. is a non-partisan,
-              community-based organization dedicated to protecting the rights of
-              Cuban migrants and upholding the humanitarian principles of the
-              Cuban Adjustment Act.
+              {t("about.heroDesc")}
             </p>
           </div>
         </div>
@@ -54,24 +54,11 @@ export default function About() {
         <div className="container-wide">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="heading-2 text-foreground mb-6">Who we are</h2>
+              <h2 className="heading-2 text-foreground mb-6">{t("about.whoWeAre.title")}</h2>
               <div className="space-y-4 text-muted-foreground">
-                <p>
-                  We are a <strong className="text-foreground">non-profit organization</strong> created
-                  under <strong className="text-foreground">Chapter 617 of the Florida Statutes</strong>,
-                  eligible for federal tax exemption under{" "}
-                  <strong className="text-foreground">Section 501(c)(3)</strong>.
-                </p>
-                <p>
-                  Our headquarters are in Florida, with the possibility of
-                  establishing local chapters in other states or cities as our
-                  community grows.
-                </p>
-                <p>
-                  All resources are used exclusively for institutional purposes.
-                  Board members and directors do not receive personal financial
-                  benefits from the organization.
-                </p>
+                <p dangerouslySetInnerHTML={{ __html: t("about.whoWeAre.p1") }} />
+                <p>{t("about.whoWeAre.p2")}</p>
+                <p>{t("about.whoWeAre.p3")}</p>
               </div>
             </div>
             <div className="bg-section-light rounded-2xl p-8">
@@ -80,26 +67,26 @@ export default function About() {
                   <Building className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground">Legal Status</h3>
-                  <p className="text-sm text-muted-foreground">Florida Non-Profit</p>
+                  <h3 className="font-semibold text-foreground">{t("about.legalStatus")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("about.floridaNonProfit")}</p>
                 </div>
               </div>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
                   <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>Organized under Chapter 617, Florida Statutes</span>
+                  <span>{t("about.legal1")}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>Eligible for 501(c)(3) tax-exempt status</span>
+                  <span>{t("about.legal2")}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>Non-partisan and politically independent</span>
+                  <span>{t("about.legal3")}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>Community-governed with volunteer leadership</span>
+                  <span>{t("about.legal4")}</span>
                 </li>
               </ul>
             </div>
@@ -115,13 +102,9 @@ export default function About() {
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
                 <Shield className="w-7 h-7 text-primary" />
               </div>
-              <h2 className="heading-3 text-foreground mb-4">Our Mission</h2>
+              <h2 className="heading-3 text-foreground mb-4">{t("about.mission.title")}</h2>
               <p className="text-muted-foreground">
-                To promote social justice and human dignity for immigrants,
-                especially Cubans, through civic education, community
-                assistance, and social integration. We strengthen participation
-                and positive contribution of Cuban and Latin American migrants
-                to U.S. society.
+                {t("about.mission.desc")}
               </p>
             </div>
 
@@ -129,12 +112,9 @@ export default function About() {
               <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
                 <Eye className="w-7 h-7 text-primary" />
               </div>
-              <h2 className="heading-3 text-foreground mb-4">Our Vision</h2>
+              <h2 className="heading-3 text-foreground mb-4">{t("about.vision.title")}</h2>
               <p className="text-muted-foreground">
-                To be a reference organization in education, freedom, and
-                solidarity with immigrants, recognized for transparency and
-                impact on civic and cultural integration of Cubans and Latinos
-                in the United States.
+                {t("about.vision.desc")}
               </p>
             </div>
           </div>
@@ -145,59 +125,53 @@ export default function About() {
       <section className="section-padding">
         <div className="container-wide">
           <h2 className="heading-2 text-foreground text-center mb-12">
-            Core Objectives
+            {t("about.objectives.title")}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="p-6 border rounded-xl">
               <h3 className="font-semibold text-foreground mb-2">
-                Civic Education
+                {t("about.obj.civicEd")}
               </h3>
               <p className="text-sm text-muted-foreground">
-                Provide civic and community education for Cuban and Latin
-                American immigrants.
+                {t("about.obj.civicEdDesc")}
               </p>
             </div>
             <div className="p-6 border rounded-xl">
               <h3 className="font-semibold text-foreground mb-2">
-                Support Programs
+                {t("about.obj.support")}
               </h3>
               <p className="text-sm text-muted-foreground">
-                Develop support and solidarity programs that foster integration,
-                respect, and democratic values.
+                {t("about.obj.supportDesc")}
               </p>
             </div>
             <div className="p-6 border rounded-xl">
-              <h3 className="font-semibold text-foreground mb-2">CAA Defense</h3>
+              <h3 className="font-semibold text-foreground mb-2">{t("about.obj.caaDefense")}</h3>
               <p className="text-sm text-muted-foreground">
-                Defend and preserve the humanitarian principles of the Cuban
-                Adjustment Act as a pathway for family integration.
-              </p>
-            </div>
-            <div className="p-6 border rounded-xl">
-              <h3 className="font-semibold text-foreground mb-2">
-                Root Causes
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Highlight the consequences of communism and dictatorships as
-                root causes of forced migration.
+                {t("about.obj.caaDefenseDesc")}
               </p>
             </div>
             <div className="p-6 border rounded-xl">
               <h3 className="font-semibold text-foreground mb-2">
-                Dignity Campaigns
+                {t("about.obj.rootCauses")}
               </h3>
               <p className="text-sm text-muted-foreground">
-                Run campaigns that dignify the image of migrants and highlight
-                their social, economic, and cultural contributions.
+                {t("about.obj.rootCausesDesc")}
               </p>
             </div>
             <div className="p-6 border rounded-xl">
               <h3 className="font-semibold text-foreground mb-2">
-                Fraud Prevention
+                {t("about.obj.dignity")}
               </h3>
               <p className="text-sm text-muted-foreground">
-                Monitor and report abusive practices targeting Cuban migrants in
-                immigration services.
+                {t("about.obj.dignityDesc")}
+              </p>
+            </div>
+            <div className="p-6 border rounded-xl">
+              <h3 className="font-semibold text-foreground mb-2">
+                {t("about.obj.fraudPrev")}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {t("about.obj.fraudPrevDesc")}
               </p>
             </div>
           </div>
@@ -208,7 +182,7 @@ export default function About() {
       <section className="section-padding bg-section-alt">
         <div className="container-wide">
           <h2 className="heading-2 text-foreground text-center mb-12">
-            Core Values
+            {t("about.values.title")}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {coreValues.map((value) => (
@@ -233,34 +207,30 @@ export default function About() {
         <div className="container-wide">
           <div className="max-w-4xl mx-auto">
             <h2 className="heading-2 text-foreground text-center mb-6">
-              Governance
+              {t("about.governance.title")}
             </h2>
             <p className="text-center text-muted-foreground mb-12">
-              Our organization is governed democratically with full
-              transparency.
+              {t("about.governance.desc")}
             </p>
 
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-card border rounded-xl p-6">
                 <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                   <Users className="w-5 h-5 text-primary" />
-                  General Assembly
+                  {t("about.governance.assembly")}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  The supreme decision-making body of the organization. Meets at
-                  least once per year to approve budgets, elect directors, and
-                  set strategic direction.
+                  {t("about.governance.assemblyDesc")}
                 </p>
               </div>
 
               <div className="bg-card border rounded-xl p-6">
                 <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                   <FileText className="w-5 h-5 text-primary" />
-                  Board of Directors
+                  {t("about.governance.board")}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-3">
-                  Seven volunteer members responsible for administration,
-                  budgeting, accountability, and transparency:
+                  {t("about.governance.boardDesc")}
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   {boardPositions.map((position) => (
@@ -284,14 +254,10 @@ export default function About() {
               <MapPin className="w-7 h-7 text-primary" />
             </div>
             <h2 className="heading-2 text-foreground mb-4">
-              Territorial Chapters
+              {t("about.chapters.title")}
             </h2>
             <p className="text-muted-foreground mb-8">
-              Local chapters can be created when there are enough active members
-              in a city or state. Local boards help execute national programs,
-              promote membership, and report regularly. Chapters do not have
-              independent legal personality but operate under the national
-              organization's governance.
+              {t("about.chapters.desc")}
             </p>
           </div>
         </div>
@@ -304,11 +270,11 @@ export default function About() {
             <Button asChild size="lg">
               <a href="#" target="_blank" rel="noopener noreferrer">
                 <FileText className="w-4 h-4 mr-2" />
-                Read our bylaws (PDF)
+                {t("about.cta.bylaws")}
               </a>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link to="/get-involved">Join as a member</Link>
+              <Link to="/get-involved">{t("about.cta.join")}</Link>
             </Button>
           </div>
         </div>

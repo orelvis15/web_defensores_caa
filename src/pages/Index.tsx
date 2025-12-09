@@ -9,43 +9,41 @@ import {
   BookOpen,
   AlertTriangle,
   Heart,
-  Scale,
-  HandHeart,
   ArrowRight,
   ChevronRight,
 } from "lucide-react";
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "What is the Cuban Adjustment Act (CAA) and how does it work?",
-    excerpt:
-      "Learn the basics of this important law that has helped Cuban migrants find stability in the United States for decades.",
-    date: "December 5, 2024",
-    tag: "CAA basics",
-    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=250&fit=crop",
-  },
-  {
-    id: 2,
-    title: "How to avoid fraud in immigration services: 5 warning signs",
-    excerpt:
-      "Protect yourself and your family from scams and abusive practices when seeking immigration help.",
-    date: "December 1, 2024",
-    tag: "Fraud prevention",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=250&fit=crop",
-  },
-  {
-    id: 3,
-    title: "Community ambassadors: Cuban voices protecting Cuban families",
-    excerpt:
-      "Meet the volunteers across the United States who share verified information and support our community.",
-    date: "November 28, 2024",
-    tag: "Community stories",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=250&fit=crop",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Index() {
+  const { t } = useLanguage();
+
+  const blogPosts = [
+    {
+      id: 1,
+      title: t("blog.post1.title"),
+      excerpt: t("blog.post1.excerpt"),
+      date: "December 5, 2024",
+      tag: t("blog.post1.tag"),
+      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=250&fit=crop",
+    },
+    {
+      id: 2,
+      title: t("blog.post2.title"),
+      excerpt: t("blog.post2.excerpt"),
+      date: "December 1, 2024",
+      tag: t("blog.post2.tag"),
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=250&fit=crop",
+    },
+    {
+      id: 3,
+      title: t("blog.post3.title"),
+      excerpt: t("blog.post3.excerpt"),
+      date: "November 28, 2024",
+      tag: t("blog.post3.tag"),
+      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=250&fit=crop",
+    },
+  ];
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -55,16 +53,17 @@ export default function Index() {
             {/* Left - Text Content */}
             <div className="animate-slide-up">
               <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">
-                Non-partisan community NGO for Cuban migrants
+                {t("hero.badge")}
               </span>
 
               <h1 className="heading-1 text-foreground mb-6">
-                Defending the Cuban Adjustment Act and the right to freedom
+                {t("hero.title")}
               </h1>
 
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                We defend the <strong>humane application of the Cuban Adjustment Act (CAA)</strong> so Cuban migrants and their families can obtain stability and legal status. Cuba is currently designated by the United States as a <strong>State Sponsor of Terrorism</strong>, reflecting a serious situation for human rights and security. Many people are fleeing repression and need protection and fair treatment.
-              </p>
+              <p 
+                className="text-lg text-muted-foreground mb-6 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: t("hero.description") }}
+              />
 
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-3">
@@ -72,7 +71,7 @@ export default function Index() {
                     <BookOpen className="w-3.5 h-3.5 text-cta" />
                   </div>
                   <span className="text-foreground">
-                    Legal information and civic education for Cuban migrants and their families.
+                    {t("hero.bullet1")}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -80,7 +79,7 @@ export default function Index() {
                     <Eye className="w-3.5 h-3.5 text-cta" />
                   </div>
                   <span className="text-foreground">
-                    Monitoring abuses, fraud, and misuse of immigration processes.
+                    {t("hero.bullet2")}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -88,14 +87,14 @@ export default function Index() {
                     <Users className="w-3.5 h-3.5 text-cta" />
                   </div>
                   <span className="text-foreground">
-                    Community support, ambassadors, and local outreach across the United States.
+                    {t("hero.bullet3")}
                   </span>
                 </li>
               </ul>
 
               <Button asChild variant="outline" size="lg">
                 <Link to="/about">
-                  Learn more about our mission
+                  {t("hero.learnMore")}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -113,10 +112,11 @@ export default function Index() {
       <section className="section-padding">
         <div className="container-wide">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="heading-2 text-foreground mb-4">Who we are</h2>
-            <p className="text-lg text-muted-foreground">
-              We are formed by Cuban migrants, professionals, and allies committed to <strong>justice, dignity, and civic education</strong>. We operate as a non-profit under Florida law (Chapter 617 of the Florida Statutes) and are eligible for 501(c)(3) status. All resources are dedicated exclusively to institutional purposes.
-            </p>
+            <h2 className="heading-2 text-foreground mb-4">{t("whoWeAre.title")}</h2>
+            <p 
+              className="text-lg text-muted-foreground"
+              dangerouslySetInnerHTML={{ __html: t("whoWeAre.description") }}
+            />
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mb-10">
@@ -124,9 +124,9 @@ export default function Index() {
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">Mission</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{t("whoWeAre.mission")}</h3>
               <p className="text-muted-foreground text-sm">
-                Promote social justice and human dignity for immigrants, especially Cubans, through civic education, community assistance, and social integration.
+                {t("whoWeAre.missionDesc")}
               </p>
             </div>
 
@@ -134,9 +134,9 @@ export default function Index() {
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Eye className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">Vision</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{t("whoWeAre.vision")}</h3>
               <p className="text-muted-foreground text-sm">
-                Be a reference organization in education, freedom, and solidarity with immigrants, recognized for transparency and impact on civic integration.
+                {t("whoWeAre.visionDesc")}
               </p>
             </div>
 
@@ -144,9 +144,9 @@ export default function Index() {
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                 <Heart className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-foreground mb-2">Core Values</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">{t("whoWeAre.values")}</h3>
               <p className="text-muted-foreground text-sm">
-                Dignity, rule of law, transparency, solidarity, and non-violence guide everything we do.
+                {t("whoWeAre.valuesDesc")}
               </p>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function Index() {
           <div className="text-center">
             <Button asChild variant="link" className="text-primary">
               <Link to="/about">
-                Read our full mission and bylaws
+                {t("whoWeAre.readMore")}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Link>
             </Button>
@@ -166,9 +166,9 @@ export default function Index() {
       <section className="section-padding bg-section-light">
         <div className="container-wide">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="heading-2 text-foreground mb-4">What we do</h2>
+            <h2 className="heading-2 text-foreground mb-4">{t("whatWeDo.title")}</h2>
             <p className="text-lg text-muted-foreground">
-              Our programs protect, educate, and empower Cuban migrants across the United States.
+              {t("whatWeDo.description")}
             </p>
           </div>
 
@@ -178,13 +178,13 @@ export default function Index() {
                 <AlertTriangle className="w-6 h-6 text-cta" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                Ethical and Anti-Fraud Migratory Observatory (OEAM)
+                {t("whatWeDo.oeam.title")}
               </h3>
               <p className="text-muted-foreground text-sm mb-4">
-                We receive and document complaints about fraud, abusive practices, or misconduct by notaries, lawyers, and others offering immigration services. We escalate verified cases to authorities.
+                {t("whatWeDo.oeam.desc")}
               </p>
               <span className="text-xs text-muted-foreground">
-                Note: We do not provide individual legal representation.
+                {t("whatWeDo.oeam.note")}
               </span>
             </div>
 
@@ -193,10 +193,10 @@ export default function Index() {
                 <BookOpen className="w-6 h-6 text-primary" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                Civic Education and CAA Awareness
+                {t("whatWeDo.education.title")}
               </h3>
               <p className="text-muted-foreground text-sm mb-4">
-                Workshops, online materials, and guides that explain rights and duties under U.S. law, the basics of the Cuban Adjustment Act, and how to avoid misinformation.
+                {t("whatWeDo.education.desc")}
               </p>
             </div>
 
@@ -205,10 +205,10 @@ export default function Index() {
                 <Users className="w-6 h-6 text-primary" />
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                Community Support & Ambassadors Program
+                {t("whatWeDo.community.title")}
               </h3>
               <p className="text-muted-foreground text-sm mb-4">
-                A network of community ambassadors in different cities and states that share verified information, detect patterns of abuse, and connect families with reliable resources.
+                {t("whatWeDo.community.desc")}
               </p>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function Index() {
           <div className="text-center">
             <Button asChild>
               <Link to="/our-work">
-                Learn more about our work
+                {t("whatWeDo.learnMore")}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
@@ -228,9 +228,9 @@ export default function Index() {
       <section className="section-padding">
         <div className="container-wide">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="heading-2 text-foreground mb-4">How your donation helps</h2>
+            <h2 className="heading-2 text-foreground mb-4">{t("impact.title")}</h2>
             <p className="text-lg text-muted-foreground">
-              Every contribution strengthens our ability to protect and serve the Cuban community.
+              {t("impact.description")}
             </p>
           </div>
 
@@ -238,25 +238,25 @@ export default function Index() {
             <div className="text-center p-6 rounded-xl bg-primary/5">
               <div className="text-4xl font-bold text-primary mb-2">50+</div>
               <p className="text-sm text-muted-foreground">
-                Educational materials created and updated regularly
+                {t("impact.stat1")}
               </p>
             </div>
             <div className="text-center p-6 rounded-xl bg-cta/5">
               <div className="text-4xl font-bold text-cta mb-2">200+</div>
               <p className="text-sm text-muted-foreground">
-                Community complaints documented and monitored against fraud
+                {t("impact.stat2")}
               </p>
             </div>
             <div className="text-center p-6 rounded-xl bg-primary/5">
               <div className="text-4xl font-bold text-primary mb-2">25+</div>
               <p className="text-sm text-muted-foreground">
-                Ambassadors and volunteers supporting families in multiple states
+                {t("impact.stat3")}
               </p>
             </div>
             <div className="text-center p-6 rounded-xl bg-cta/5">
               <div className="text-4xl font-bold text-cta mb-2">15+</div>
               <p className="text-sm text-muted-foreground">
-                Reports and alerts issued to protect the community
+                {t("impact.stat4")}
               </p>
             </div>
           </div>
@@ -264,7 +264,7 @@ export default function Index() {
           <div className="text-center mt-10">
             <Button asChild variant="link" className="text-primary">
               <Link to="/resources">
-                See our transparency and reports
+                {t("impact.transparency")}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Link>
             </Button>
@@ -277,13 +277,13 @@ export default function Index() {
         <div className="container-wide">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
             <div>
-              <h2 className="heading-2 text-foreground mb-2">Latest from our blog</h2>
+              <h2 className="heading-2 text-foreground mb-2">{t("blog.title")}</h2>
               <p className="text-muted-foreground">
-                News, guides, and stories from our community.
+                {t("blog.description")}
               </p>
             </div>
             <Button asChild variant="outline">
-              <Link to="/blog">Visit the Blog</Link>
+              <Link to="/blog">{t("blog.visitBlog")}</Link>
             </Button>
           </div>
 
@@ -325,17 +325,17 @@ export default function Index() {
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container-wide text-center">
           <h2 className="heading-2 mb-4">
-            Cuban migrants deserve dignity, truth, and the protection of the law.
+            {t("cta.title")}
           </h2>
           <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-            Join us in defending the Cuban Adjustment Act and protecting our community from fraud and abuse.
+            {t("cta.description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="hero" size="lg">
-              <Link to="/take-action">Take action</Link>
+              <Link to="/take-action">{t("cta.takeAction")}</Link>
             </Button>
             <Button asChild variant="outline-light" size="lg">
-              <Link to="/get-involved">Become a member or volunteer</Link>
+              <Link to="/get-involved">{t("cta.becomeMember")}</Link>
             </Button>
           </div>
         </div>

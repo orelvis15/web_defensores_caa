@@ -3,23 +3,24 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo.png";
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/our-work", label: "Our Work" },
-  { href: "/blog", label: "Blog" },
-  { href: "/resources", label: "Resources" },
-  { href: "/get-involved", label: "Get Involved" },
-  { href: "/contact", label: "Contact" },
-];
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [language, setLanguage] = useState<"EN" | "ES">("EN");
+  const { language, setLanguage, t } = useLanguage();
   const location = useLocation();
+
+  const navLinks = [
+    { href: "/", label: t("nav.home") },
+    { href: "/about", label: t("nav.about") },
+    { href: "/our-work", label: t("nav.ourWork") },
+    { href: "/blog", label: t("nav.blog") },
+    { href: "/resources", label: t("nav.resources") },
+    { href: "/get-involved", label: t("nav.getInvolved") },
+    { href: "/contact", label: t("nav.contact") },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,25 +83,24 @@ export function Header() {
           {/* Right side actions */}
           <div className="flex items-center gap-2 md:gap-4">
             {/* Language Toggle */}
-            <div className="flex items-center text-sm font-medium">
+            <div className="flex items-center bg-muted rounded-full p-0.5">
               <button
                 onClick={() => setLanguage("EN")}
                 className={cn(
-                  "px-2 py-1 rounded-l transition-colors",
+                  "px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
                   language === "EN"
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 EN
               </button>
-              <span className="text-muted-foreground">|</span>
               <button
                 onClick={() => setLanguage("ES")}
                 className={cn(
-                  "px-2 py-1 rounded-r transition-colors",
+                  "px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
                   language === "ES"
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-primary text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -110,7 +110,7 @@ export function Header() {
 
             {/* Donate Button */}
             <Button asChild variant="cta" size="sm" className="hidden sm:flex">
-              <Link to="/take-action">Donate</Link>
+              <Link to="/take-action">{t("nav.donate")}</Link>
             </Button>
 
             {/* Mobile Menu Button */}
@@ -148,7 +148,7 @@ export function Header() {
               ))}
               <div className="px-4 pt-4">
                 <Button asChild variant="cta" className="w-full">
-                  <Link to="/take-action">Donate</Link>
+                  <Link to="/take-action">{t("nav.donate")}</Link>
                 </Button>
               </div>
             </div>

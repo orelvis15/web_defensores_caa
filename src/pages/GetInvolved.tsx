@@ -24,25 +24,11 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
-const volunteerRoles = [
-  { icon: Globe, title: "Ambassador", description: "Represent us in your local community" },
-  { icon: Languages, title: "Translator", description: "Help translate materials to Spanish" },
-  { icon: Palette, title: "Designer", description: "Create visual content and materials" },
-  { icon: Megaphone, title: "Content Creator", description: "Write articles and social media content" },
-  { icon: Calendar, title: "Event Organizer", description: "Help plan and run community events" },
-];
-
-const memberBenefits = [
-  "Voice and vote in General Assembly meetings",
-  "Participate in commissions and working groups",
-  "Access to member-only resources and updates",
-  "Opportunity to serve on the Board of Directors",
-  "Connect with other community members nationwide",
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function GetInvolved() {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,11 +38,27 @@ export default function GetInvolved() {
     message: "",
   });
 
+  const volunteerRoles = [
+    { icon: Globe, title: t("getInvolved.volunteer.ambassador"), description: t("getInvolved.volunteer.ambassadorDesc") },
+    { icon: Languages, title: t("getInvolved.volunteer.translator"), description: t("getInvolved.volunteer.translatorDesc") },
+    { icon: Palette, title: t("getInvolved.volunteer.designer"), description: t("getInvolved.volunteer.designerDesc") },
+    { icon: Megaphone, title: t("getInvolved.volunteer.contentCreator"), description: t("getInvolved.volunteer.contentCreatorDesc") },
+    { icon: Calendar, title: t("getInvolved.volunteer.eventOrganizer"), description: t("getInvolved.volunteer.eventOrganizerDesc") },
+  ];
+
+  const memberBenefits = [
+    t("getInvolved.member.benefit1"),
+    t("getInvolved.member.benefit2"),
+    t("getInvolved.member.benefit3"),
+    t("getInvolved.member.benefit4"),
+    t("getInvolved.member.benefit5"),
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
-      title: "Application submitted!",
-      description: "Thank you for your interest. We will contact you soon.",
+      title: t("toast.applicationSubmitted"),
+      description: t("toast.applicationDesc"),
     });
     setFormData({ name: "", email: "", city: "", state: "", interest: "", message: "" });
   };
@@ -71,10 +73,9 @@ export default function GetInvolved() {
       <section className="bg-gradient-to-b from-primary/5 to-background section-padding">
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
-            <h1 className="heading-1 text-foreground mb-6">Get Involved</h1>
+            <h1 className="heading-1 text-foreground mb-6">{t("getInvolved.title")}</h1>
             <p className="text-xl text-muted-foreground">
-              Join our community of Cuban migrants, professionals, and allies
-              working together to protect rights and promote dignity.
+              {t("getInvolved.heroDesc")}
             </p>
           </div>
         </div>
@@ -89,16 +90,14 @@ export default function GetInvolved() {
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Users className="w-7 h-7 text-primary" />
                 </div>
-                <h2 className="heading-2 text-foreground">Become a Member</h2>
+                <h2 className="heading-2 text-foreground">{t("getInvolved.member.title")}</h2>
               </div>
               <p className="text-lg text-muted-foreground mb-6">
-                Members are adults who share our mission and want to actively
-                participate in defending the rights of Cuban migrants. Membership
-                is open to Cuban nationals, people of Cuban origin, and allies.
+                {t("getInvolved.member.desc")}
               </p>
 
               <h3 className="font-semibold text-foreground mb-4">
-                Member rights include:
+                {t("getInvolved.member.rights")}
               </h3>
               <ul className="space-y-3 mb-8">
                 {memberBenefits.map((benefit) => (
@@ -113,11 +112,11 @@ export default function GetInvolved() {
             {/* Membership Form */}
             <div className="bg-card border rounded-xl p-8">
               <h3 className="font-semibold text-foreground mb-6">
-                Apply to become a member
+                {t("getInvolved.form.title")}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <Label htmlFor="name">Full name</Label>
+                  <Label htmlFor="name">{t("getInvolved.form.name")}</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -127,7 +126,7 @@ export default function GetInvolved() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("getInvolved.form.email")}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -139,7 +138,7 @@ export default function GetInvolved() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="city">City</Label>
+                    <Label htmlFor="city">{t("getInvolved.form.city")}</Label>
                     <Input
                       id="city"
                       value={formData.city}
@@ -149,7 +148,7 @@ export default function GetInvolved() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="state">State</Label>
+                    <Label htmlFor="state">{t("getInvolved.form.state")}</Label>
                     <Input
                       id="state"
                       value={formData.state}
@@ -160,25 +159,25 @@ export default function GetInvolved() {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="interest">How do you want to help?</Label>
+                  <Label htmlFor="interest">{t("getInvolved.form.interest")}</Label>
                   <Select
                     value={formData.interest}
                     onValueChange={(value) => handleChange("interest", value)}
                   >
                     <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select an option" />
+                      <SelectValue placeholder={t("getInvolved.form.selectOption")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="member">General membership</SelectItem>
-                      <SelectItem value="ambassador">Community ambassador</SelectItem>
-                      <SelectItem value="volunteer">Volunteer</SelectItem>
-                      <SelectItem value="professional">Professional support</SelectItem>
+                      <SelectItem value="member">{t("getInvolved.form.generalMembership")}</SelectItem>
+                      <SelectItem value="ambassador">{t("getInvolved.form.ambassador")}</SelectItem>
+                      <SelectItem value="volunteer">{t("getInvolved.form.volunteer")}</SelectItem>
+                      <SelectItem value="professional">{t("getInvolved.form.professional")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
                   <Label htmlFor="message">
-                    Tell us about yourself (optional)
+                    {t("getInvolved.form.aboutYou")}
                   </Label>
                   <Textarea
                     id="message"
@@ -186,11 +185,11 @@ export default function GetInvolved() {
                     onChange={(e) => handleChange("message", e.target.value)}
                     className="mt-1"
                     rows={3}
-                    placeholder="Your background, skills, or why you want to join..."
+                    placeholder={t("getInvolved.form.placeholder")}
                   />
                 </div>
                 <Button type="submit" variant="cta" className="w-full">
-                  Submit application
+                  {t("getInvolved.form.submit")}
                 </Button>
               </form>
             </div>
@@ -203,11 +202,10 @@ export default function GetInvolved() {
         <div className="container-wide">
           <div className="text-center mb-12">
             <h2 className="heading-2 text-foreground mb-4">
-              Volunteer Opportunities
+              {t("getInvolved.volunteer.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Use your skills to make a difference. We have various roles for
-              people with different talents and availability.
+              {t("getInvolved.volunteer.desc")}
             </p>
           </div>
 
@@ -242,17 +240,15 @@ export default function GetInvolved() {
               </div>
               <div className="text-center md:text-left flex-1">
                 <h2 className="heading-3 text-foreground mb-3">
-                  Support with a donation
+                  {t("getInvolved.donate.title")}
                 </h2>
                 <p className="text-muted-foreground mb-6 md:mb-0">
-                  Can't volunteer your time? Your financial support helps us
-                  continue protecting Cuban migrants, fighting fraud, and
-                  providing education to our community.
+                  {t("getInvolved.donate.desc")}
                 </p>
               </div>
               <Button asChild variant="cta" size="lg" className="shrink-0">
                 <Link to="/take-action">
-                  Donate now
+                  {t("getInvolved.donate.button")}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>

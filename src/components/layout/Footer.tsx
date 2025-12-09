@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container-wide py-12 md:py-16">
@@ -30,19 +33,17 @@ export function Footer() {
                 </svg>
               </div>
               <div>
-                <span className="font-bold block">Defenders of the CAA</span>
-                <span className="text-sm opacity-80">and Freedom, Inc.</span>
+                <span className="font-bold block">{t("footer.brand")}</span>
+                <span className="text-sm opacity-80">{t("footer.brandSub")}</span>
               </div>
             </div>
             <p className="text-sm opacity-80 mb-4">
-              A non-partisan, community-based non-profit organization defending
-              the rights of Cuban migrants through education, advocacy, and
-              community support.
+              {t("footer.desc")}
             </p>
             <div className="flex flex-col gap-2 text-sm opacity-80">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
-                <span>Florida, United States</span>
+                <span>{t("contact.florida")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
@@ -53,26 +54,26 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4">{t("footer.quickLinks")}</h4>
             <ul className="space-y-2 text-sm opacity-80">
               <li>
                 <Link to="/about" className="hover:opacity-100 transition-opacity">
-                  About Us
+                  {t("footer.aboutUs")}
                 </Link>
               </li>
               <li>
                 <Link to="/our-work" className="hover:opacity-100 transition-opacity">
-                  Our Work
+                  {t("footer.ourWork")}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="hover:opacity-100 transition-opacity">
-                  Blog & News
+                  {t("footer.blogNews")}
                 </Link>
               </li>
               <li>
                 <Link to="/resources" className="hover:opacity-100 transition-opacity">
-                  Resources
+                  {t("footer.resources")}
                 </Link>
               </li>
             </ul>
@@ -80,26 +81,26 @@ export function Footer() {
 
           {/* Get Involved */}
           <div>
-            <h4 className="font-semibold mb-4">Get Involved</h4>
+            <h4 className="font-semibold mb-4">{t("footer.getInvolved")}</h4>
             <ul className="space-y-2 text-sm opacity-80">
               <li>
                 <Link to="/take-action" className="hover:opacity-100 transition-opacity">
-                  Donate
+                  {t("footer.donate")}
                 </Link>
               </li>
               <li>
                 <Link to="/get-involved" className="hover:opacity-100 transition-opacity">
-                  Become a Member
+                  {t("footer.becomeMember")}
                 </Link>
               </li>
               <li>
                 <Link to="/get-involved" className="hover:opacity-100 transition-opacity">
-                  Volunteer
+                  {t("footer.volunteer")}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:opacity-100 transition-opacity">
-                  Contact Us
+                  {t("footer.contactUs")}
                 </Link>
               </li>
             </ul>
@@ -107,30 +108,26 @@ export function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
+            <h4 className="font-semibold mb-4">{t("footer.legal")}</h4>
             <p className="text-sm opacity-80 mb-4">
-              Defenders of the CAA and Freedom, Inc. is a non-profit
-              organization under Chapter 617 of the Florida Statutes, eligible
-              for 501(c)(3) status.
+              {t("footer.legalDesc")}
             </p>
             <p className="text-xs opacity-60">
-              This website does not provide legal advice. For legal counsel,
-              please consult a licensed attorney.
+              {t("footer.legalDisclaimer")}
             </p>
           </div>
         </div>
 
         <div className="border-t border-primary-foreground/20 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm opacity-60">
-            © {new Date().getFullYear()} Defenders of the CAA and Freedom, Inc.
-            All rights reserved.
+            © {new Date().getFullYear()} {t("footer.brand")} {t("footer.brandSub")} {t("footer.allRights")}
           </p>
           <div className="flex gap-6 text-sm opacity-60">
             <Link to="/privacy" className="hover:opacity-100 transition-opacity">
-              Privacy Policy
+              {t("footer.privacy")}
             </Link>
             <Link to="/terms" className="hover:opacity-100 transition-opacity">
-              Terms of Use
+              {t("footer.terms")}
             </Link>
           </div>
         </div>

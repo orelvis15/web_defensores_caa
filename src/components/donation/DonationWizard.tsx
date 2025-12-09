@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { Check, CreditCard, Building2, Lock, ChevronLeft } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type DonationType = "one-time" | "monthly";
 type PaymentMethod = "card" | "bank";
@@ -23,16 +24,8 @@ interface DonationWizardProps {
 const oneTimeAmounts = [10, 20, 50, 100];
 const monthlyAmounts = [10, 20, 30];
 
-const countries = [
-  "United States",
-  "Canada",
-  "Mexico",
-  "Cuba",
-  "Spain",
-  "Other",
-];
-
 export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   const [donationType, setDonationType] = useState<DonationType>("one-time");
   const [selectedAmount, setSelectedAmount] = useState<number | null>(50);
@@ -56,6 +49,15 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
   const [receiptOptIn, setReceiptOptIn] = useState(true);
   const [isComplete, setIsComplete] = useState(false);
 
+  const countries = [
+    t("country.us"),
+    t("country.canada"),
+    t("country.mexico"),
+    t("country.cuba"),
+    t("country.spain"),
+    t("country.other"),
+  ];
+
   const amounts = donationType === "one-time" ? oneTimeAmounts : monthlyAmounts;
   const currentAmount = selectedAmount || Number(customAmount) || 0;
 
@@ -73,7 +75,6 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
   };
 
   const handleSubmit = () => {
-    // Simulate submission
     setIsComplete(true);
   };
 
@@ -82,6 +83,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
   };
 
   if (isComplete) {
+    const typeText = donationType === "one-time" ? t("donation.oneTime").toLowerCase() : t("donation.monthly").toLowerCase();
     return (
       <div
         className={cn(
@@ -94,11 +96,12 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
             <Check className="w-8 h-8 text-success" />
           </div>
           <h3 className="heading-3 text-foreground mb-2">
-            Thank you for your donation!
+            {t("donation.thankYou")}
           </h3>
           <p className="text-muted-foreground mb-6">
-            Your ${currentAmount} {donationType} donation helps us defend the
-            rights of Cuban migrants and fight against fraud and abuse.
+            {t("donation.thankYouDesc")
+              .replace("{amount}", `$${currentAmount}`)
+              .replace("{type}", typeText)}
           </p>
           <Button
             variant="outline"
@@ -106,7 +109,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
               navigator.clipboard.writeText(window.location.href);
             }}
           >
-            Share this page
+            {t("donation.share")}
           </Button>
         </div>
       </div>
@@ -124,7 +127,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
       <div className="bg-muted/50 px-6 py-4 border-b">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-muted-foreground">
-            Step {step} of 3
+            {t("donation.step")} {step} {t("donation.of")} 3
           </span>
           <div className="flex gap-1">
             {[1, 2, 3].map((s) => (
@@ -139,9 +142,9 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
           </div>
         </div>
         <h3 className="font-semibold text-foreground">
-          {step === 1 && "Choose your donation"}
-          {step === 2 && "Your information"}
-          {step === 3 && "Confirm your donation"}
+          {step === 1 && t("donation.step1Title")}
+          {step === 2 && t("donation.step2Title")}
+          {step === 3 && t("donation.step3Title")}
         </h3>
       </div>
 
@@ -160,7 +163,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                One-time
+                {t("donation.oneTime")}
               </button>
               <button
                 onClick={() => setDonationType("monthly")}
@@ -171,14 +174,14 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                Monthly
+                {t("donation.monthly")}
               </button>
             </div>
 
             {/* Amount Selection */}
             <div>
               <Label className="text-sm font-medium mb-3 block">
-                Select amount
+                {t("donation.selectAmount")}
               </Label>
               <div className="grid grid-cols-3 gap-2 mb-3">
                 {amounts.map((amount) => (
@@ -205,7 +208,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                     : "border-border hover:border-cta/50"
                 )}
               >
-                Other amount
+                {t("donation.otherAmount")}
               </button>
               {selectedAmount === null && (
                 <div className="mt-3">
@@ -215,7 +218,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                     </span>
                     <Input
                       type="number"
-                      placeholder="Enter amount"
+                      placeholder={t("donation.enterAmount")}
                       value={customAmount}
                       onChange={(e) => setCustomAmount(e.target.value)}
                       className="pl-7"
@@ -228,7 +231,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
             {/* Payment Method */}
             <div>
               <Label className="text-sm font-medium mb-3 block">
-                Payment method
+                {t("donation.paymentMethod")}
               </Label>
               <div className="grid grid-cols-2 gap-2">
                 <button
@@ -241,7 +244,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                   )}
                 >
                   <CreditCard className="w-4 h-4" />
-                  <span className="font-medium">Credit card</span>
+                  <span className="font-medium">{t("donation.creditCard")}</span>
                 </button>
                 <button
                   onClick={() => setPaymentMethod("bank")}
@@ -253,7 +256,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                   )}
                 >
                   <Building2 className="w-4 h-4" />
-                  <span className="font-medium">Bank account</span>
+                  <span className="font-medium">{t("donation.bankAccount")}</span>
                 </button>
               </div>
             </div>
@@ -265,13 +268,12 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
               onClick={() => setStep(2)}
               disabled={currentAmount <= 0}
             >
-              Continue
+              {t("donation.continue")}
             </Button>
 
             <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-1">
               <Lock className="w-3 h-3" />
-              Secure and encrypted processing. You can change or cancel a
-              monthly donation at any time.
+              {t("donation.secureNote")}
             </p>
           </div>
         )}
@@ -281,7 +283,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
           <div className="space-y-5 animate-fade-in">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="firstName">First name</Label>
+                <Label htmlFor="firstName">{t("donation.firstName")}</Label>
                 <Input
                   id="firstName"
                   value={formData.firstName}
@@ -292,7 +294,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                 />
               </div>
               <div>
-                <Label htmlFor="lastName">Last name</Label>
+                <Label htmlFor="lastName">{t("donation.lastName")}</Label>
                 <Input
                   id="lastName"
                   value={formData.lastName}
@@ -303,7 +305,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
             </div>
 
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("donation.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -314,13 +316,13 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
             </div>
 
             <div>
-              <Label htmlFor="country">Country</Label>
+              <Label htmlFor="country">{t("donation.country")}</Label>
               <Select
                 value={formData.country}
                 onValueChange={(value) => handleInputChange("country", value)}
               >
                 <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="Select country" />
+                  <SelectValue placeholder={t("donation.selectCountry")} />
                 </SelectTrigger>
                 <SelectContent>
                   {countries.map((country) => (
@@ -341,20 +343,20 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                 }
               />
               <Label htmlFor="isCuban" className="text-sm cursor-pointer">
-                I am a Cuban national or of Cuban origin
+                {t("donation.isCuban")}
               </Label>
             </div>
 
             {/* Payment Details */}
             <div className="border-t pt-5">
               <h4 className="font-medium mb-4">
-                {paymentMethod === "card" ? "Card details" : "Bank details"}
+                {paymentMethod === "card" ? t("donation.cardDetails") : t("donation.bankDetails")}
               </h4>
 
               {paymentMethod === "card" ? (
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="cardNumber">Card number</Label>
+                    <Label htmlFor="cardNumber">{t("donation.cardNumber")}</Label>
                     <Input
                       id="cardNumber"
                       placeholder="1234 5678 9012 3456"
@@ -367,7 +369,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     <div>
-                      <Label htmlFor="expiry">Expiry</Label>
+                      <Label htmlFor="expiry">{t("donation.expiry")}</Label>
                       <Input
                         id="expiry"
                         placeholder="MM/YY"
@@ -391,7 +393,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="zip">ZIP</Label>
+                      <Label htmlFor="zip">{t("donation.zip")}</Label>
                       <Input
                         id="zip"
                         placeholder="12345"
@@ -407,7 +409,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
               ) : (
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="accountName">Account holder name</Label>
+                    <Label htmlFor="accountName">{t("donation.accountHolder")}</Label>
                     <Input
                       id="accountName"
                       value={formData.accountName}
@@ -419,7 +421,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="routingNumber">Routing number</Label>
+                      <Label htmlFor="routingNumber">{t("donation.routingNumber")}</Label>
                       <Input
                         id="routingNumber"
                         value={formData.routingNumber}
@@ -430,7 +432,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="accountNumber">Account number</Label>
+                      <Label htmlFor="accountNumber">{t("donation.accountNumber")}</Label>
                       <Input
                         id="accountNumber"
                         value={formData.accountNumber}
@@ -442,7 +444,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                     </div>
                   </div>
                   <div>
-                    <Label>Account type</Label>
+                    <Label>{t("donation.accountType")}</Label>
                     <div className="flex gap-4 mt-2">
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input
@@ -455,7 +457,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                           }
                           className="w-4 h-4 text-cta"
                         />
-                        <span className="text-sm">Checking</span>
+                        <span className="text-sm">{t("donation.checking")}</span>
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer">
                         <input
@@ -468,7 +470,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                           }
                           className="w-4 h-4 text-cta"
                         />
-                        <span className="text-sm">Savings</span>
+                        <span className="text-sm">{t("donation.savings")}</span>
                       </label>
                     </div>
                   </div>
@@ -479,14 +481,14 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
             <div className="flex gap-3 pt-2">
               <Button variant="outline" onClick={goBack} className="flex-1">
                 <ChevronLeft className="w-4 h-4 mr-1" />
-                Back
+                {t("donation.back")}
               </Button>
               <Button
                 variant="cta"
                 onClick={() => setStep(3)}
                 className="flex-1"
               >
-                Review donation
+                {t("donation.reviewDonation")}
               </Button>
             </div>
           </div>
@@ -494,70 +496,74 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
 
         {/* Step 3: Confirmation */}
         {step === 3 && (
-          <div className="space-y-5 animate-fade-in">
-            <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Donation type</span>
-                <span className="font-medium capitalize">{donationType}</span>
+          <div className="space-y-6 animate-fade-in">
+            <div className="bg-muted/30 rounded-lg p-5">
+              <h4 className="font-medium text-foreground mb-4">
+                {t("donation.summary")}
+              </h4>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t("donation.type")}</span>
+                  <span className="font-medium">
+                    {donationType === "one-time" ? t("donation.oneTime") : t("donation.monthly")}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t("donation.amount")}</span>
+                  <span className="font-medium text-cta">${currentAmount}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{t("donation.method")}</span>
+                  <span className="font-medium">
+                    {paymentMethod === "card" ? t("donation.creditCard") : t("donation.bankAccount")}
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Amount</span>
-                <span className="font-semibold text-lg">${currentAmount}</span>
+            </div>
+
+            <div className="bg-muted/30 rounded-lg p-5">
+              <div className="flex justify-between items-start mb-2">
+                <h4 className="font-medium text-foreground">{t("donation.yourInfo")}</h4>
+                <button
+                  onClick={() => setStep(2)}
+                  className="text-xs text-primary hover:underline"
+                >
+                  {t("donation.change")}
+                </button>
               </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Payment method</span>
-                <span className="font-medium">
-                  {paymentMethod === "card"
-                    ? `Card ending ${formData.cardNumber.slice(-4) || "****"}`
-                    : `Bank account ending ${formData.accountNumber.slice(-4) || "****"}`}
-                </span>
-              </div>
-              <div className="border-t pt-3 flex justify-between">
-                <span className="text-muted-foreground">Donor</span>
-                <span className="font-medium">
-                  {formData.firstName} {formData.lastName}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Email</span>
-                <span className="font-medium">{formData.email}</span>
-              </div>
+              <p className="text-sm text-muted-foreground">
+                {formData.firstName} {formData.lastName}
+                <br />
+                {formData.email}
+                <br />
+                {formData.country}
+              </p>
             </div>
 
             <div className="flex items-start gap-2">
               <Checkbox
                 id="receiptOptIn"
                 checked={receiptOptIn}
-                onCheckedChange={(checked) =>
-                  setReceiptOptIn(checked as boolean)
-                }
-                className="mt-0.5"
+                onCheckedChange={(checked) => setReceiptOptIn(checked as boolean)}
               />
               <Label htmlFor="receiptOptIn" className="text-sm cursor-pointer">
-                Email me a receipt and updates about our work.
+                {t("donation.receiptOptIn")}
               </Label>
             </div>
 
             <div className="flex gap-3">
               <Button variant="outline" onClick={goBack} className="flex-1">
                 <ChevronLeft className="w-4 h-4 mr-1" />
-                Back
+                {t("donation.back")}
               </Button>
-              <Button
-                variant="cta"
-                onClick={handleSubmit}
-                className="flex-1"
-                size="lg"
-              >
-                Confirm and donate
+              <Button variant="cta" onClick={handleSubmit} className="flex-1">
+                {t("donation.completeDonation")}
               </Button>
             </div>
 
-            <p className="text-xs text-center text-muted-foreground">
-              Defenders of the CAA and Freedom, Inc. is a non-partisan,
-              community-based non-profit. Donations support information,
-              education, community outreach, and monitoring against abuses. This
-              website does not provide legal advice.
+            <p className="text-xs text-center text-muted-foreground flex items-center justify-center gap-1">
+              <Lock className="w-3 h-3" />
+              {t("donation.secureNote")}
             </p>
           </div>
         )}

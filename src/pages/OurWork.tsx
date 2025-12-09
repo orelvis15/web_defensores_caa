@@ -13,19 +13,20 @@ import {
   Scale,
   Eye,
 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function OurWork() {
+  const { t } = useLanguage();
+
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background section-padding">
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
-            <h1 className="heading-1 text-foreground mb-6">Our Work</h1>
+            <h1 className="heading-1 text-foreground mb-6">{t("ourWork.title")}</h1>
             <p className="text-xl text-muted-foreground">
-              Through education, monitoring, and community support, we protect
-              Cuban migrants and defend the humanitarian principles of the Cuban
-              Adjustment Act.
+              {t("ourWork.heroDesc")}
             </p>
           </div>
         </div>
@@ -41,38 +42,34 @@ export default function OurWork() {
               </div>
               <div>
                 <h2 className="heading-2 text-foreground">
-                  Ethical and Anti-Fraud Migratory Observatory
+                  {t("ourWork.oeam.title")}
                 </h2>
-                <p className="text-muted-foreground">(OEAM)</p>
+                <p className="text-muted-foreground">{t("ourWork.oeam.acronym")}</p>
               </div>
             </div>
 
             <div className="prose prose-lg max-w-none text-muted-foreground mb-8">
-              <p>
-                The OEAM is a permanent program to <strong className="text-foreground">receive, document, analyze,
-                and channel complaints</strong> about fraudulent, abusive, or deceptive
-                practices by:
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: t("ourWork.oeam.intro") }} />
               <ul className="grid sm:grid-cols-2 gap-2 my-6">
                 <li className="flex items-center gap-2">
                   <Scale className="w-4 h-4 text-primary" />
-                  Notaries
+                  {t("ourWork.oeam.notaries")}
                 </li>
                 <li className="flex items-center gap-2">
                   <Scale className="w-4 h-4 text-primary" />
-                  Lawyers
+                  {t("ourWork.oeam.lawyers")}
                 </li>
                 <li className="flex items-center gap-2">
                   <Scale className="w-4 h-4 text-primary" />
-                  Paralegals
+                  {t("ourWork.oeam.paralegals")}
                 </li>
                 <li className="flex items-center gap-2">
                   <Scale className="w-4 h-4 text-primary" />
-                  Document preparers
+                  {t("ourWork.oeam.docPrep")}
                 </li>
                 <li className="flex items-center gap-2 sm:col-span-2">
                   <Scale className="w-4 h-4 text-primary" />
-                  Any person offering legal or migration services
+                  {t("ourWork.oeam.anyone")}
                 </li>
               </ul>
             </div>
@@ -82,37 +79,36 @@ export default function OurWork() {
               <div className="bg-success/5 border border-success/20 rounded-xl p-6">
                 <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-success" />
-                  What the OEAM does
+                  {t("ourWork.oeam.doesTitle")}
                 </h3>
                 <ul className="space-y-3 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-success mt-2" />
-                    Receives complaints from community members
+                    {t("ourWork.oeam.does1")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-success mt-2" />
-                    Verifies credibility and basic evidence
+                    {t("ourWork.oeam.does2")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-success mt-2" />
-                    Opens internal case files with codes (e.g., OEAM-FL-2025-001)
+                    {t("ourWork.oeam.does3")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-success mt-2" />
-                    Detects patterns when multiple complaints target the same
-                    professional
+                    {t("ourWork.oeam.does4")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-success mt-2" />
-                    Submits formal institutional complaints to authorities
+                    {t("ourWork.oeam.does5")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-success mt-2" />
-                    Issues public alerts and educational campaigns
+                    {t("ourWork.oeam.does6")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-success mt-2" />
-                    Protects confidentiality of complainants
+                    {t("ourWork.oeam.does7")}
                   </li>
                 </ul>
               </div>
@@ -120,24 +116,24 @@ export default function OurWork() {
               <div className="bg-destructive/5 border border-destructive/20 rounded-xl p-6">
                 <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                   <XCircle className="w-5 h-5 text-destructive" />
-                  What the OEAM does NOT do
+                  {t("ourWork.oeam.doesNotTitle")}
                 </h3>
                 <ul className="space-y-3 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-2" />
-                    Provide individual legal representation
+                    {t("ourWork.oeam.doesNot1")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-2" />
-                    Replace attorneys or legal counsel
+                    {t("ourWork.oeam.doesNot2")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-2" />
-                    Litigate cases on behalf of individuals
+                    {t("ourWork.oeam.doesNot3")}
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-2" />
-                    Give legal advice for specific situations
+                    {t("ourWork.oeam.doesNot4")}
                   </li>
                 </ul>
               </div>
@@ -145,13 +141,13 @@ export default function OurWork() {
 
             <div className="bg-muted/50 rounded-xl p-6">
               <h4 className="font-medium text-foreground mb-3">
-                Where we escalate verified cases:
+                {t("ourWork.oeam.escalate")}
               </h4>
               <ul className="grid sm:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                <li>• State Bar associations</li>
-                <li>• State departments regulating notaries</li>
-                <li>• Consumer protection departments</li>
-                <li>• State Attorneys General</li>
+                <li>• {t("ourWork.oeam.escalate1")}</li>
+                <li>• {t("ourWork.oeam.escalate2")}</li>
+                <li>• {t("ourWork.oeam.escalate3")}</li>
+                <li>• {t("ourWork.oeam.escalate4")}</li>
               </ul>
             </div>
           </div>
@@ -167,48 +163,45 @@ export default function OurWork() {
                 <BookOpen className="w-8 h-8 text-primary" />
               </div>
               <h2 className="heading-2 text-foreground">
-                Education & Civic Awareness
+                {t("ourWork.education.title")}
               </h2>
             </div>
 
             <p className="text-lg text-muted-foreground mb-8">
-              We provide workshops, online materials, and guides that help our
-              community understand their rights and responsibilities.
+              {t("ourWork.education.desc")}
             </p>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-card border rounded-xl p-5">
                 <h3 className="font-semibold text-foreground mb-2">
-                  Rights & Responsibilities
+                  {t("ourWork.education.rights")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Understanding immigrant rights and duties under U.S. law.
+                  {t("ourWork.education.rightsDesc")}
                 </p>
               </div>
               <div className="bg-card border rounded-xl p-5">
                 <h3 className="font-semibold text-foreground mb-2">
-                  CAA Basics
+                  {t("ourWork.education.caa")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  The fundamentals of the Cuban Adjustment Act and related
-                  processes.
+                  {t("ourWork.education.caaDesc")}
                 </p>
               </div>
               <div className="bg-card border rounded-xl p-5">
                 <h3 className="font-semibold text-foreground mb-2">
-                  Fraud Prevention
+                  {t("ourWork.education.fraud")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  How to identify and avoid scams and misinformation.
+                  {t("ourWork.education.fraudDesc")}
                 </p>
               </div>
               <div className="bg-card border rounded-xl p-5">
                 <h3 className="font-semibold text-foreground mb-2">
-                  Democratic Values
+                  {t("ourWork.education.democratic")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Human rights, civic participation, and the history of Cuban
-                  exile.
+                  {t("ourWork.education.democraticDesc")}
                 </p>
               </div>
             </div>
@@ -225,51 +218,49 @@ export default function OurWork() {
                 <Users className="w-8 h-8 text-primary" />
               </div>
               <h2 className="heading-2 text-foreground">
-                Community Support & Ambassadors Program
+                {t("ourWork.community.title")}
               </h2>
             </div>
 
             <p className="text-lg text-muted-foreground mb-8">
-              Our network of community ambassadors across the United States
-              serves as trusted voices for Cuban families.
+              {t("ourWork.community.desc")}
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-card border rounded-xl p-6">
                 <h3 className="font-semibold text-foreground mb-4">
-                  What ambassadors do
+                  {t("ourWork.community.whatDo")}
                 </h3>
                 <ul className="space-y-3 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-success mt-0.5" />
-                    Share verified information with their local communities
+                    {t("ourWork.community.do1")}
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-success mt-0.5" />
-                    Help families understand trustworthy resources
+                    {t("ourWork.community.do2")}
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-success mt-0.5" />
-                    Collect non-confidential data on local problems
+                    {t("ourWork.community.do3")}
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-success mt-0.5" />
-                    Support events, forums, and outreach campaigns
+                    {t("ourWork.community.do4")}
                   </li>
                 </ul>
               </div>
 
               <div className="bg-primary/5 rounded-xl p-6">
                 <h3 className="font-semibold text-foreground mb-4">
-                  Become an Ambassador
+                  {t("ourWork.community.become")}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Are you passionate about helping Cuban migrants in your city?
-                  Join our network of community ambassadors.
+                  {t("ourWork.community.becomeDesc")}
                 </p>
                 <Button asChild>
                   <Link to="/get-involved">
-                    Apply to become an ambassador
+                    {t("ourWork.community.apply")}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
                 </Button>
@@ -287,43 +278,42 @@ export default function OurWork() {
               <FileText className="w-8 h-8 text-primary" />
             </div>
             <h2 className="heading-2 text-foreground mb-4">
-              Transparency & Reporting
+              {t("ourWork.transparency.title")}
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              We publish regular reports to maintain full accountability with
-              our community and donors.
+              {t("ourWork.transparency.desc")}
             </p>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="bg-card border rounded-xl p-4 text-center">
                 <Eye className="w-6 h-6 text-primary mx-auto mb-2" />
                 <p className="text-sm font-medium text-foreground">
-                  Complaint Statistics
+                  {t("ourWork.transparency.stats")}
                 </p>
               </div>
               <div className="bg-card border rounded-xl p-4 text-center">
                 <Shield className="w-6 h-6 text-primary mx-auto mb-2" />
                 <p className="text-sm font-medium text-foreground">
-                  Resolved Cases
+                  {t("ourWork.transparency.resolved")}
                 </p>
               </div>
               <div className="bg-card border rounded-xl p-4 text-center">
                 <BookOpen className="w-6 h-6 text-primary mx-auto mb-2" />
                 <p className="text-sm font-medium text-foreground">
-                  Educational Materials
+                  {t("ourWork.transparency.materials")}
                 </p>
               </div>
               <div className="bg-card border rounded-xl p-4 text-center">
                 <FileText className="w-6 h-6 text-primary mx-auto mb-2" />
                 <p className="text-sm font-medium text-foreground">
-                  Financial Reports
+                  {t("ourWork.transparency.financial")}
                 </p>
               </div>
             </div>
 
             <div className="mt-8">
               <Button asChild variant="outline">
-                <Link to="/resources">View our reports and resources</Link>
+                <Link to="/resources">{t("ourWork.transparency.view")}</Link>
               </Button>
             </div>
           </div>
@@ -333,17 +323,16 @@ export default function OurWork() {
       {/* CTA */}
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container-wide text-center">
-          <h2 className="heading-2 mb-4">Support our work</h2>
+          <h2 className="heading-2 mb-4">{t("ourWork.cta.title")}</h2>
           <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-            Your donation helps us protect Cuban migrants, fight fraud, and
-            defend the Cuban Adjustment Act.
+            {t("ourWork.cta.desc")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="hero" size="lg">
-              <Link to="/take-action">Donate now</Link>
+              <Link to="/take-action">{t("ourWork.cta.donate")}</Link>
             </Button>
             <Button asChild variant="outline-light" size="lg">
-              <Link to="/get-involved">Join as a volunteer</Link>
+              <Link to="/get-involved">{t("ourWork.cta.volunteer")}</Link>
             </Button>
           </div>
         </div>

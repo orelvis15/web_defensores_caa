@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -45,27 +46,11 @@ export function Header() {
         <nav className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary flex items-center justify-center">
-              <svg
-                viewBox="0 0 40 40"
-                className="w-6 h-6 md:w-8 md:h-8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {/* Shield with dove silhouette */}
-                <path
-                  d="M20 4L6 10V20C6 28.284 12.716 35 20 38C27.284 35 34 28.284 34 20V10L20 4Z"
-                  fill="white"
-                  fillOpacity="0.2"
-                  stroke="white"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M15 18C17 16 20 15 23 16C25 17 26 19 25 21C24 23 21 24 18 23L14 26L16 22L15 18Z"
-                  fill="white"
-                />
-              </svg>
-            </div>
+            <img 
+              src={logo} 
+              alt="Defenders of the CAA and Freedom, Inc." 
+              className="w-10 h-10 md:w-12 md:h-12 object-contain"
+            />
             <div className="hidden sm:block">
               <span className="text-sm md:text-base font-bold text-primary leading-tight block">
                 Defenders of the CAA

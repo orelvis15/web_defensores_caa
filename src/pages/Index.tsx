@@ -49,9 +49,9 @@ export default function Index() {
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-section-light to-background pt-4 pb-8 md:pt-6 md:pb-12">
         <div className="container-wide">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
             {/* Left - Text Content */}
-            <div className="animate-slide-up">
+            <div className="animate-slide-up order-1 lg:order-1">
               <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
                 {t("hero.badge")}
               </span>
@@ -64,7 +64,15 @@ export default function Index() {
                 className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: t("hero.description") }}
               />
+            </div>
 
+            {/* Right - Donation Widget */}
+            <div className="animate-slide-in-right lg:sticky lg:top-20 order-2 lg:order-2 lg:row-span-2">
+              <DonationWizard />
+            </div>
+
+            {/* Bullet Points - Below form on mobile */}
+            <div className="order-3 lg:order-3">
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-cta/10 flex items-center justify-center shrink-0 mt-0.5">
@@ -98,11 +106,6 @@ export default function Index() {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
-            </div>
-
-            {/* Right - Donation Widget */}
-            <div className="animate-slide-in-right lg:sticky lg:top-20">
-              <DonationWizard />
             </div>
           </div>
         </div>

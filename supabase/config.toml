@@ -1,0 +1,4 @@
+project_id = "mutulosksodfkpdfkkhl"
+
+[functions.create-donation-checkout]
+verify_jwt = false

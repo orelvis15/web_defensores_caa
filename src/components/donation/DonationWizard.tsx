@@ -37,7 +37,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
     lastName: "",
     email: "",
     country: "",
-    isCuban: false,
+    acceptTerms: false,
   });
 
   const countries = [
@@ -288,16 +288,17 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
               </Select>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-start gap-2">
               <Checkbox
-                id="isCuban"
-                checked={formData.isCuban}
+                id="acceptTerms"
+                checked={formData.acceptTerms}
                 onCheckedChange={(checked) =>
-                  handleInputChange("isCuban", checked as boolean)
+                  handleInputChange("acceptTerms", checked as boolean)
                 }
+                className="mt-0.5"
               />
-              <Label htmlFor="isCuban" className="text-sm cursor-pointer">
-                {t("donation.isCuban")}
+              <Label htmlFor="acceptTerms" className="text-sm cursor-pointer leading-tight">
+                {t("donation.acceptTerms")}
               </Label>
             </div>
 

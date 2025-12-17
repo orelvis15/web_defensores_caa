@@ -354,7 +354,7 @@ const translations: Record<string, Record<Language, string>> = {
   "donation.email": { EN: "Email", ES: "Correo electrónico" },
   "donation.country": { EN: "Country", ES: "País" },
   "donation.selectCountry": { EN: "Select country", ES: "Selecciona país" },
-  "donation.isCuban": { EN: "I am a Cuban national or of Cuban origin", ES: "Soy ciudadano cubano o de origen cubano" },
+  "donation.acceptTerms": { EN: "I accept the terms and conditions and privacy policy", ES: "Acepto los términos y condiciones y la política de privacidad" },
   "donation.cardDetails": { EN: "Card details", ES: "Datos de la tarjeta" },
   "donation.bankDetails": { EN: "Bank details", ES: "Datos bancarios" },
   "donation.cardNumber": { EN: "Card number", ES: "Número de tarjeta" },

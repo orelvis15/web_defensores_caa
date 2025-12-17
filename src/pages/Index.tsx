@@ -47,30 +47,30 @@ export default function Index() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-section-light to-background section-padding">
+      <section className="bg-gradient-to-b from-section-light to-background pt-4 pb-8 md:pt-6 md:pb-12">
         <div className="container-wide">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
             {/* Left - Text Content */}
             <div className="animate-slide-up">
-              <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6">
+              <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
                 {t("hero.badge")}
               </span>
 
-              <h1 className="heading-1 text-foreground mb-6">
+              <h1 className="heading-1 text-foreground mb-4">
                 {t("hero.title")}
               </h1>
 
               <p 
-                className="text-lg text-muted-foreground mb-6 leading-relaxed"
+                className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: t("hero.description") }}
               />
 
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-2 mb-6">
                 <li className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-cta/10 flex items-center justify-center shrink-0 mt-0.5">
                     <BookOpen className="w-3.5 h-3.5 text-cta" />
                   </div>
-                  <span className="text-foreground">
+                  <span className="text-foreground text-sm md:text-base">
                     {t("hero.bullet1")}
                   </span>
                 </li>
@@ -78,7 +78,7 @@ export default function Index() {
                   <div className="w-6 h-6 rounded-full bg-cta/10 flex items-center justify-center shrink-0 mt-0.5">
                     <Eye className="w-3.5 h-3.5 text-cta" />
                   </div>
-                  <span className="text-foreground">
+                  <span className="text-foreground text-sm md:text-base">
                     {t("hero.bullet2")}
                   </span>
                 </li>
@@ -86,7 +86,7 @@ export default function Index() {
                   <div className="w-6 h-6 rounded-full bg-cta/10 flex items-center justify-center shrink-0 mt-0.5">
                     <Users className="w-3.5 h-3.5 text-cta" />
                   </div>
-                  <span className="text-foreground">
+                  <span className="text-foreground text-sm md:text-base">
                     {t("hero.bullet3")}
                   </span>
                 </li>
@@ -101,7 +101,7 @@ export default function Index() {
             </div>
 
             {/* Right - Donation Widget */}
-            <div className="animate-slide-in-right lg:sticky lg:top-24">
+            <div className="animate-slide-in-right lg:sticky lg:top-20">
               <DonationWizard />
             </div>
           </div>

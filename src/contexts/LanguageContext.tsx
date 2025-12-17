@@ -379,6 +379,14 @@ const translations: Record<string, Record<Language, string>> = {
   "donation.thankYou": { EN: "Thank you for your donation!", ES: "¡Gracias por tu donación!" },
   "donation.thankYouDesc": { EN: "Your {amount} {type} donation helps us defend the rights of Cuban migrants and fight against fraud and abuse.", ES: "Tu donación {type} de {amount} nos ayuda a defender los derechos de los migrantes cubanos y luchar contra el fraude y abuso." },
   "donation.share": { EN: "Share this page", ES: "Compartir esta página" },
+  "donation.shareText": { EN: "Support Cuban migrants - donate to Defenders of the CAA", ES: "Apoya a los migrantes cubanos - dona a Defensores de la CAA" },
+  "donation.successMessage": { EN: "Your generosity helps us defend the rights of Cuban migrants and fight against fraud and abuse. A receipt has been sent to your email.", ES: "Tu generosidad nos ayuda a defender los derechos de los migrantes cubanos y luchar contra el fraude y abuso. Se ha enviado un recibo a tu correo electrónico." },
+  "donation.step2TitleSimple": { EN: "Your information", ES: "Tu información" },
+  "donation.emailRequired": { EN: "Email is required", ES: "El correo electrónico es requerido" },
+  "donation.checkoutError": { EN: "Unable to start checkout. Please try again.", ES: "No se pudo iniciar el pago. Por favor intenta de nuevo." },
+  "donation.processing": { EN: "Processing...", ES: "Procesando..." },
+  "donation.proceedToPayment": { EN: "Proceed to payment", ES: "Proceder al pago" },
+  "donation.stripeSecure": { EN: "You will be redirected to Stripe's secure payment page.", ES: "Serás redirigido a la página de pago segura de Stripe." },
 
   // Footer
   "footer.brand": { EN: "Defenders of the CAA", ES: "Defensores de la CAA" },

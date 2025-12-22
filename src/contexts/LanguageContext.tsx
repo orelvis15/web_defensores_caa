@@ -482,6 +482,18 @@ const translations: Record<string, Record<Language, string>> = {
   "privacy.section8.content": { EN: "We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated effective date. We encourage you to review this policy periodically.", ES: "Podemos actualizar esta Política de Privacidad de vez en cuando. Los cambios se publicarán en esta página con una fecha de vigencia actualizada. Le recomendamos revisar esta política periódicamente." },
   "privacy.section9.title": { EN: "Contact", ES: "Contacto" },
   "privacy.section9.content": { EN: "If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us at info@defensoresdelacaa.org.", ES: "Si tiene alguna pregunta sobre esta Política de Privacidad o desea ejercer sus derechos, contáctenos en info@defensoresdelacaa.org." },
+
+  // Consent Popup
+  "consent.title": { EN: "Welcome to our website", ES: "Bienvenido a nuestro sitio web" },
+  "consent.description": { EN: "To continue using this website, you must agree to our", ES: "Para continuar usando este sitio web, debe aceptar nuestros" },
+  "consent.termsLink": { EN: "Terms and Conditions", ES: "Términos y Condiciones" },
+  "consent.and": { EN: "and", ES: "y" },
+  "consent.privacyLink": { EN: "Privacy Policy", ES: "Política de Privacidad" },
+  "consent.accept": { EN: "I Accept", ES: "Acepto" },
+  "consent.decline": { EN: "I Do Not Accept", ES: "No Acepto" },
+  "consent.declinedTitle": { EN: "Access Denied", ES: "Acceso Denegado" },
+  "consent.declinedDescription": { EN: "You cannot use this website without accepting our Terms and Conditions and Privacy Policy. If you change your mind, you can reconsider your decision.", ES: "No puede usar este sitio web sin aceptar nuestros Términos y Condiciones y Política de Privacidad. Si cambia de opinión, puede reconsiderar su decisión." },
+  "consent.reconsider": { EN: "Reconsider", ES: "Reconsiderar" },
 };
 
 // Detect browser language

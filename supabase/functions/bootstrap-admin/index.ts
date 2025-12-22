@@ -1,0 +1,80 @@
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.2";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+serve(async (req: Request) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+    const { email, password, applicationId } = await req.json();
+
+    // Only allow specific admin email
+    if (email !== "rafael@defensorescaa.org") {
+      throw new Error("Unauthorized email");
+    }
+
+    console.log("Creating admin user for:", email);
+
+    // Create the user
+    const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: { 
+        name: "Rafael Caveda",
+        city: "Miami",
+        state: "Florida"
+      },
+    });
+
+    if (createError) {
+      console.error("Error creating user:", createError);
+      throw new Error(`Failed to create user: ${createError.message}`);
+    }
+
+    console.log("Admin user created:", newUser.user.id);
+
+    // Update application status
+    if (applicationId) {
+      await supabaseAdmin
+        .from("member_applications")
+        .update({
+          status: "approved",
+          reviewed_at: new Date().toISOString(),
+        })
+        .eq("id", applicationId);
+    }
+
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        userId: newUser.user.id,
+        message: "Admin account created successfully" 
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
+  } catch (error: any) {
+    console.error("Error in bootstrap-admin:", error);
+    return new Response(
+      JSON.stringify({ error: error.message }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
+  }
+});

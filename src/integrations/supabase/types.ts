@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      donations: {
+        Row: {
+          amount: number
+          completed_at: string | null
+          created_at: string
+          currency: string
+          donation_type: string
+          email: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_session_id: string
+        }
+        Insert: {
+          amount: number
+          completed_at?: string | null
+          created_at?: string
+          currency?: string
+          donation_type: string
+          email: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_session_id: string
+        }
+        Update: {
+          amount?: number
+          completed_at?: string | null
+          created_at?: string
+          currency?: string
+          donation_type?: string
+          email?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_session_id?: string
+        }
+        Relationships: []
+      }
       member_applications: {
         Row: {
           city: string

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -192,6 +193,31 @@ serve(async (req) => {
     const session = await stripe.checkout.sessions.create(sessionConfig);
 
     logStep("Checkout session created", { sessionId: session.id });
+
+    // Save donation record to database
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
+
+    const { error: dbError } = await supabaseClient.from("donations").insert({
+      stripe_session_id: session.id,
+      stripe_customer_id: customerId || null,
+      email: email || "guest",
+      first_name: firstName || null,
+      last_name: lastName || null,
+      amount: amount,
+      currency: "usd",
+      donation_type: donationType,
+      status: "pending",
+    });
+
+    if (dbError) {
+      console.error("[CREATE-DONATION-CHECKOUT] Failed to save donation to DB", dbError);
+      // Don't fail the checkout, just log the error
+    } else {
+      logStep("Donation saved to database");
+    }
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

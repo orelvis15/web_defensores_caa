@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -298,7 +299,14 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                 className="mt-0.5"
               />
               <Label htmlFor="acceptTerms" className="text-sm cursor-pointer leading-tight">
-                {t("donation.acceptTerms")}
+                {t("donation.acceptTermsPrefix")}{" "}
+                <Link to="/terms" className="text-primary underline hover:text-primary/80" target="_blank">
+                  {t("donation.termsLink")}
+                </Link>{" "}
+                {t("donation.acceptTermsAnd")}{" "}
+                <Link to="/privacy" className="text-primary underline hover:text-primary/80" target="_blank">
+                  {t("donation.privacyLink")}
+                </Link>
               </Label>
             </div>
 

@@ -22,20 +22,35 @@ import {
   Calendar,
   CheckCircle,
   ArrowRight,
+  Loader2,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const applicationSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().trim().email("Invalid email address").max(255),
+  city: z.string().trim().min(2, "City is required").max(100),
+  state: z.string().trim().min(2, "State is required").max(100),
+  reason: z.string().trim().min(10, "Please tell us more about why you want to help").max(1000),
+  note: z.string().max(500).optional(),
+});
 
 export default function GetInvolved() {
   const { toast } = useToast();
   const { t } = useLanguage();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     city: "",
     state: "",
-    interest: "",
-    message: "",
+    reason: "",
+    note: "",
   });
 
   const volunteerRoles = [
@@ -54,17 +69,70 @@ export default function GetInvolved() {
     t("getInvolved.member.benefit5"),
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: t("toast.applicationSubmitted"),
-      description: t("toast.applicationDesc"),
-    });
-    setFormData({ name: "", email: "", city: "", state: "", interest: "", message: "" });
+    setErrors({});
+
+    const validation = applicationSchema.safeParse(formData);
+    if (!validation.success) {
+      const fieldErrors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as string] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("member_applications").insert({
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        city: formData.city.trim(),
+        state: formData.state.trim(),
+        reason: formData.reason.trim(),
+        note: formData.note?.trim() || null,
+        status: "pending",
+      });
+
+      if (error) {
+        if (error.message.includes("duplicate")) {
+          toast({
+            title: "Application Already Exists",
+            description: "An application with this email has already been submitted.",
+            variant: "destructive",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        setSubmitted(true);
+        toast({
+          title: t("toast.applicationSubmitted"),
+          description: t("toast.applicationDesc"),
+        });
+        setFormData({ name: "", email: "", city: "", state: "", reason: "", note: "" });
+      }
+    } catch (error: any) {
+      console.error("Error submitting application:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit application. Please try again.",
+        variant: "destructive",
+      });
+    }
+
+    setIsSubmitting(false);
   };
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
   };
 
   return (
@@ -111,87 +179,126 @@ export default function GetInvolved() {
 
             {/* Membership Form */}
             <div className="bg-card border rounded-xl p-8">
-              <h3 className="font-semibold text-foreground mb-6">
-                {t("getInvolved.form.title")}
-              </h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <Label htmlFor="name">{t("getInvolved.form.name")}</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    className="mt-1"
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email">{t("getInvolved.form.email")}</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    className="mt-1"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="city">{t("getInvolved.form.city")}</Label>
-                    <Input
-                      id="city"
-                      value={formData.city}
-                      onChange={(e) => handleChange("city", e.target.value)}
-                      className="mt-1"
-                      required
-                    />
+              {submitted ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-success" />
                   </div>
-                  <div>
-                    <Label htmlFor="state">{t("getInvolved.form.state")}</Label>
-                    <Input
-                      id="state"
-                      value={formData.state}
-                      onChange={(e) => handleChange("state", e.target.value)}
-                      className="mt-1"
-                      required
-                    />
-                  </div>
+                  <h3 className="heading-3 text-foreground mb-3">
+                    Thank You!
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    Your application has been received. We will review it and get back to you soon with a decision.
+                  </p>
+                  <Button variant="outline" onClick={() => setSubmitted(false)}>
+                    Submit Another Application
+                  </Button>
                 </div>
-                <div>
-                  <Label htmlFor="interest">{t("getInvolved.form.interest")}</Label>
-                  <Select
-                    value={formData.interest}
-                    onValueChange={(value) => handleChange("interest", value)}
-                  >
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder={t("getInvolved.form.selectOption")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="member">{t("getInvolved.form.generalMembership")}</SelectItem>
-                      <SelectItem value="ambassador">{t("getInvolved.form.ambassador")}</SelectItem>
-                      <SelectItem value="volunteer">{t("getInvolved.form.volunteer")}</SelectItem>
-                      <SelectItem value="professional">{t("getInvolved.form.professional")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="message">
-                    {t("getInvolved.form.aboutYou")}
-                  </Label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => handleChange("message", e.target.value)}
-                    className="mt-1"
-                    rows={3}
-                    placeholder={t("getInvolved.form.placeholder")}
-                  />
-                </div>
-                <Button type="submit" variant="cta" className="w-full">
-                  {t("getInvolved.form.submit")}
-                </Button>
-              </form>
+              ) : (
+                <>
+                  <h3 className="font-semibold text-foreground mb-6">
+                    {t("getInvolved.form.title")}
+                  </h3>
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                      <Label htmlFor="name">{t("getInvolved.form.name")}</Label>
+                      <Input
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => handleChange("name", e.target.value)}
+                        className="mt-1"
+                        required
+                      />
+                      {errors.name && (
+                        <p className="text-sm text-destructive mt-1">{errors.name}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="email">{t("getInvolved.form.email")}</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleChange("email", e.target.value)}
+                        className="mt-1"
+                        required
+                      />
+                      {errors.email && (
+                        <p className="text-sm text-destructive mt-1">{errors.email}</p>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="city">{t("getInvolved.form.city")}</Label>
+                        <Input
+                          id="city"
+                          value={formData.city}
+                          onChange={(e) => handleChange("city", e.target.value)}
+                          className="mt-1"
+                          required
+                        />
+                        {errors.city && (
+                          <p className="text-sm text-destructive mt-1">{errors.city}</p>
+                        )}
+                      </div>
+                      <div>
+                        <Label htmlFor="state">{t("getInvolved.form.state")}</Label>
+                        <Input
+                          id="state"
+                          value={formData.state}
+                          onChange={(e) => handleChange("state", e.target.value)}
+                          className="mt-1"
+                          required
+                        />
+                        {errors.state && (
+                          <p className="text-sm text-destructive mt-1">{errors.state}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="reason">{t("getInvolved.form.interest")}</Label>
+                      <Textarea
+                        id="reason"
+                        value={formData.reason}
+                        onChange={(e) => handleChange("reason", e.target.value)}
+                        className="mt-1"
+                        rows={3}
+                        placeholder="Tell us why you want to become a member and how you'd like to help..."
+                        required
+                      />
+                      {errors.reason && (
+                        <p className="text-sm text-destructive mt-1">{errors.reason}</p>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="note">
+                        {t("getInvolved.form.aboutYou")}
+                      </Label>
+                      <Textarea
+                        id="note"
+                        value={formData.note}
+                        onChange={(e) => handleChange("note", e.target.value)}
+                        className="mt-1"
+                        rows={2}
+                        placeholder={t("getInvolved.form.placeholder")}
+                      />
+                      {errors.note && (
+                        <p className="text-sm text-destructive mt-1">{errors.note}</p>
+                      )}
+                    </div>
+                    <Button type="submit" variant="cta" className="w-full" disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Submitting...
+                        </>
+                      ) : (
+                        t("getInvolved.form.submit")
+                      )}
+                    </Button>
+                  </form>
+                </>
+              )}
             </div>
           </div>
         </div>

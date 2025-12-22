@@ -23,6 +23,8 @@ import {
   CheckCircle,
   ArrowRight,
   Loader2,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -59,6 +61,8 @@ export default function GetInvolved() {
     reason: "",
     note: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const volunteerRoles = [
     { icon: Globe, title: t("getInvolved.volunteer.ambassador"), description: t("getInvolved.volunteer.ambassadorDesc") },
@@ -238,30 +242,46 @@ export default function GetInvolved() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="password">Password</Label>
-                        <Input
-                          id="password"
-                          type="password"
-                          value={formData.password}
-                          onChange={(e) => handleChange("password", e.target.value)}
-                          className="mt-1"
-                          placeholder="Min. 8 characters"
-                          required
-                        />
+                        <div className="relative mt-1">
+                          <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            value={formData.password}
+                            onChange={(e) => handleChange("password", e.target.value)}
+                            placeholder="Min. 8 characters"
+                            required
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                        </div>
                         {errors.password && (
                           <p className="text-sm text-destructive mt-1">{errors.password}</p>
                         )}
                       </div>
                       <div>
                         <Label htmlFor="confirmPassword">Confirm Password</Label>
-                        <Input
-                          id="confirmPassword"
-                          type="password"
-                          value={formData.confirmPassword}
-                          onChange={(e) => handleChange("confirmPassword", e.target.value)}
-                          className="mt-1"
-                          placeholder="Repeat password"
-                          required
-                        />
+                        <div className="relative mt-1">
+                          <Input
+                            id="confirmPassword"
+                            type={showConfirmPassword ? "text" : "password"}
+                            value={formData.confirmPassword}
+                            onChange={(e) => handleChange("confirmPassword", e.target.value)}
+                            placeholder="Repeat password"
+                            required
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                          >
+                            {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                        </div>
                         {errors.confirmPassword && (
                           <p className="text-sm text-destructive mt-1">{errors.confirmPassword}</p>
                         )}

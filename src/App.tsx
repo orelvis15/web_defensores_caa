@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { ConsentPopup } from "@/components/ConsentPopup";
 import Index from "./pages/Index";
 import TakeAction from "./pages/TakeAction";
 import DonationSuccess from "./pages/DonationSuccess";
@@ -25,6 +26,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <ConsentPopup />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />

@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,6 +24,9 @@ import {
   CheckCircle,
   XCircle,
   Loader2,
+  Users,
+  CreditCard,
+  DollarSign,
 } from "lucide-react";
 
 type ApplicationStatus = "pending" | "approved" | "denied";
@@ -39,14 +43,30 @@ interface Application {
   created_at: string;
 }
 
+interface Donation {
+  id: string;
+  email: string;
+  first_name: string | null;
+  last_name: string | null;
+  amount: number;
+  currency: string;
+  donation_type: string;
+  status: string;
+  created_at: string;
+  completed_at: string | null;
+}
+
 export default function Admin() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user, loading, isAdmin, signOut } = useAuth();
   const [applications, setApplications] = useState<Application[]>([]);
+  const [donations, setDonations] = useState<Donation[]>([]);
   const [loadingApps, setLoadingApps] = useState(true);
+  const [loadingDonations, setLoadingDonations] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<ApplicationStatus | "all">("pending");
+  const [activeTab, setActiveTab] = useState("applications");
 
   useEffect(() => {
     if (!loading && !user) {
@@ -60,6 +80,7 @@ export default function Admin() {
   useEffect(() => {
     if (user && isAdmin) {
       fetchApplications();
+      fetchDonations();
     }
   }, [user, isAdmin, filter]);
 
@@ -87,6 +108,26 @@ export default function Admin() {
       setApplications(data as Application[]);
     }
     setLoadingApps(false);
+  };
+
+  const fetchDonations = async () => {
+    setLoadingDonations(true);
+    const { data, error } = await supabase
+      .from("donations")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching donations:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load donations",
+        variant: "destructive",
+      });
+    } else {
+      setDonations(data as Donation[]);
+    }
+    setLoadingDonations(false);
   };
 
   const handleApprove = async (application: Application) => {
@@ -188,6 +229,39 @@ export default function Admin() {
     }
   };
 
+  const getDonationStatusBadge = (status: string) => {
+    switch (status) {
+      case "pending":
+        return (
+          <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
+            <Clock className="w-3 h-3 mr-1" />
+            Pending
+          </Badge>
+        );
+      case "completed":
+        return (
+          <Badge variant="outline" className="bg-success/10 text-success border-success/30">
+            <CheckCircle className="w-3 h-3 mr-1" />
+            Completed
+          </Badge>
+        );
+      case "failed":
+      case "cancelled":
+        return (
+          <Badge variant="outline" className="bg-destructive/10 text-destructive border-destructive/30">
+            <XCircle className="w-3 h-3 mr-1" />
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </Badge>
+        );
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  const totalDonations = donations
+    .filter((d) => d.status === "completed" || d.status === "pending")
+    .reduce((sum, d) => sum + Number(d.amount), 0);
+
   if (loading) {
     return (
       <Layout>
@@ -213,7 +287,7 @@ export default function Admin() {
               </div>
               <div>
                 <h1 className="heading-2 text-foreground">Admin Panel</h1>
-                <p className="text-muted-foreground">Manage member applications</p>
+                <p className="text-muted-foreground">Manage applications & donations</p>
               </div>
             </div>
             <Button variant="ghost" onClick={handleSignOut}>
@@ -222,94 +296,200 @@ export default function Admin() {
             </Button>
           </div>
 
-          {/* Filter buttons */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {(["all", "pending", "approved", "denied"] as const).map((status) => (
-              <Button
-                key={status}
-                variant={filter === status ? "default" : "outline"}
-                size="sm"
-                onClick={() => setFilter(status)}
-              >
-                {status.charAt(0).toUpperCase() + status.slice(1)}
-              </Button>
-            ))}
-          </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="grid w-full max-w-md grid-cols-2">
+              <TabsTrigger value="applications" className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                Applications
+              </TabsTrigger>
+              <TabsTrigger value="payments" className="flex items-center gap-2">
+                <CreditCard className="w-4 h-4" />
+                Payments
+              </TabsTrigger>
+            </TabsList>
 
-          {/* Applications table */}
-          <div className="bg-card border rounded-xl overflow-hidden">
-            {loadingApps ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <TabsContent value="applications" className="space-y-6">
+              {/* Filter buttons */}
+              <div className="flex flex-wrap gap-2">
+                {(["all", "pending", "approved", "denied"] as const).map((status) => (
+                  <Button
+                    key={status}
+                    variant={filter === status ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setFilter(status)}
+                  >
+                    {status.charAt(0).toUpperCase() + status.slice(1)}
+                  </Button>
+                ))}
               </div>
-            ) : applications.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground">
-                No applications found
+
+              {/* Applications table */}
+              <div className="bg-card border rounded-xl overflow-hidden">
+                {loadingApps ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                  </div>
+                ) : applications.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground">
+                    No applications found
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Location</TableHead>
+                          <TableHead>Reason</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Date</TableHead>
+                          <TableHead className="text-right">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {applications.map((app) => (
+                          <TableRow key={app.id}>
+                            <TableCell className="font-medium">{app.name}</TableCell>
+                            <TableCell>{app.email}</TableCell>
+                            <TableCell>
+                              {app.city}, {app.state}
+                            </TableCell>
+                            <TableCell className="max-w-xs truncate" title={app.reason}>
+                              {app.reason}
+                            </TableCell>
+                            <TableCell>{getStatusBadge(app.status)}</TableCell>
+                            <TableCell>
+                              {new Date(app.created_at).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {app.status === "pending" && (
+                                <div className="flex gap-2 justify-end">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-success hover:bg-success/10"
+                                    onClick={() => handleApprove(app)}
+                                    disabled={processingId === app.id}
+                                  >
+                                    {processingId === app.id ? (
+                                      <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                      <Check className="w-4 h-4" />
+                                    )}
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="text-destructive hover:bg-destructive/10"
+                                    onClick={() => handleDeny(app)}
+                                    disabled={processingId === app.id}
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </Button>
+                                </div>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Location</TableHead>
-                      <TableHead>Reason</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {applications.map((app) => (
-                      <TableRow key={app.id}>
-                        <TableCell className="font-medium">{app.name}</TableCell>
-                        <TableCell>{app.email}</TableCell>
-                        <TableCell>
-                          {app.city}, {app.state}
-                        </TableCell>
-                        <TableCell className="max-w-xs truncate" title={app.reason}>
-                          {app.reason}
-                        </TableCell>
-                        <TableCell>{getStatusBadge(app.status)}</TableCell>
-                        <TableCell>
-                          {new Date(app.created_at).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {app.status === "pending" && (
-                            <div className="flex gap-2 justify-end">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="text-success hover:bg-success/10"
-                                onClick={() => handleApprove(app)}
-                                disabled={processingId === app.id}
-                              >
-                                {processingId === app.id ? (
-                                  <Loader2 className="w-4 h-4 animate-spin" />
-                                ) : (
-                                  <Check className="w-4 h-4" />
-                                )}
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="text-destructive hover:bg-destructive/10"
-                                onClick={() => handleDeny(app)}
-                                disabled={processingId === app.id}
-                              >
-                                <X className="w-4 h-4" />
-                              </Button>
-                            </div>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+            </TabsContent>
+
+            <TabsContent value="payments" className="space-y-6">
+              {/* Summary Card */}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="bg-card border rounded-xl p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
+                      <DollarSign className="w-5 h-5 text-success" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Total Donations</p>
+                      <p className="text-2xl font-bold text-foreground">${totalDonations.toFixed(2)}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-card border rounded-xl p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <CreditCard className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Total Donations</p>
+                      <p className="text-2xl font-bold text-foreground">{donations.length}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-card border rounded-xl p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center">
+                      <Clock className="w-5 h-5 text-warning" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Monthly Donors</p>
+                      <p className="text-2xl font-bold text-foreground">
+                        {donations.filter((d) => d.donation_type === "monthly").length}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
+
+              {/* Donations table */}
+              <div className="bg-card border rounded-xl overflow-hidden">
+                {loadingDonations ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                  </div>
+                ) : donations.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground">
+                    No donations yet
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Donor</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Amount</TableHead>
+                          <TableHead>Type</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Date</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {donations.map((donation) => (
+                          <TableRow key={donation.id}>
+                            <TableCell className="font-medium">
+                              {[donation.first_name, donation.last_name].filter(Boolean).join(" ") || "Anonymous"}
+                            </TableCell>
+                            <TableCell>{donation.email}</TableCell>
+                            <TableCell className="font-semibold text-success">
+                              ${Number(donation.amount).toFixed(2)}
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="outline" className={donation.donation_type === "monthly" ? "bg-primary/10 text-primary border-primary/30" : ""}>
+                                {donation.donation_type === "monthly" ? "Monthly" : "One-time"}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>{getDonationStatusBadge(donation.status)}</TableCell>
+                            <TableCell>
+                              {new Date(donation.created_at).toLocaleDateString()}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
     </Layout>

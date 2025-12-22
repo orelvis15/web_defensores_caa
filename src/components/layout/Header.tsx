@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogIn, User } from "lucide-react";
+import { Menu, X, LogIn, User, ShoppingBag } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -21,6 +22,7 @@ export function Header() {
     { href: "/blog", label: t("nav.blog") },
     { href: "/resources", label: t("nav.resources") },
     { href: "/get-involved", label: t("nav.getInvolved") },
+    { href: "/store", label: language === "ES" ? "Tienda" : "Store", comingSoon: true },
     { href: "/contact", label: t("nav.contact") },
   ];
 
@@ -71,13 +73,19 @@ export function Header() {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                  "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
                   location.pathname === link.href
                     ? "text-primary bg-primary/5"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 )}
               >
+                {link.comingSoon && <ShoppingBag className="w-3.5 h-3.5" />}
                 {link.label}
+                {link.comingSoon && (
+                  <Badge variant="outline" className="ml-1 text-[10px] px-1.5 py-0 h-4 border-amber-500 text-amber-600 bg-amber-50">
+                    Soon
+                  </Badge>
+                )}
               </Link>
             ))}
           </div>
@@ -156,13 +164,19 @@ export function Header() {
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "px-4 py-3 text-base font-medium rounded-md transition-colors",
+                    "px-4 py-3 text-base font-medium rounded-md transition-colors flex items-center gap-2",
                     location.pathname === link.href
                       ? "text-primary bg-primary/5"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   )}
                 >
+                  {link.comingSoon && <ShoppingBag className="w-4 h-4" />}
                   {link.label}
+                  {link.comingSoon && (
+                    <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-amber-500 text-amber-600 bg-amber-50">
+                      Soon
+                    </Badge>
+                  )}
                 </Link>
               ))}
               <div className="px-4 pt-4 flex flex-col gap-2">

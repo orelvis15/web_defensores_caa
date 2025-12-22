@@ -26,8 +26,8 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <ConsentPopup />
         <BrowserRouter>
+          <ConsentPopup />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/take-action" element={<TakeAction />} />

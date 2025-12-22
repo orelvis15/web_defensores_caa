@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/logo.png";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { user, isAdmin } = useAuth();
   const location = useLocation();
 
   const navLinks = [
@@ -113,6 +115,23 @@ export function Header() {
               <Link to="/take-action">{t("nav.donate")}</Link>
             </Button>
 
+            {/* Login/Dashboard Button */}
+            {user ? (
+              <Button asChild variant="outline" size="sm" className="hidden sm:flex">
+                <Link to={isAdmin ? "/admin" : "/dashboard"}>
+                  <User className="w-4 h-4 mr-1" />
+                  {isAdmin ? "Admin" : "Dashboard"}
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild variant="ghost" size="sm" className="hidden sm:flex">
+                <Link to="/login">
+                  <LogIn className="w-4 h-4 mr-1" />
+                  Login
+                </Link>
+              </Button>
+            )}
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -146,10 +165,25 @@ export function Header() {
                   {link.label}
                 </Link>
               ))}
-              <div className="px-4 pt-4">
+              <div className="px-4 pt-4 flex flex-col gap-2">
                 <Button asChild variant="cta" className="w-full">
                   <Link to="/take-action">{t("nav.donate")}</Link>
                 </Button>
+                {user ? (
+                  <Button asChild variant="outline" className="w-full">
+                    <Link to={isAdmin ? "/admin" : "/dashboard"}>
+                      <User className="w-4 h-4 mr-2" />
+                      {isAdmin ? "Admin Panel" : "Dashboard"}
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button asChild variant="ghost" className="w-full">
+                    <Link to="/login">
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Login
+                    </Link>
+                  </Button>
+                )}
               </div>
             </div>
           </div>

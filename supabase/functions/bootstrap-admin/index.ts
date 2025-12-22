@@ -19,8 +19,15 @@ serve(async (req: Request) => {
 
     const { email, password, applicationId } = await req.json();
 
-    // Only allow specific admin email
-    if (email !== "rafael@defensorescaa.org") {
+    // Only allow specific admin emails
+    const allowedEmails = [
+      "rafael@defensorescaa.org",
+      "mag@defensorescaa.org",
+      "manuel@defensorescaa.org",
+      "lisy@defensorescaa.org"
+    ];
+    
+    if (!allowedEmails.includes(email)) {
       throw new Error("Unauthorized email");
     }
 

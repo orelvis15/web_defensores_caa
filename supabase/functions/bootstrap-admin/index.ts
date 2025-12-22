@@ -17,21 +17,11 @@ serve(async (req: Request) => {
     
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
-    const { email, password, applicationId } = await req.json();
+    const { email, password, name, applicationId } = await req.json();
 
-    // Only allow specific admin emails
-    const allowedEmails = [
-      "rafael@defensorescaa.org",
-      "mag@defensorescaa.org",
-      "manuel@defensorescaa.org",
-      "lisy@defensorescaa.org"
-    ];
-    
-    if (!allowedEmails.includes(email)) {
-      throw new Error("Unauthorized email");
-    }
+    console.log("Creating user for:", email);
 
-    console.log("Creating admin user for:", email);
+    console.log("Creating user for:", email);
 
     // Create the user
     const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
@@ -39,9 +29,7 @@ serve(async (req: Request) => {
       password,
       email_confirm: true,
       user_metadata: { 
-        name: "Rafael Caveda",
-        city: "Miami",
-        state: "Florida"
+        name: name || "User"
       },
     });
 

@@ -25,19 +25,19 @@ const products = [
     id: 2,
     name: { en: "Stainless Steel Tumbler", es: "Vaso de Acero Inoxidable" },
     image: tumblerImg,
-    price: "$30.00",
+    price: "$14.90",
   },
   {
     id: 3,
     name: { en: "Keychain", es: "Llavero" },
     image: keychainImg,
-    price: "$10.00",
+    price: "$4.90",
   },
   {
     id: 4,
     name: { en: "Trucker Cap", es: "Gorra" },
     image: capImg,
-    price: "$22.00",
+    price: "$9.90",
   },
   {
     id: 5,
@@ -49,13 +49,13 @@ const products = [
     id: 6,
     name: { en: "Crewneck Sweatshirt", es: "Sudadera" },
     image: sweatshirtImg,
-    price: "$45.00",
+    price: "$19.99",
   },
   {
     id: 7,
     name: { en: "License Plate", es: "Placa de Licencia" },
     image: licensePlateImg,
-    price: "$20.00",
+    price: "$9.90",
   },
   {
     id: 8,

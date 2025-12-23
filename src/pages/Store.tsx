@@ -19,7 +19,7 @@ const products = [
     id: 1,
     name: { en: "Foundation T-Shirt", es: "Camiseta de la Fundación" },
     image: tshirtImg,
-    price: "$25.00",
+    price: "$15.00",
   },
   {
     id: 2,

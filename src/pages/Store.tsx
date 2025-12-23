@@ -61,7 +61,7 @@ const products = [
     id: 8,
     name: { en: "Bookmark Set", es: "Set de Marcadores" },
     image: bookmarkImg,
-    price: "$12.00",
+    price: "$7.00",
   },
 ];
 

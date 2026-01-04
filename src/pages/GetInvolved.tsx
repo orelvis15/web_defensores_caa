@@ -23,8 +23,6 @@ import {
   CheckCircle,
   ArrowRight,
   Loader2,
-  Eye,
-  EyeOff,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -34,15 +32,10 @@ import { z } from "zod";
 const applicationSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
-  password: z.string().min(8, "Password must be at least 8 characters").max(100),
-  confirmPassword: z.string(),
   city: z.string().trim().min(2, "City is required").max(100),
   state: z.string().trim().min(2, "State is required").max(100),
   reason: z.string().trim().min(10, "Please tell us more about why you want to help").max(1000),
   note: z.string().max(500).optional(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
 });
 
 export default function GetInvolved() {
@@ -54,15 +47,11 @@ export default function GetInvolved() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     city: "",
     state: "",
     reason: "",
     note: "",
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const volunteerRoles = [
     { icon: Globe, title: t("getInvolved.volunteer.ambassador"), description: t("getInvolved.volunteer.ambassadorDesc") },
@@ -106,7 +95,6 @@ export default function GetInvolved() {
         state: formData.state.trim(),
         reason: formData.reason.trim(),
         note: formData.note?.trim() || null,
-        password_hash: formData.password, // Will be used when creating account
         status: "pending",
       });
 
@@ -126,7 +114,7 @@ export default function GetInvolved() {
           title: t("toast.applicationSubmitted"),
           description: t("toast.applicationDesc"),
         });
-        setFormData({ name: "", email: "", password: "", confirmPassword: "", city: "", state: "", reason: "", note: "" });
+        setFormData({ name: "", email: "", city: "", state: "", reason: "", note: "" });
       }
     } catch (error: any) {
       console.error("Error submitting application:", error);
@@ -238,54 +226,6 @@ export default function GetInvolved() {
                       {errors.email && (
                         <p className="text-sm text-destructive mt-1">{errors.email}</p>
                       )}
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="password">Password</Label>
-                        <div className="relative mt-1">
-                          <Input
-                            id="password"
-                            type={showPassword ? "text" : "password"}
-                            value={formData.password}
-                            onChange={(e) => handleChange("password", e.target.value)}
-                            placeholder="Min. 8 characters"
-                            required
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </button>
-                        </div>
-                        {errors.password && (
-                          <p className="text-sm text-destructive mt-1">{errors.password}</p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="confirmPassword">Confirm Password</Label>
-                        <div className="relative mt-1">
-                          <Input
-                            id="confirmPassword"
-                            type={showConfirmPassword ? "text" : "password"}
-                            value={formData.confirmPassword}
-                            onChange={(e) => handleChange("confirmPassword", e.target.value)}
-                            placeholder="Repeat password"
-                            required
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </button>
-                        </div>
-                        {errors.confirmPassword && (
-                          <p className="text-sm text-destructive mt-1">{errors.confirmPassword}</p>
-                        )}
-                      </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>

@@ -67,7 +67,6 @@ export type Database = {
           id: string
           name: string
           note: string | null
-          password_hash: string | null
           reason: string
           reviewed_at: string | null
           reviewed_by: string | null
@@ -82,7 +81,6 @@ export type Database = {
           id?: string
           name: string
           note?: string | null
-          password_hash?: string | null
           reason: string
           reviewed_at?: string | null
           reviewed_by?: string | null
@@ -97,7 +95,6 @@ export type Database = {
           id?: string
           name?: string
           note?: string | null
-          password_hash?: string | null
           reason?: string
           reviewed_at?: string | null
           reviewed_by?: string | null

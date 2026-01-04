@@ -7,6 +7,39 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Rate limiting: max 10 requests per IP per minute
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10;
+const rateLimitStore = new Map<string, { count: number; windowStart: number }>();
+
+const checkRateLimit = (clientIP: string): { allowed: boolean; retryAfter?: number } => {
+  const now = Date.now();
+  const record = rateLimitStore.get(clientIP);
+  
+  // Clean up old entries periodically (every 100 checks)
+  if (Math.random() < 0.01) {
+    for (const [ip, data] of rateLimitStore.entries()) {
+      if (now - data.windowStart > RATE_LIMIT_WINDOW_MS * 2) {
+        rateLimitStore.delete(ip);
+      }
+    }
+  }
+
+  if (!record || now - record.windowStart > RATE_LIMIT_WINDOW_MS) {
+    // New window
+    rateLimitStore.set(clientIP, { count: 1, windowStart: now });
+    return { allowed: true };
+  }
+
+  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
+    const retryAfter = Math.ceil((record.windowStart + RATE_LIMIT_WINDOW_MS - now) / 1000);
+    return { allowed: false, retryAfter };
+  }
+
+  record.count++;
+  return { allowed: true };
+};
+
 const logStep = (step: string, details?: Record<string, unknown>) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
   console.log(`[CREATE-DONATION-CHECKOUT] ${step}${detailsStr}`);
@@ -92,6 +125,25 @@ serve(async (req) => {
 
   try {
     logStep("Function started");
+
+    // Rate limiting check
+    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                     req.headers.get("x-real-ip") || 
+                     "unknown";
+    const rateLimit = checkRateLimit(clientIP);
+    
+    if (!rateLimit.allowed) {
+      logStep("Rate limit exceeded", { clientIP, retryAfter: rateLimit.retryAfter });
+      return new Response(JSON.stringify({ error: "Too many requests. Please try again later." }), {
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json",
+          "Retry-After": String(rateLimit.retryAfter || 60)
+        },
+        status: 429,
+      });
+    }
+    logStep("Rate limit check passed", { clientIP });
 
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
     if (!stripeKey) {

@@ -59,24 +59,13 @@ serve(async (req: Request) => {
 
     console.log("Processing approval for:", email);
 
-    // Get the stored password from the application
-    const { data: application, error: appError } = await supabaseAdmin
-      .from("member_applications")
-      .select("password_hash")
-      .eq("id", applicationId)
-      .single();
+    // Generate a secure random temporary password (user will set their own via password reset)
+    const tempPassword = crypto.randomUUID() + "Aa1!";
 
-    if (appError || !application) {
-      throw new Error("Application not found");
-    }
-
-    // Use stored password or generate temporary one
-    const password = application.password_hash || (crypto.randomUUID().slice(0, 16) + "Aa1!");
-
-    // Create the user account
+    // Create the user account with temporary password
     const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
       email,
-      password,
+      password: tempPassword,
       email_confirm: true,
       user_metadata: { name, city, state },
     });

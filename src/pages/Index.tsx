@@ -11,6 +11,8 @@ import {
   Heart,
   ArrowRight,
   ChevronRight,
+  FileText,
+  Download,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -46,6 +48,26 @@ export default function Index() {
 
   return (
     <Layout>
+      {/* Annual Report Banner */}
+      <div className="bg-primary text-primary-foreground">
+        <div className="container-wide py-3">
+          <a 
+            href="/documents/informe_anual_2025.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
+          >
+            <FileText className="w-5 h-5 shrink-0" />
+            <span className="text-sm md:text-base font-medium text-center">
+              {t("lang") === "es" 
+                ? "📄 Informe Institucional y Financiero 2025 disponible para descargar" 
+                : "📄 2025 Institutional and Financial Report available for download"}
+            </span>
+            <Download className="w-4 h-4 shrink-0" />
+          </a>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-section-light to-background pt-4 pb-8 md:pt-6 md:pb-12">
         <div className="container-wide">

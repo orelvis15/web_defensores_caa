@@ -88,25 +88,36 @@ export default function GetInvolved() {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from("member_applications").insert({
-        name: formData.name.trim(),
-        email: formData.email.trim().toLowerCase(),
-        city: formData.city.trim(),
-        state: formData.state.trim(),
-        reason: formData.reason.trim(),
-        note: formData.note?.trim() || null,
-        status: "pending",
+      const { data, error } = await supabase.functions.invoke("submit-member-application", {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          city: formData.city.trim(),
+          state: formData.state.trim(),
+          reason: formData.reason.trim(),
+          note: formData.note?.trim() || null,
+        },
       });
 
       if (error) {
-        if (error.message.includes("duplicate")) {
+        throw error;
+      }
+
+      if (data?.error) {
+        if (data.code === "DUPLICATE_EMAIL") {
           toast({
             title: "Application Already Exists",
             description: "An application with this email has already been submitted.",
             variant: "destructive",
           });
+        } else if (data.code === "RATE_LIMITED") {
+          toast({
+            title: "Too Many Requests",
+            description: "Please wait before submitting another application.",
+            variant: "destructive",
+          });
         } else {
-          throw error;
+          throw new Error(data.error);
         }
       } else {
         setSubmitted(true);

@@ -27,7 +27,15 @@ import {
   Users,
   CreditCard,
   DollarSign,
+  Eye,
+  ArrowLeft,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 type ApplicationStatus = "pending" | "approved" | "denied";
 
@@ -67,6 +75,7 @@ export default function Admin() {
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [filter, setFilter] = useState<ApplicationStatus | "all">("pending");
   const [activeTab, setActiveTab] = useState("applications");
+  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -355,8 +364,19 @@ export default function Admin() {
                             <TableCell>
                               {app.city}, {app.state}
                             </TableCell>
-                            <TableCell className="max-w-xs truncate" title={app.reason}>
-                              {app.reason}
+                            <TableCell className="max-w-xs">
+                              <div className="group relative flex items-center gap-2">
+                                <span className="truncate">{app.reason}</span>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                                  onClick={() => setSelectedApplication(app)}
+                                >
+                                  <Eye className="w-4 h-4 mr-1" />
+                                  View Details
+                                </Button>
+                              </div>
                             </TableCell>
                             <TableCell>{getStatusBadge(app.status)}</TableCell>
                             <TableCell>
@@ -492,6 +512,99 @@ export default function Admin() {
           </Tabs>
         </div>
       </section>
+
+      {/* Application Details Dialog */}
+      <Dialog open={!!selectedApplication} onOpenChange={(open) => !open && setSelectedApplication(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              Application Details
+              {selectedApplication && getStatusBadge(selectedApplication.status)}
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedApplication && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground">Name</p>
+                  <p className="font-medium">{selectedApplication.name}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Email</p>
+                  <p className="font-medium">{selectedApplication.email}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">City</p>
+                  <p className="font-medium">{selectedApplication.city}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">State</p>
+                  <p className="font-medium">{selectedApplication.state}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Date Applied</p>
+                  <p className="font-medium">{new Date(selectedApplication.created_at).toLocaleDateString()}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm text-muted-foreground mb-2">Reason for Joining</p>
+                <div className="bg-muted/50 rounded-lg p-4">
+                  <p className="whitespace-pre-wrap">{selectedApplication.reason}</p>
+                </div>
+              </div>
+
+              {selectedApplication.note && (
+                <div>
+                  <p className="text-sm text-muted-foreground mb-2">Additional Notes</p>
+                  <div className="bg-muted/50 rounded-lg p-4">
+                    <p className="whitespace-pre-wrap">{selectedApplication.note}</p>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex gap-3 pt-4 border-t">
+                <Button variant="outline" onClick={() => setSelectedApplication(null)}>
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Panel
+                </Button>
+                
+                {selectedApplication.status === "pending" && (
+                  <>
+                    <Button
+                      className="bg-success hover:bg-success/90 text-success-foreground"
+                      onClick={() => {
+                        handleApprove(selectedApplication);
+                        setSelectedApplication(null);
+                      }}
+                      disabled={processingId === selectedApplication.id}
+                    >
+                      {processingId === selectedApplication.id ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Check className="w-4 h-4 mr-2" />
+                      )}
+                      Approve
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() => {
+                        handleDeny(selectedApplication);
+                        setSelectedApplication(null);
+                      }}
+                      disabled={processingId === selectedApplication.id}
+                    >
+                      <X className="w-4 h-4 mr-2" />
+                      Deny
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 }

@@ -184,6 +184,18 @@ export function HumanitarianCampaign() {
                 </p>
               </div>
             </div>
+
+            {/* Verification Badge */}
+            <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-4 border-l-4 border-primary">
+              ✓ <strong>Caso verificado y documentado</strong> por la fundación. 
+              Toda ayuda será administrada con responsabilidad y transparencia.
+            </p>
+
+            {/* Emotional closing */}
+            <p className="text-center text-sm text-muted-foreground">
+              🙏 <em>Cada donación representa un paso más hacia la estabilidad, 
+              la dignidad y la reunificación familiar.</em>
+            </p>
           </div>
 
           {/* Right - Donation Form + Details */}
@@ -289,18 +301,6 @@ export function HumanitarianCampaign() {
                 ))}
               </ul>
             </div>
-
-            {/* Verification Badge */}
-            <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-4 border-l-4 border-primary">
-              ✓ <strong>Caso verificado y documentado</strong> por la fundación. 
-              Toda ayuda será administrada con responsabilidad y transparencia.
-            </p>
-
-            {/* Emotional closing */}
-            <p className="text-center text-sm text-muted-foreground">
-              🙏 <em>Cada donación representa un paso más hacia la estabilidad, 
-              la dignidad y la reunificación familiar.</em>
-            </p>
           </div>
         </div>
       </div>

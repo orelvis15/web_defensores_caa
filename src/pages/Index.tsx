@@ -70,7 +70,7 @@ export default function Index() {
       </div>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-section-light to-background pt-4 pb-8 md:pt-6 md:pb-12">
+      <section className="bg-gradient-to-b from-section-light to-background pt-12 pb-8 md:pt-12 md:pb-12">
         <div className="container-wide">
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
             {/* Left - Text Content */}

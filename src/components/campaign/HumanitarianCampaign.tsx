@@ -127,26 +127,27 @@ export function HumanitarianCampaign() {
           La Fundación Defensores del CAA presenta este caso humanitario para solicitar apoyo solidario
         </p>
 
-        {/* Big Counter */}
-        <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-6 md:p-8 text-white text-center mb-10 max-w-2xl mx-auto shadow-2xl">
-          <p className="text-sm md:text-base uppercase tracking-wide opacity-90 mb-2">
-            Total Recaudado
-          </p>
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <DollarSign className="w-10 h-10 md:w-14 md:h-14" />
-            <span className="text-5xl md:text-7xl font-bold tracking-tight">
-              {formatCurrency(totalRaised).replace('$', '')}
-            </span>
-          </div>
-          <p className="text-sm opacity-80">
-            de {donorCount} {donorCount === 1 ? 'donante' : 'donantes'} generosos
-          </p>
-        </div>
-
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-          {/* Left - Image Carousel */}
-          <div className="relative">
-            <Carousel className="w-full max-w-lg mx-auto" opts={{ loop: true }}>
+          {/* Left - Counter + Image Carousel */}
+          <div className="space-y-6">
+            {/* Counter Card */}
+            <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl p-5 md:p-6 text-white shadow-2xl">
+              <p className="text-xs md:text-sm uppercase tracking-wide opacity-90 mb-1">
+                Total Recaudado
+              </p>
+              <div className="flex items-center gap-2 mb-1">
+                <DollarSign className="w-8 h-8 md:w-10 md:h-10" />
+                <span className="text-4xl md:text-5xl font-bold tracking-tight">
+                  {formatCurrency(totalRaised).replace('$', '')}
+                </span>
+              </div>
+              <p className="text-xs opacity-80">
+                de {donorCount} {donorCount === 1 ? 'donante' : 'donantes'} generosos
+              </p>
+            </div>
+
+            {/* Image Carousel */}
+            <Carousel className="w-full" opts={{ loop: true }}>
               <CarouselContent>
                 {images.map((image, index) => (
                   <CarouselItem key={index}>
@@ -164,12 +165,12 @@ export function HumanitarianCampaign() {
               <CarouselNext className="right-2" />
             </Carousel>
             
-            <p className="text-center text-sm text-muted-foreground mt-4 italic">
+            <p className="text-center text-sm text-muted-foreground italic">
               Beatriz, Emanuel y sus dos hijos — una familia que necesita nuestra ayuda
             </p>
 
             {/* Story below carousel on mobile, hidden on lg */}
-            <div className="mt-8 lg:hidden space-y-4">
+            <div className="lg:hidden space-y-4">
               <div className="prose prose-gray dark:prose-invert max-w-none text-sm">
                 <p className="text-foreground leading-relaxed">
                   <strong>Beatriz Mercedes Corrales Rivero</strong>, madre cubana residente en Dallas, Texas, 

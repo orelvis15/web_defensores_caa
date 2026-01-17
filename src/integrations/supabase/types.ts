@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      campaign_donations: {
+        Row: {
+          amount: number
+          campaign_id: string
+          completed_at: string | null
+          created_at: string
+          currency: string
+          email: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_session_id: string
+        }
+        Insert: {
+          amount: number
+          campaign_id?: string
+          completed_at?: string | null
+          created_at?: string
+          currency?: string
+          email: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_session_id: string
+        }
+        Update: {
+          amount?: number
+          campaign_id?: string
+          completed_at?: string | null
+          created_at?: string
+          currency?: string
+          email?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_session_id?: string
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number

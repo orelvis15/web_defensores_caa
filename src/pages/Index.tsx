@@ -49,6 +49,9 @@ export default function Index() {
 
   return (
     <Layout>
+      {/* Humanitarian Campaign - Featured */}
+      <HumanitarianCampaign />
+
       {/* Annual Report Banner */}
       <div className="bg-primary text-primary-foreground">
         <div className="container-wide py-3">
@@ -133,9 +136,6 @@ export default function Index() {
           </div>
         </div>
       </section>
-
-      {/* Humanitarian Campaign */}
-      <HumanitarianCampaign />
 
       {/* About Teaser */}
       <section className="section-padding">

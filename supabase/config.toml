@@ -11,3 +11,12 @@ verify_jwt = false
 
 [functions.submit-member-application]
 verify_jwt = false
+
+[functions.create-campaign-donation]
+verify_jwt = false
+
+[functions.verify-campaign-donation]
+verify_jwt = false
+
+[functions.get-campaign-total]
+verify_jwt = false

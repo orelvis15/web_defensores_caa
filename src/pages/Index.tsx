@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
+import { HumanitarianCampaign } from "@/components/campaign/HumanitarianCampaign";
 import { Button } from "@/components/ui/button";
 import {
   Shield,
@@ -132,6 +133,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Humanitarian Campaign */}
+      <HumanitarianCampaign />
 
       {/* About Teaser */}
       <section className="section-padding">

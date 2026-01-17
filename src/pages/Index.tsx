@@ -58,7 +58,7 @@ export default function Index() {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
           >
-            <Download className="w-5 h-5 shrink-0" />
+            
             <span className="text-sm md:text-base font-medium text-center">
               {t("lang") === "es" 
                 ? "📄 Informe Institucional y Financiero 2025 disponible para descargar" 

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
-import { HumanitarianCampaign } from "@/components/campaign/HumanitarianCampaign";
 import { PDFViewer } from "@/components/documents/PDFViewer";
+import { LetterCommentsSection } from "@/components/comments/LetterCommentsSection";
 import { Button } from "@/components/ui/button";
 import {
   Shield,
@@ -140,6 +140,9 @@ export default function Index() {
         title="Carta a Representantes del Congreso"
         description="Documento oficial de la Fundación Defensores del CAA dirigido a congresistas y senadores sobre la situación de la comunidad cubana en Estados Unidos."
       />
+
+      {/* Comments Section for Letter */}
+      <LetterCommentsSection />
 
       {/* About Teaser */}
       <section className="section-padding">

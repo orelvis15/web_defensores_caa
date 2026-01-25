@@ -133,8 +133,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Humanitarian Campaign */}
-      <HumanitarianCampaign />
 
       {/* Official Letter to Representatives */}
       <PDFViewer 

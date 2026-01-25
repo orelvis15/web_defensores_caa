@@ -29,7 +29,9 @@ import {
   DollarSign,
   Eye,
   ArrowLeft,
+  MessageSquare,
 } from "lucide-react";
+import { CommentsManagement } from "@/components/admin/CommentsManagement";
 import {
   Dialog,
   DialogContent,
@@ -306,7 +308,7 @@ export default function Admin() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsList className="grid w-full max-w-lg grid-cols-3">
               <TabsTrigger value="applications" className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 Applications
@@ -314,6 +316,10 @@ export default function Admin() {
               <TabsTrigger value="payments" className="flex items-center gap-2">
                 <CreditCard className="w-4 h-4" />
                 Payments
+              </TabsTrigger>
+              <TabsTrigger value="comments" className="flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Comments
               </TabsTrigger>
             </TabsList>
 
@@ -508,6 +514,10 @@ export default function Admin() {
                   </div>
                 )}
               </div>
+            </TabsContent>
+
+            <TabsContent value="comments">
+              <CommentsManagement />
             </TabsContent>
           </Tabs>
         </div>

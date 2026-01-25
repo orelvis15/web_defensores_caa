@@ -104,6 +104,42 @@ export type Database = {
         }
         Relationships: []
       }
+      letter_comments: {
+        Row: {
+          city: string | null
+          comment: string
+          created_at: string
+          id: string
+          name: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          state: string | null
+          status: string
+        }
+        Insert: {
+          city?: string | null
+          comment: string
+          created_at?: string
+          id?: string
+          name: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          state?: string | null
+          status?: string
+        }
+        Update: {
+          city?: string | null
+          comment?: string
+          created_at?: string
+          id?: string
+          name?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          state?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       member_applications: {
         Row: {
           city: string

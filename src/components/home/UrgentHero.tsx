@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Users, AlertTriangle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import billboardImage from "@/assets/campaign/billboard-campaign.png";
+import heroImage from "@/assets/campaign/hero-campaign.gif";
 
 export function UrgentHero() {
   const { language } = useLanguage();
@@ -17,10 +17,10 @@ export function UrgentHero() {
           <div className="order-2 lg:order-1">
             <div className="relative rounded-xl overflow-hidden shadow-2xl">
               <img 
-                src={billboardImage} 
+                src={heroImage} 
                 alt={isSpanish 
-                  ? "Valla publicitaria: Alto a las detenciones y deportaciones injustas" 
-                  : "Billboard: Stop detentions and unjust deportations"}
+                  ? "Campaña: Alto a las detenciones y deportaciones injustas" 
+                  : "Campaign: Stop detentions and unjust deportations"}
                 className="w-full h-auto"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">

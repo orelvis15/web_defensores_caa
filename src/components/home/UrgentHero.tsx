@@ -6,8 +6,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import billboardImage from "@/assets/campaign/billboard-campaign.png";
 
 export function UrgentHero() {
-  const { t } = useLanguage();
-  const isSpanish = t("lang") === "es";
+  const { language } = useLanguage();
+  const isSpanish = language === "ES";
 
   return (
     <section className="bg-gradient-to-b from-destructive/5 via-background to-background py-10 md:py-16">

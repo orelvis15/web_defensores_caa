@@ -12,14 +12,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Mail, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function Contact() {
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,13 +38,39 @@ export default function Contact() {
     { value: "other", label: t("contact.subjectOther") },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    toast({
-      title: t("toast.messageSent"),
-      description: t("toast.messageDesc"),
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-contact", {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+      });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      toast({
+        title: t("toast.messageSent"),
+        description: t("toast.messageDesc"),
+      });
+    } catch (error: any) {
+      console.error("Error submitting contact form:", error);
+      toast({
+        title: language === "ES" ? "Error" : "Error",
+        description: language === "ES" 
+          ? "No se pudo enviar el mensaje. Inténtalo de nuevo." 
+          : "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (field: string, value: string | boolean) => {
@@ -63,7 +91,10 @@ export default function Contact() {
             <p className="text-lg text-muted-foreground mb-8">
               {t("contact.successDesc")}
             </p>
-            <Button onClick={() => setIsSubmitted(false)}>
+            <Button onClick={() => {
+              setIsSubmitted(false);
+              setFormData({ name: "", email: "", subject: "", message: "", subscribe: false });
+            }}>
               {t("contact.sendAnother")}
             </Button>
           </div>
@@ -143,6 +174,8 @@ export default function Contact() {
                         onChange={(e) => handleChange("name", e.target.value)}
                         className="mt-1"
                         required
+                        maxLength={100}
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -154,6 +187,8 @@ export default function Contact() {
                         onChange={(e) => handleChange("email", e.target.value)}
                         className="mt-1"
                         required
+                        maxLength={255}
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -163,6 +198,7 @@ export default function Contact() {
                     <Select
                       value={formData.subject}
                       onValueChange={(value) => handleChange("subject", value)}
+                      disabled={isSubmitting}
                     >
                       <SelectTrigger className="mt-1">
                         <SelectValue placeholder={t("contact.selectSubject")} />
@@ -187,6 +223,8 @@ export default function Contact() {
                       rows={6}
                       placeholder={t("contact.messagePlaceholder")}
                       required
+                      maxLength={2000}
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -198,15 +236,31 @@ export default function Contact() {
                         handleChange("subscribe", checked as boolean)
                       }
                       className="mt-0.5"
+                      disabled={isSubmitting}
                     />
                     <Label htmlFor="subscribe" className="text-sm cursor-pointer">
                       {t("contact.subscribe")}
                     </Label>
                   </div>
 
-                  <Button type="submit" variant="cta" size="lg" className="w-full sm:w-auto">
-                    <Send className="w-4 h-4 mr-2" />
-                    {t("contact.send")}
+                  <Button 
+                    type="submit" 
+                    variant="cta" 
+                    size="lg" 
+                    className="w-full sm:w-auto"
+                    disabled={isSubmitting || !formData.subject}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        {language === "ES" ? "Enviando..." : "Sending..."}
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" />
+                        {t("contact.send")}
+                      </>
+                    )}
                   </Button>
                 </form>
               </div>

@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
-import { PDFViewer } from "@/components/documents/PDFViewer";
-import { LetterCommentsSection } from "@/components/comments/LetterCommentsSection";
 import { Button } from "@/components/ui/button";
 import {
   Shield,
@@ -13,7 +11,6 @@ import {
   Heart,
   ArrowRight,
   ChevronRight,
-  Download,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -133,16 +130,6 @@ export default function Index() {
         </div>
       </section>
 
-
-      {/* Official Letter to Representatives */}
-      <PDFViewer 
-        pdfUrl="/documents/carta_representantes.pdf"
-        title="Carta a Representantes del Congreso"
-        description="Documento oficial de la Fundación Defensores del CAA dirigido a congresistas y senadores sobre la situación de la comunidad cubana en Estados Unidos."
-      />
-
-      {/* Comments Section for Letter */}
-      <LetterCommentsSection />
 
       {/* About Teaser */}
       <section className="section-padding">

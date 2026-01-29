@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
+import { UrgentHero } from "@/components/home/UrgentHero";
 import { Button } from "@/components/ui/button";
 import {
   Shield,
@@ -55,7 +56,6 @@ export default function Index() {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
           >
-            
             <span className="text-sm md:text-base font-medium text-center">
               {t("lang") === "es" 
                 ? "📄 Informe Institucional y Financiero 2025 disponible para descargar" 
@@ -65,70 +65,8 @@ export default function Index() {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-section-light to-background pt-12 pb-8 md:pt-12 md:pb-12">
-        <div className="container-wide">
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-12 items-start">
-            {/* Left - Text Content */}
-            <div className="animate-slide-up order-1 lg:order-1">
-              <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
-                {t("hero.badge")}
-              </span>
-
-              <h1 className="heading-1 text-foreground mb-4">
-                {t("hero.title")}
-              </h1>
-
-              <p 
-                className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: t("hero.description") }}
-              />
-            </div>
-
-            {/* Right - Donation Widget */}
-            <div className="animate-slide-in-right lg:sticky lg:top-20 order-2 lg:order-2 lg:row-span-2">
-              <DonationWizard />
-            </div>
-
-            {/* Bullet Points - Below form on mobile */}
-            <div className="order-3 lg:order-3">
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-cta/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <BookOpen className="w-3.5 h-3.5 text-cta" />
-                  </div>
-                  <span className="text-foreground text-sm md:text-base">
-                    {t("hero.bullet1")}
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-cta/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <Eye className="w-3.5 h-3.5 text-cta" />
-                  </div>
-                  <span className="text-foreground text-sm md:text-base">
-                    {t("hero.bullet2")}
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-cta/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <Users className="w-3.5 h-3.5 text-cta" />
-                  </div>
-                  <span className="text-foreground text-sm md:text-base">
-                    {t("hero.bullet3")}
-                  </span>
-                </li>
-              </ul>
-
-              <Button asChild variant="outline" size="lg">
-                <Link to="/about">
-                  {t("hero.learnMore")}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Urgent Hero Section */}
+      <UrgentHero />
 
 
       {/* About Teaser */}

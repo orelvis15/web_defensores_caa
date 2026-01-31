@@ -136,7 +136,7 @@ export default function Contact() {
                   <div>
                     <h3 className="font-medium text-foreground">{t("contact.email")}</h3>
                     <p className="text-sm text-muted-foreground">
-                      contact@defenderscaa.org
+                      Defendiendoelajuste@gmail.com
                     </p>
                   </div>
                 </div>

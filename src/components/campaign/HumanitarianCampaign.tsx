@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Heart, Home, Scale, Baby, HandHeart, DollarSign } from "lucide-react";
+import { Heart, Home, Scale, Baby, HandHeart, DollarSign, Utensils } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,21 +13,22 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-import family1 from "@/assets/campaign/family-1.jpg";
-import family2 from "@/assets/campaign/family-2.jpg";
-import family3 from "@/assets/campaign/family-3.jpg";
-import family4 from "@/assets/campaign/family-4.jpg";
-import family5 from "@/assets/campaign/family-5.jpg";
+import aylin1 from "@/assets/campaign2/aylin-1.jpg";
+import aylin2 from "@/assets/campaign2/aylin-2.jpg";
+import aylin3 from "@/assets/campaign2/aylin-3.jpg";
+import aylin4 from "@/assets/campaign2/aylin-4.jpg";
+import aylin5 from "@/assets/campaign2/aylin-5.jpg";
+import aylin6 from "@/assets/campaign2/aylin-6.jpg";
 
-const images = [family1, family2, family3, family4, family5];
+const images = [aylin1, aylin4, aylin3, aylin5, aylin6, aylin2];
 
-const CAMPAIGN_ID = "vazquez-corrales-2025";
+const CAMPAIGN_ID = "rivera-ruiz-2026";
 
 const donationUses = [
-  { icon: Scale, text: "Honorarios legales y defensa migratoria" },
-  { icon: Home, text: "Vivienda, renta y servicios básicos" },
-  { icon: Heart, text: "Alimentación y necesidades esenciales" },
-  { icon: Baby, text: "Cuidado infantil para que Beatriz pueda trabajar" },
+  { icon: Home, text: "Vivienda y renta" },
+  { icon: Utensils, text: "Alimentación y necesidades esenciales" },
+  { icon: Baby, text: "Cuidado de su bebé de 8 meses" },
+  { icon: Heart, text: "Estabilización mientras encuentra empleo" },
 ];
 
 const suggestedAmounts = [25, 50, 100, 250];
@@ -39,18 +40,20 @@ export function HumanitarianCampaign() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  // Fetch campaign total on mount
   useEffect(() => {
     fetchCampaignTotal();
   }, []);
 
   const fetchCampaignTotal = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('get-campaign-total', {
-        method: 'GET',
-      });
-      
-      if (!error && data) {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+      const res = await fetch(
+        `${supabaseUrl}/functions/v1/get-campaign-total?campaignId=${CAMPAIGN_ID}`,
+        { headers: { 'apikey': supabaseKey } }
+      );
+      const data = await res.json();
+      if (data) {
         setTotalRaised(data.total || 0);
         setDonorCount(data.count || 0);
       }
@@ -61,7 +64,7 @@ export function HumanitarianCampaign() {
 
   const handleDonate = async () => {
     const amount = parseFloat(customAmount);
-    
+
     if (isNaN(amount) || amount < 1) {
       toast({
         title: "Cantidad inválida",
@@ -120,7 +123,7 @@ export function HumanitarianCampaign() {
 
         {/* Title */}
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-foreground mb-3 max-w-4xl mx-auto">
-          Apoyo humanitario urgente para familia cubana con padre detenido
+          Apoyo humanitario urgente para Aylin y su bebé
         </h2>
 
         <p className="text-center text-muted-foreground mb-8 max-w-3xl mx-auto">
@@ -154,7 +157,7 @@ export function HumanitarianCampaign() {
                     <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                       <img
                         src={image}
-                        alt={`Familia Vázquez Corrales - Foto ${index + 1}`}
+                        alt={`Aylin y su familia - Foto ${index + 1}`}
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -164,37 +167,36 @@ export function HumanitarianCampaign() {
               <CarouselPrevious className="left-2" />
               <CarouselNext className="right-2" />
             </Carousel>
-            
+
             <p className="text-center text-sm text-muted-foreground italic">
-              Beatriz, Emanuel y sus dos hijos — una familia que necesita nuestra ayuda
+              Aylin, Marlon y su bebé — una familia que necesita nuestra ayuda
             </p>
 
-            {/* Story below carousel on mobile, hidden on lg */}
+            {/* Story below carousel on mobile */}
             <div className="lg:hidden space-y-4">
               <div className="prose prose-gray dark:prose-invert max-w-none text-sm">
                 <p className="text-foreground leading-relaxed">
-                  <strong>Beatriz Mercedes Corrales Rivero</strong>, madre cubana residente en Dallas, Texas, 
-                  y sus dos hijos menores de 1 y 3 años, atraviesan una situación extremadamente difícil 
-                  tras la detención migratoria de su esposo <strong>Emanuel Vázquez Vasallo</strong>, 
-                  ocurrida el 13 de noviembre de 2025.
+                  <strong>Aylin Rivera Odio</strong> es una mujer migrante que atraviesa una situación 
+                  de extrema vulnerabilidad tras la detención y deportación de su esposo{" "}
+                  <strong>Marlon Ruiz</strong> a Cuba. Fue detenido durante una cita de rutina con ICE, 
+                  a pesar de no tener antecedentes penales.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  Emanuel era el único sostén económico del hogar. Su detención dejó a la familia 
-                  sin ingresos suficientes para cubrir necesidades básicas.
+                  Aylin llegó al país mediante el programa CBP One y quedó sola al cuidado de su bebé 
+                  de apenas 8 meses, completamente dependiente de ella.
                 </p>
               </div>
             </div>
 
             {/* Verification Badge */}
             <p className="text-sm text-muted-foreground bg-muted/50 rounded-lg p-4 border-l-4 border-primary">
-              ✓ <strong>Caso verificado y documentado</strong> por la fundación. 
+              ✓ <strong>Caso verificado y documentado</strong> por la fundación.
               Toda ayuda será administrada con responsabilidad y transparencia.
             </p>
 
             {/* Emotional closing */}
             <p className="text-center text-sm text-muted-foreground">
-              🙏 <em>Cada donación representa un paso más hacia la estabilidad, 
-              la dignidad y la reunificación familiar.</em>
+              🙏 <em>Tu apoyo puede marcar una diferencia real en la vida de una madre y su hija.</em>
             </p>
           </div>
 
@@ -203,17 +205,19 @@ export function HumanitarianCampaign() {
             {/* Story - only on lg */}
             <div className="hidden lg:block prose prose-gray dark:prose-invert max-w-none">
               <p className="text-foreground leading-relaxed">
-                <strong>Beatriz Mercedes Corrales Rivero</strong>, madre cubana residente en Dallas, Texas, 
-                y sus dos hijos menores de 1 y 3 años, atraviesan una situación extremadamente difícil 
-                tras la detención migratoria de su esposo <strong>Emanuel Vázquez Vasallo</strong>, 
-                ocurrida el 13 de noviembre de 2025.
+                <strong>Aylin Rivera Odio</strong> es una mujer migrante que atraviesa una situación 
+                de extrema vulnerabilidad tras la detención y deportación de su esposo{" "}
+                <strong>Marlon Ruiz</strong> a Cuba. Su esposo fue detenido durante una cita de rutina 
+                con ICE, a pesar de no tener antecedentes penales, y posteriormente deportado, dejando 
+                a Aylin sola y sin apoyo familiar en los Estados Unidos.
               </p>
 
               <p className="text-muted-foreground leading-relaxed">
-                Emanuel era el único sostén económico del hogar. Su detención dejó a la familia 
-                sin ingresos suficientes para cubrir necesidades básicas como vivienda, alimentación, 
-                servicios esenciales y gastos legales. No posee historial criminal y su caso se 
-                encuentra bajo defensa activa del Ajuste Cubano.
+                Aylin llegó al país mediante el programa CBP One, por lo que actualmente no cuenta 
+                con estatus migratorio, lo que dificulta aún más su acceso inmediato a empleo y recursos. 
+                Quedó sola al cuidado de su bebé, una niña de apenas 8 meses de nacida, completamente 
+                dependiente de ella. Necesita apoyo urgente para cubrir sus necesidades básicas más 
+                esenciales como techo y alimentación, mientras logra estabilizarse y encontrar un trabajo.
               </p>
             </div>
 
@@ -264,10 +268,10 @@ export function HumanitarianCampaign() {
               </div>
 
               {/* Donate Button */}
-              <Button 
+              <Button
                 onClick={handleDonate}
                 disabled={isLoading}
-                size="lg" 
+                size="lg"
                 className="w-full bg-red-600 hover:bg-red-700 text-white text-lg py-6"
               >
                 {isLoading ? (

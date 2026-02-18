@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
 import { UrgentHero } from "@/components/home/UrgentHero";
+import { HumanitarianCampaign } from "@/components/campaign/HumanitarianCampaign";
 import { Button } from "@/components/ui/button";
 import {
   Shield,
@@ -67,6 +68,9 @@ export default function Index() {
 
       {/* Urgent Hero Section */}
       <UrgentHero />
+
+      {/* Humanitarian Campaign */}
+      <HumanitarianCampaign />
 
       {/* Original Hero Section with Donation */}
       <section className="bg-gradient-to-b from-section-light to-background pt-12 pb-8 md:pt-12 md:pb-12">

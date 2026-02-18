@@ -91,7 +91,7 @@ serve(async (req) => {
             currency: "usd",
             unit_amount: amountInCents,
             product_data: {
-              name: `Donación Humanitaria - Familia Vázquez Corrales`,
+              name: `Donación Humanitaria - Campaña ${campaignId}`,
               description: `Donación de $${amount} para apoyo humanitario urgente`,
             },
           },

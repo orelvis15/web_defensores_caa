@@ -175,14 +175,27 @@ export function HumanitarianCampaign() {
             {/* Story below carousel on mobile */}
             <div className="lg:hidden space-y-4">
               <div className="prose prose-gray dark:prose-invert max-w-none text-sm">
-              <p className="text-foreground leading-relaxed">
+                <p className="text-foreground leading-relaxed">
                   Aylin es una mujer migrante que atraviesa una situación de extrema vulnerabilidad 
-                  tras la detención y deportación de su esposo a Cuba. Fue detenido durante una cita 
-                  de rutina con ICE, a pesar de no tener antecedentes penales.
+                  tras la detención y deportación de su esposo a Cuba. Su esposo fue detenido durante 
+                  una cita de rutina con ICE, a pesar de no tener antecedentes penales, y posteriormente 
+                  deportado, dejando a Aylin sola y sin apoyo familiar en los Estados Unidos.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  Quedó sola al cuidado de su bebé de apenas 8 meses, completamente dependiente de ella. 
-                  Necesita apoyo urgente para cubrir sus necesidades básicas más esenciales.
+                  Aylin llegó al país mediante el programa CBP One, por lo que actualmente no cuenta 
+                  con estatus migratorio, lo que dificulta aún más su acceso inmediato a empleo y recursos. 
+                  Como resultado de esta situación, quedó sola al cuidado de su bebé, una niña de apenas 
+                  8 meses de nacida, completamente dependiente de ella.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  En este momento, Aylin necesita apoyo urgente para poder cubrir sus necesidades básicas 
+                  más esenciales, como techo y alimentación, mientras logra estabilizarse y encontrar un 
+                  trabajo que le permita sustentar dignamente a su hija.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  La Fundación hace un llamado solidario a la comunidad para apoyar a Aylin en este 
+                  momento crítico. Cada contribución ayudará a garantizar un entorno seguro y digno 
+                  para ella y su bebé durante esta etapa de transición y necesidad.
                 </p>
               </div>
             </div>

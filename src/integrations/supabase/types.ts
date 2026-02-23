@@ -95,6 +95,60 @@ export type Database = {
         }
         Relationships: []
       }
+      course_purchases: {
+        Row: {
+          amount: number
+          city: string | null
+          completed_at: string | null
+          course_id: string
+          created_at: string
+          currency: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          phone: string | null
+          state: string | null
+          status: string
+          stripe_customer_id: string | null
+          stripe_session_id: string
+        }
+        Insert: {
+          amount?: number
+          city?: string | null
+          completed_at?: string | null
+          course_id?: string
+          created_at?: string
+          currency?: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          phone?: string | null
+          state?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_session_id: string
+        }
+        Update: {
+          amount?: number
+          city?: string | null
+          completed_at?: string | null
+          course_id?: string
+          created_at?: string
+          currency?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          phone?: string | null
+          state?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_session_id?: string
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number

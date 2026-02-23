@@ -31,9 +31,11 @@ import {
   ArrowLeft,
   MessageSquare,
   Mail,
+  GraduationCap,
 } from "lucide-react";
 import { CommentsManagement } from "@/components/admin/CommentsManagement";
 import { ContactManagement } from "@/components/admin/ContactManagement";
+import { CoursePurchasesManagement } from "@/components/admin/CoursePurchasesManagement";
 import {
   Dialog,
   DialogContent,
@@ -310,7 +312,7 @@ export default function Admin() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-2xl grid-cols-4">
+            <TabsList className="grid w-full max-w-3xl grid-cols-5">
               <TabsTrigger value="applications" className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 Applications
@@ -318,6 +320,10 @@ export default function Admin() {
               <TabsTrigger value="payments" className="flex items-center gap-2">
                 <CreditCard className="w-4 h-4" />
                 Payments
+              </TabsTrigger>
+              <TabsTrigger value="courses" className="flex items-center gap-2">
+                <GraduationCap className="w-4 h-4" />
+                Courses
               </TabsTrigger>
               <TabsTrigger value="contact" className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
@@ -520,6 +526,10 @@ export default function Admin() {
                   </div>
                 )}
               </div>
+            </TabsContent>
+
+            <TabsContent value="courses">
+              <CoursePurchasesManagement />
             </TabsContent>
 
             <TabsContent value="contact">

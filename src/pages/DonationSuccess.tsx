@@ -13,14 +13,18 @@ export default function DonationSuccess() {
   
   const sessionId = searchParams.get("session_id");
   const campaignId = searchParams.get("campaign");
+  const purchaseType = searchParams.get("type");
   const isCampaignDonation = !!campaignId;
+  const isCoursePurchase = purchaseType === "course";
 
   useEffect(() => {
-    // If this is a campaign donation, verify and update the status
     if (sessionId && isCampaignDonation) {
       verifyCampaignDonation();
     }
-  }, [sessionId, isCampaignDonation]);
+    if (sessionId && isCoursePurchase) {
+      verifyCoursePurchase();
+    }
+  }, [sessionId, isCampaignDonation, isCoursePurchase]);
 
   const verifyCampaignDonation = async () => {
     setVerifying(true);
@@ -28,10 +32,7 @@ export default function DonationSuccess() {
       const { data, error } = await supabase.functions.invoke('verify-campaign-donation', {
         body: { sessionId },
       });
-      
-      if (!error && data?.success) {
-        setVerified(true);
-      }
+      if (!error && data?.success) setVerified(true);
     } catch (err) {
       console.error("Verification error:", err);
     } finally {
@@ -39,10 +40,26 @@ export default function DonationSuccess() {
     }
   };
 
+  const verifyCoursePurchase = async () => {
+    setVerifying(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('verify-course-purchase', {
+        body: { sessionId },
+      });
+      if (!error && data?.success) setVerified(true);
+    } catch (err) {
+      console.error("Course verification error:", err);
+    } finally {
+      setVerifying(false);
+    }
+  };
+
   const handleShare = () => {
-    const shareText = isCampaignDonation 
-      ? "Acabo de donar para ayudar a una familia cubana en necesidad. ¡Únete a esta causa humanitaria!"
-      : t("donation.shareText");
+    const shareText = isCoursePurchase
+      ? "Me inscribí en el curso Herramientas de Libertad. ¡Aprende sobre Habeas Corpus Pro Se!"
+      : isCampaignDonation 
+        ? "Acabo de donar para ayudar a una familia cubana en necesidad. ¡Únete a esta causa humanitaria!"
+        : t("donation.shareText");
     
     if (navigator.share) {
       navigator.share({
@@ -58,8 +75,10 @@ export default function DonationSuccess() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-section-light to-background flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-card rounded-xl shadow-lg border p-8 text-center animate-fade-in">
-        <div className={`w-20 h-20 ${isCampaignDonation ? 'bg-red-100 dark:bg-red-900/30' : 'bg-success/10'} rounded-full flex items-center justify-center mx-auto mb-6`}>
-          {isCampaignDonation ? (
+        <div className={`w-20 h-20 ${isCoursePurchase ? 'bg-primary/10' : isCampaignDonation ? 'bg-red-100 dark:bg-red-900/30' : 'bg-success/10'} rounded-full flex items-center justify-center mx-auto mb-6`}>
+          {isCoursePurchase ? (
+            <Check className="w-10 h-10 text-primary" />
+          ) : isCampaignDonation ? (
             <Heart className="w-10 h-10 text-red-600" />
           ) : (
             <Check className="w-10 h-10 text-success" />
@@ -67,26 +86,30 @@ export default function DonationSuccess() {
         </div>
         
         <h1 className="heading-2 text-foreground mb-4">
-          {isCampaignDonation ? "¡Gracias por tu generosidad!" : t("donation.thankYou")}
+          {isCoursePurchase
+            ? "¡Inscripción exitosa!"
+            : isCampaignDonation ? "¡Gracias por tu generosidad!" : t("donation.thankYou")}
         </h1>
         
         <p className="text-muted-foreground mb-6">
-          {isCampaignDonation 
-            ? "Tu donación para la familia Vázquez Corrales ha sido recibida exitosamente. Tu apoyo marca una diferencia real en sus vidas."
-            : t("donation.successMessage")}
+          {isCoursePurchase
+            ? "Tu inscripción al curso Herramientas de Libertad ha sido confirmada. Recibirás los detalles del curso por email dentro de las próximas 24 horas."
+            : isCampaignDonation 
+              ? "Tu donación para la familia Vázquez Corrales ha sido recibida exitosamente. Tu apoyo marca una diferencia real en sus vidas."
+              : t("donation.successMessage")}
         </p>
 
-        {isCampaignDonation && (
-          <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4 mb-6 text-sm text-muted-foreground">
+        {(isCampaignDonation || isCoursePurchase) && (
+          <div className={`${isCoursePurchase ? 'bg-primary/5' : 'bg-red-50 dark:bg-red-900/20'} rounded-lg p-4 mb-6 text-sm text-muted-foreground`}>
             {verifying ? (
-              <span>Verificando donación...</span>
+              <span>{isCoursePurchase ? "Verificando inscripción..." : "Verificando donación..."}</span>
             ) : verified ? (
               <span className="text-green-600 dark:text-green-400 flex items-center justify-center gap-2">
                 <Check className="w-4 h-4" />
-                Donación verificada y registrada
+                {isCoursePurchase ? "Inscripción verificada y registrada" : "Donación verificada y registrada"}
               </span>
             ) : (
-              <span>Tu donación será registrada en breve</span>
+              <span>{isCoursePurchase ? "Tu inscripción será registrada en breve" : "Tu donación será registrada en breve"}</span>
             )}
           </div>
         )}

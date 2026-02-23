@@ -48,6 +48,22 @@ export default function Index() {
 
   return (
     <Layout>
+      {/* Course Banner */}
+      <div className="bg-gradient-to-r from-cta to-cta/80 text-cta-foreground">
+        <div className="container-wide py-3">
+          <Link
+            to="/curso"
+            className="flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
+          >
+            <span className="text-sm md:text-base font-bold text-center">
+              {t("lang") === "es"
+                ? "🎓 Nuevo Curso: Herramientas de Libertad — Habeas Corpus Pro Se — ¡Inscríbete por $50!"
+                : "🎓 New Course: Tools of Freedom — Habeas Corpus Pro Se — Register for $50!"}
+            </span>
+          </Link>
+        </div>
+      </div>
+
       {/* Annual Report Banner */}
       <div className="bg-primary text-primary-foreground">
         <div className="container-wide py-3">

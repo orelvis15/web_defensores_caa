@@ -95,7 +95,7 @@ export default function DonationSuccess() {
           {isCoursePurchase
             ? "Tu inscripción al curso Herramientas de Libertad ha sido confirmada. Recibirás los detalles del curso por email dentro de las próximas 24 horas."
             : isCampaignDonation 
-              ? "Tu donación para la familia Vázquez Corrales ha sido recibida exitosamente. Tu apoyo marca una diferencia real en sus vidas."
+              ? "Tu donación para la familia Rivera-Ruiz ha sido recibida exitosamente. Tu apoyo marca una diferencia real en sus vidas."
               : t("donation.successMessage")}
         </p>
 

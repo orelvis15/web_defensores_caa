@@ -23,12 +23,6 @@ export default function Index() {
 
   return (
     <Layout>
-      {/* Urgent Hero Section */}
-      <UrgentHero />
-
-      {/* Humanitarian Campaign */}
-      <HumanitarianCampaign />
-
       {/* Original Hero Section with Donation */}
       <section className="bg-gradient-to-b from-section-light to-background pt-12 pb-8 md:pt-12 md:pb-12">
         <div className="container-wide">
@@ -93,6 +87,12 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Humanitarian Campaign */}
+      <HumanitarianCampaign />
+
+      {/* Urgent Hero Section */}
+      <UrgentHero />
 
       {/* About Teaser */}
       <section className="section-padding">

@@ -64,6 +64,15 @@ const translations: Record<string, Record<Language, string>> = {
   "blog.title": { EN: "Latest from our blog", ES: "Lo último de nuestro blog" },
   "blog.description": { EN: "News, guides, and stories from our community.", ES: "Noticias, guías e historias de nuestra comunidad." },
   "blog.visitBlog": { EN: "Visit the Blog", ES: "Visitar el Blog" },
+
+  // Public Documents Section
+  "docs.title": { EN: "Public Documents", ES: "Documentos Públicos" },
+  "docs.description": { EN: "Access our reports and resources available to the public.", ES: "Accede a nuestros informes, reportes y recursos disponibles para la comunidad." },
+  "docs.viewAll": { EN: "View all resources", ES: "Ver todos los recursos" },
+  "docs.report2025.tag": { EN: "Institutional Report", ES: "Informe Institucional" },
+  "docs.report2025.title": { EN: "2025 Institutional and Financial Report", ES: "Informe Institucional y Financiero 2025" },
+  "docs.report2025.desc": { EN: "Complete report of activities, financial transparency, and organizational achievements during 2025.", ES: "Informe completo de actividades, transparencia financiera y logros de la organización durante el año 2025." },
+  "docs.download": { EN: "Download PDF", ES: "Descargar PDF" },
   "blog.readMore": { EN: "Read more", ES: "Leer más" },
   "blog.backToBlog": { EN: "Back to blog", ES: "Volver al blog" },
   "blog.postNotFound": { EN: "Post not found", ES: "Publicación no encontrada" },

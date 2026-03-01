@@ -13,75 +13,16 @@ import {
   Heart,
   ArrowRight,
   ChevronRight,
+  FileText,
+  Download,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Index() {
   const { t } = useLanguage();
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: t("blog.post1.title"),
-      excerpt: t("blog.post1.excerpt"),
-      date: "December 5, 2024",
-      tag: t("blog.post1.tag"),
-      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&h=250&fit=crop",
-    },
-    {
-      id: 2,
-      title: t("blog.post2.title"),
-      excerpt: t("blog.post2.excerpt"),
-      date: "December 1, 2024",
-      tag: t("blog.post2.tag"),
-      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=400&h=250&fit=crop",
-    },
-    {
-      id: 3,
-      title: t("blog.post3.title"),
-      excerpt: t("blog.post3.excerpt"),
-      date: "November 28, 2024",
-      tag: t("blog.post3.tag"),
-      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&h=250&fit=crop",
-    },
-  ];
-
   return (
     <Layout>
-      {/* Course Banner */}
-      <div className="bg-gradient-to-r from-cta to-cta/80 text-cta-foreground">
-        <div className="container-wide py-3">
-          <Link
-            to="/curso"
-            className="flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
-          >
-            <span className="text-sm md:text-base font-bold text-center">
-              {t("lang") === "es"
-                ? "🎓 Nuevo Curso: Herramientas de Libertad — Habeas Corpus Pro Se — ¡Inscríbete por $50!"
-                : "🎓 New Course: Tools of Freedom — Habeas Corpus Pro Se — Register for $50!"}
-            </span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Annual Report Banner */}
-      <div className="bg-primary text-primary-foreground">
-        <div className="container-wide py-3">
-          <a 
-            href="/documents/informe_anual_2025.pdf" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 hover:opacity-90 transition-opacity"
-          >
-            <span className="text-sm md:text-base font-medium text-center">
-              {t("lang") === "es" 
-                ? "📄 Informe Institucional y Financiero 2025 disponible para descargar" 
-                : "📄 2025 Institutional and Financial Report available for download"}
-            </span>
-          </a>
-        </div>
-      </div>
-
       {/* Urgent Hero Section */}
       <UrgentHero />
 
@@ -317,51 +258,46 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Blog Preview */}
+      {/* Public Documents */}
       <section className="section-padding bg-section-alt">
         <div className="container-wide">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
             <div>
-              <h2 className="heading-2 text-foreground mb-2">{t("blog.title")}</h2>
+              <h2 className="heading-2 text-foreground mb-2">
+                {t("docs.title")}
+              </h2>
               <p className="text-muted-foreground">
-                {t("blog.description")}
+                {t("docs.description")}
               </p>
             </div>
-            <Button asChild variant="outline">
-              <Link to="/blog">{t("blog.visitBlog")}</Link>
-            </Button>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {blogPosts.map((post) => (
-              <Link
-                key={post.id}
-                to={`/blog/${post.id}`}
-                className="bg-card border rounded-xl overflow-hidden hover:shadow-lg transition-shadow group"
+            {/* 2025 Annual Report */}
+            <div className="bg-card border rounded-xl p-6 hover:shadow-lg transition-shadow flex flex-col">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <FileText className="w-6 h-6 text-primary" />
+              </div>
+              <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded w-fit mb-3">
+                {t("docs.report2025.tag")}
+              </span>
+              <h3 className="font-semibold text-foreground mb-2">
+                {t("docs.report2025.title")}
+              </h3>
+              <p className="text-sm text-muted-foreground mb-6 flex-1">
+                {t("docs.report2025.desc")}
+              </p>
+              <a
+                href="/documents/informe_anual_2025.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <div className="aspect-video overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded">
-                      {post.tag}
-                    </span>
-                    <span className="text-xs text-muted-foreground">{post.date}</span>
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                </div>
-              </Link>
-            ))}
+                <Button variant="outline" className="w-full gap-2">
+                  <Download className="w-4 h-4" />
+                  {t("docs.download")}
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
       </section>

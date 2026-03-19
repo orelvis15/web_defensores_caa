@@ -89,7 +89,7 @@ export default function Index() {
       </section>
 
       {/* Humanitarian Campaign */}
-      <HumanitarianCampaign />
+      {/* <HumanitarianCampaign /> */}
 
       {/* Urgent Hero Section */}
       <UrgentHero />

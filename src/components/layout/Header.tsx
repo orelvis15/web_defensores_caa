@@ -19,7 +19,7 @@ export function Header() {
     { href: "/about", label: t("nav.about"), icon: Info },
     { href: "/our-work", label: t("nav.ourWork"), icon: Briefcase },
     { href: "/get-involved", label: t("nav.getInvolved"), icon: HandHeart },
-    { href: "https://tienda.defensorescaa.org/", label: language === "ES" ? "Tienda" : "Store", icon: ShoppingBag, external: true },
+    { href: "https://frontend-topaz-ten-91.vercel.app", label: language === "ES" ? "Tienda" : "Store", icon: ShoppingBag, external: true },
     { href: "/contact", label: t("nav.contact"), icon: Phone },
   ];
 

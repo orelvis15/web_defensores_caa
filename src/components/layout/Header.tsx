@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogIn, User, ShoppingBag } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -16,14 +15,12 @@ export function Header() {
   const location = useLocation();
 
   const navLinks = [
-    { href: "/", label: t("nav.home") },
-    { href: "/about", label: t("nav.about") },
-    { href: "/our-work", label: t("nav.ourWork") },
-    { href: "/blog", label: t("nav.blog") },
-    { href: "/resources", label: t("nav.resources") },
-    { href: "/get-involved", label: t("nav.getInvolved") },
-    { href: "/store", label: language === "ES" ? "Tienda" : "Store", comingSoon: true },
-    { href: "/contact", label: t("nav.contact") },
+    { href: "/", label: t("nav.home"), icon: Home },
+    { href: "/about", label: t("nav.about"), icon: Info },
+    { href: "/our-work", label: t("nav.ourWork"), icon: Briefcase },
+    { href: "/get-involved", label: t("nav.getInvolved"), icon: HandHeart },
+    { href: "https://tienda.defensorescaa.org/", label: language === "ES" ? "Tienda" : "Store", icon: ShoppingBag, external: true },
+    { href: "/contact", label: t("nav.contact"), icon: Phone },
   ];
 
   useEffect(() => {
@@ -56,11 +53,11 @@ export function Header() {
               alt="Defenders of the CAA and Freedom, Inc." 
               className="w-10 h-10 md:w-12 md:h-12 object-contain"
             />
-            <div className="hidden sm:block">
-              <span className="text-sm md:text-base font-bold text-primary leading-tight block">
+            <div className="block">
+              <span className="text-xs sm:text-sm md:text-base font-bold text-primary leading-tight block">
                 Defenders of the CAA
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs sm:text-sm md:text-base font-bold text-primary leading-tight block">
                 and Freedom, Inc.
               </span>
             </div>
@@ -68,26 +65,35 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
-                  location.pathname === link.href
-                    ? "text-primary bg-primary/5"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                )}
-              >
-                {link.comingSoon && <ShoppingBag className="w-3.5 h-3.5" />}
-                {link.label}
-                {link.comingSoon && (
-                  <Badge variant="outline" className="ml-1 text-[10px] px-1.5 py-0 h-4 border-amber-500 text-amber-600 bg-amber-50">
-                    Soon
-                  </Badge>
-                )}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return link.external ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1 text-muted-foreground hover:text-foreground hover:bg-muted"
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={cn(
+                    "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
+                    location.pathname === link.href
+                      ? "text-primary bg-primary/5"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  )}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right side actions */}
@@ -117,11 +123,6 @@ export function Header() {
                 ES
               </button>
             </div>
-
-            {/* Donate Button */}
-            <Button asChild variant="cta" size="sm" className="hidden sm:flex">
-              <Link to="/take-action">{t("nav.donate")}</Link>
-            </Button>
 
             {/* Login/Dashboard Button */}
             {user ? (
@@ -159,30 +160,36 @@ export function Header() {
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t bg-background pb-4 animate-fade-in">
             <div className="flex flex-col gap-1 pt-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className={cn(
-                    "px-4 py-3 text-base font-medium rounded-md transition-colors flex items-center gap-2",
-                    location.pathname === link.href
-                      ? "text-primary bg-primary/5"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                  )}
-                >
-                  {link.comingSoon && <ShoppingBag className="w-4 h-4" />}
-                  {link.label}
-                  {link.comingSoon && (
-                    <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-amber-500 text-amber-600 bg-amber-50">
-                      Soon
-                    </Badge>
-                  )}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                return link.external ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-3 text-base font-medium rounded-md transition-colors flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-muted"
+                  >
+                    <Icon className="w-4 h-4" />
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={cn(
+                      "px-4 py-3 text-base font-medium rounded-md transition-colors flex items-center gap-2",
+                      location.pathname === link.href
+                        ? "text-primary bg-primary/5"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    )}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {link.label}
+                  </Link>
+                );
+              })}
               <div className="px-4 pt-4 flex flex-col gap-2">
-                <Button asChild variant="cta" className="w-full">
-                  <Link to="/take-action">{t("nav.donate")}</Link>
-                </Button>
                 {user ? (
                   <Button asChild variant="outline" className="w-full">
                     <Link to={isAdmin ? "/admin" : "/dashboard"}>

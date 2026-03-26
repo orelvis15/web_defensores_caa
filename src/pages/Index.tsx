@@ -210,54 +210,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Impact Stats */}
-      <section className="section-padding">
-        <div className="container-wide">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="heading-2 text-foreground mb-4">{t("impact.title")}</h2>
-            <p className="text-lg text-muted-foreground">
-              {t("impact.description")}
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center p-6 rounded-xl bg-primary/5">
-              <div className="text-4xl font-bold text-primary mb-2">50+</div>
-              <p className="text-sm text-muted-foreground">
-                {t("impact.stat1")}
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-xl bg-cta/5">
-              <div className="text-4xl font-bold text-cta mb-2">200+</div>
-              <p className="text-sm text-muted-foreground">
-                {t("impact.stat2")}
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-xl bg-primary/5">
-              <div className="text-4xl font-bold text-primary mb-2">25+</div>
-              <p className="text-sm text-muted-foreground">
-                {t("impact.stat3")}
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-xl bg-cta/5">
-              <div className="text-4xl font-bold text-cta mb-2">15+</div>
-              <p className="text-sm text-muted-foreground">
-                {t("impact.stat4")}
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center mt-10">
-            <Button asChild variant="link" className="text-primary">
-              <Link to="/resources">
-                {t("impact.transparency")}
-                <ChevronRight className="w-4 h-4 ml-1" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
       {/* Public Documents */}
       <section className="section-padding bg-section-alt">
         <div className="container-wide">

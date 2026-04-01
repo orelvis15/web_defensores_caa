@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
 import { UrgentHero } from "@/components/home/UrgentHero";
+import { CaravanaLibertad } from "@/components/home/CaravanaLibertad";
 import { HumanitarianCampaign } from "@/components/campaign/HumanitarianCampaign";
 import { Button } from "@/components/ui/button";
 import {
@@ -93,6 +94,9 @@ export default function Index() {
 
       {/* Urgent Hero Section */}
       <UrgentHero />
+
+      {/* Caravana por la Libertad - Tampa */}
+      <CaravanaLibertad />
 
       {/* About Teaser */}
       <section className="section-padding">

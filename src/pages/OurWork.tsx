@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Scale,
   Eye,
+  Download,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -284,7 +285,7 @@ export default function OurWork() {
               {t("ourWork.transparency.desc")}
             </p>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               <div className="bg-card border rounded-xl p-4 text-center">
                 <Eye className="w-6 h-6 text-primary mx-auto mb-2" />
                 <p className="text-sm font-medium text-foreground">
@@ -311,10 +312,32 @@ export default function OurWork() {
               </div>
             </div>
 
-            <div className="mt-8">
-              <Button asChild variant="outline">
-                <Link to="/resources">{t("ourWork.transparency.view")}</Link>
-              </Button>
+            {/* Reports */}
+            <div className="max-w-sm mx-auto">
+              <div className="bg-card border rounded-xl p-6 hover:shadow-lg transition-shadow flex flex-col text-left">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <FileText className="w-6 h-6 text-primary" />
+                </div>
+                <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded w-fit mb-3">
+                  {t("docs.report2025.tag")}
+                </span>
+                <h3 className="font-semibold text-foreground mb-2">
+                  {t("docs.report2025.title")}
+                </h3>
+                <p className="text-sm text-muted-foreground mb-6 flex-1">
+                  {t("docs.report2025.desc")}
+                </p>
+                <a
+                  href="/documents/informe_anual_2025.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="outline" className="w-full gap-2">
+                    <Download className="w-4 h-4" />
+                    {t("docs.download")}
+                  </Button>
+                </a>
+              </div>
             </div>
           </div>
         </div>

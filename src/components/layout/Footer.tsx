@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Footer() {
@@ -8,9 +8,9 @@ export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container-wide py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center">
                 <svg
@@ -41,69 +41,30 @@ export function Footer() {
               {t("footer.desc")}
             </p>
             <div className="flex flex-col gap-2 text-sm opacity-80">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                <span>{t("contact.florida")}</span>
-              </div>
-              <div className="flex items-center gap-2">
+              <a
+                href="https://maps.google.com/?q=7901+4TH+ST+N+SUITE+30525,+SAINT+PETERSBURG,+FL+33702"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2 hover:opacity-100 transition-opacity"
+              >
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
+                <span>7901 4TH ST N SUITE 30525, SAINT PETERSBURG, FL 33702</span>
+              </a>
+              <a
+                href="mailto:info@defensorescaa.org"
+                className="flex items-center gap-2 hover:opacity-100 transition-opacity"
+              >
                 <Mail className="w-4 h-4" />
-                <span>defensorescaa@gmail.com</span>
-              </div>
+                <span>info@defensorescaa.org</span>
+              </a>
+              <a
+                href="tel:8139990195"
+                className="flex items-center gap-2 hover:opacity-100 transition-opacity"
+              >
+                <Phone className="w-4 h-4" />
+                <span>(813) 999-0195</span>
+              </a>
             </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4">{t("footer.quickLinks")}</h4>
-            <ul className="space-y-2 text-sm opacity-80">
-              <li>
-                <Link to="/about" className="hover:opacity-100 transition-opacity">
-                  {t("footer.aboutUs")}
-                </Link>
-              </li>
-              <li>
-                <Link to="/our-work" className="hover:opacity-100 transition-opacity">
-                  {t("footer.ourWork")}
-                </Link>
-              </li>
-              <li>
-                <Link to="/blog" className="hover:opacity-100 transition-opacity">
-                  {t("footer.blogNews")}
-                </Link>
-              </li>
-              <li>
-                <Link to="/resources" className="hover:opacity-100 transition-opacity">
-                  {t("footer.resources")}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Get Involved */}
-          <div>
-            <h4 className="font-semibold mb-4">{t("footer.getInvolved")}</h4>
-            <ul className="space-y-2 text-sm opacity-80">
-              <li>
-                <Link to="/take-action" className="hover:opacity-100 transition-opacity">
-                  {t("footer.donate")}
-                </Link>
-              </li>
-              <li>
-                <Link to="/get-involved" className="hover:opacity-100 transition-opacity">
-                  {t("footer.becomeMember")}
-                </Link>
-              </li>
-              <li>
-                <Link to="/get-involved" className="hover:opacity-100 transition-opacity">
-                  {t("footer.volunteer")}
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:opacity-100 transition-opacity">
-                  {t("footer.contactUs")}
-                </Link>
-              </li>
-            </ul>
           </div>
 
           {/* Legal */}

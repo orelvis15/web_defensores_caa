@@ -10,8 +10,6 @@ import {
   Users,
   BookOpen,
   ArrowRight,
-  FileText,
-  Download,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -120,48 +118,6 @@ export default function Index() {
 
       {/* Paquetes de ayuda humanitaria */}
       <PaquetesAyuda />
-
-      {/* Public Documents */}
-      <section className="section-padding bg-section-alt">
-        <div className="container-wide">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="heading-2 text-foreground mb-3">
-              {t("docs.title")}
-            </h2>
-            <p className="text-muted-foreground">
-              {t("docs.description")}
-            </p>
-          </div>
-
-          <div className="max-w-sm mx-auto">
-            {/* 2025 Annual Report */}
-            <div className="bg-card border rounded-xl p-6 hover:shadow-lg transition-shadow flex flex-col">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                <FileText className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded w-fit mb-3">
-                {t("docs.report2025.tag")}
-              </span>
-              <h3 className="font-semibold text-foreground mb-2">
-                {t("docs.report2025.title")}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-6 flex-1">
-                {t("docs.report2025.desc")}
-              </p>
-              <a
-                href="/documents/informe_anual_2025.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button variant="outline" className="w-full gap-2">
-                  <Download className="w-4 h-4" />
-                  {t("docs.download")}
-                </Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Strip */}
       <section className="bg-primary text-primary-foreground py-16">

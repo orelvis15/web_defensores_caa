@@ -8,9 +8,7 @@ import {
   Scale,
   Users,
   FileText,
-  Building,
   MapPin,
-  ChevronRight,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -61,34 +59,13 @@ export default function About() {
                 <p>{t("about.whoWeAre.p3")}</p>
               </div>
             </div>
-            <div className="bg-section-light rounded-2xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Building className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">{t("about.legalStatus")}</h3>
-                  <p className="text-sm text-muted-foreground">{t("about.floridaNonProfit")}</p>
-                </div>
-              </div>
-              <ul className="space-y-3 text-sm">
-                <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>{t("about.legal1")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>{t("about.legal2")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>{t("about.legal3")}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ChevronRight className="w-4 h-4 text-primary mt-0.5" />
-                  <span>{t("about.legal4")}</span>
-                </li>
-              </ul>
+            {/* TODO: Replace src with the actual photo path/URL */}
+            <div className="rounded-2xl overflow-hidden">
+              <img
+                src=""
+                alt="Defensores de la CAA y la Libertad"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>

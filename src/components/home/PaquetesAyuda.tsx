@@ -9,8 +9,10 @@ import pkg2 from "@/assets/package/package_02.jpeg";
 import pkg3 from "@/assets/package/package_03.jpeg";
 import pkg4 from "@/assets/package/package_04.jpeg";
 import pkg5 from "@/assets/package/package_05.jpeg";
+import pkg6 from "@/assets/package/package_06.jpeg";
+import pkg7 from "@/assets/package/package_07.jpeg";
 
-const slides = [pkg1, pkg2, pkg3, pkg4, pkg5];
+const slides = [pkg1, pkg2, pkg3, pkg4, pkg5, pkg6, pkg7];
 
 export function PaquetesAyuda() {
   const { language } = useLanguage();
@@ -46,8 +48,8 @@ export function PaquetesAyuda() {
                       src={src}
                       alt={
                         isSpanish
-                          ? `Paquete de ayuda - imagen ${i + 1}`
-                          : `Aid package - image ${i + 1}`
+                          ? `Módulo de ayuda - imagen ${i + 1}`
+                          : `Aid module - image ${i + 1}`
                       }
                       className="absolute inset-0 w-full h-full object-contain"
                     />
@@ -108,8 +110,8 @@ export function PaquetesAyuda() {
 
               <p className="text-muted-foreground text-base leading-relaxed mb-5">
                 {isSpanish
-                  ? "Cada paquete que entregamos representa a una familia que no está sola. Mientras el proveedor está detenido por ICE, Defensores del CAA lleva alimentos, artículos de primera necesidad y un mensaje claro: la comunidad los respalda."
-                  : "Every package we deliver represents a family that is not alone. While their provider is detained by ICE, Defensores del CAA brings food, essential goods, and a clear message: the community stands with them."}
+                  ? "Cada módulo que entregamos representa a una familia que no está sola. Mientras el proveedor está detenido por ICE, Defensores del CAA lleva alimentos, artículos de primera necesidad y un mensaje claro: la comunidad los respalda."
+                  : "Every module we deliver represents a family that is not alone. While their provider is detained by ICE, Defensores del CAA brings food, essential goods, and a clear message: the community stands with them."}
               </p>
 
               <p className="text-muted-foreground text-base leading-relaxed mb-8">
@@ -126,7 +128,7 @@ export function PaquetesAyuda() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">
-                      {isSpanish ? "Paquetes de primera necesidad" : "Essential supply packages"}
+                      {isSpanish ? "Módulos de primera necesidad" : "Essential supply modules"}
                     </p>
                     <p className="text-sm text-muted-foreground">
                       {isSpanish
@@ -192,7 +194,7 @@ export function PaquetesAyuda() {
           >
             <img
               src={slides[current]}
-              alt={isSpanish ? "Paquete de ayuda" : "Aid package"}
+              alt={isSpanish ? "Módulo de ayuda" : "Aid module"}
               className="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl"
             />
             <button

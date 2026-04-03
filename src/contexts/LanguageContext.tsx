@@ -89,6 +89,11 @@ const translations: Record<string, Record<Language, string>> = {
   "blog.post3.excerpt": { EN: "Meet the volunteers across the United States who share verified information and support our community.", ES: "Conoce a los voluntarios en Estados Unidos que comparten información verificada y apoyan a nuestra comunidad." },
   "blog.post3.tag": { EN: "Community stories", ES: "Historias comunitarias" },
 
+  // Join / Inscription Section
+  "join.title": { EN: "Join Defenders of the CAA and Freedom", ES: "Únete a Defensores de la CAA y la Libertad" },
+  "join.description": { EN: "Be part of a community committed to defending the rights and freedom of Cubans. Register as a member and contribute your time, knowledge, or support to create real impact.", ES: "Forma parte de una comunidad comprometida con la defensa de los derechos y la libertad de los cubanos. Regístrate como miembro y contribuye con tu tiempo, conocimiento o apoyo para generar un impacto real en nuestra comunidad." },
+  "join.button": { EN: "Register now", ES: "Regístrate ahora" },
+
   // CTA Strip
   "cta.title": { EN: "Cuban migrants deserve dignity, truth, and the protection of the law.", ES: "Los migrantes cubanos merecen dignidad, verdad y la protección de la ley." },
   "cta.description": { EN: "Join us in defending the Cuban Adjustment Act and protecting our community from fraud and abuse.", ES: "Únete a nosotros en la defensa de la Ley de Ajuste Cubano y protegiendo a nuestra comunidad del fraude y abuso." },

@@ -85,6 +85,33 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Inscription / Join Section */}
+      <section className="py-10 bg-section-alt border-y">
+        <div className="container-wide">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 max-w-4xl mx-auto text-center sm:text-left">
+            <div>
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                {t("join.title")}
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-xl">
+                {t("join.description")}
+              </p>
+            </div>
+            <a
+              href="https://inscription.defensorescaa.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0"
+            >
+              <Button size="lg" className="whitespace-nowrap">
+                {t("join.button")}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Urgent Hero Section */}
       <UrgentHero />
 

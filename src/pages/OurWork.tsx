@@ -328,7 +328,7 @@ export default function OurWork() {
                   {t("docs.report2025.desc")}
                 </p>
                 <a
-                  href="/documents/informe_anual_2025.pdf"
+                  href="/documents/informe_financiero.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

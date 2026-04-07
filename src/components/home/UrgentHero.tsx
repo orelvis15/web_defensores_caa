@@ -15,6 +15,12 @@ type Slide =
 const slides: Slide[] = [
   {
     type: "video",
+    src: "https://www.youtube.com/embed/411HGlCXQ3A",
+    label: "Video corto de la campaña",
+    labelEn: "Campaign short video",
+  },
+  {
+    type: "video",
     src: "https://www.youtube.com/embed/fMbywZ4t8yo",
     label: "Video de la campaña",
     labelEn: "Campaign video",

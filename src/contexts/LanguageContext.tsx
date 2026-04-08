@@ -92,7 +92,7 @@ const translations: Record<string, Record<Language, string>> = {
   // Join / Inscription Section
   "join.title": { EN: "Join Defenders of the CAA and Freedom", ES: "Únete a Defensores de la CAA y la Libertad" },
   "join.description": { EN: "Be part of a community committed to defending the rights and freedom of Cubans. Register as a member and contribute your time, knowledge, or support to create real impact.", ES: "Forma parte de una comunidad comprometida con la defensa de los derechos y la libertad de los cubanos. Regístrate como miembro y contribuye con tu tiempo, conocimiento o apoyo para generar un impacto real en nuestra comunidad." },
-  "join.button": { EN: "Register now", ES: "Regístrate ahora" },
+  "join.button": { EN: "Create or update your profile", ES: "Crea o actualiza tu perfil" },
 
   // CTA Strip
   "cta.title": { EN: "Cuban migrants deserve dignity, truth, and the protection of the law.", ES: "Los migrantes cubanos merecen dignidad, verdad y la protección de la ley." },

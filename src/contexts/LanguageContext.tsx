@@ -508,6 +508,11 @@ const translations: Record<string, Record<Language, string>> = {
   "consent.declinedTitle": { EN: "Access Denied", ES: "Acceso Denegado" },
   "consent.declinedDescription": { EN: "You cannot use this website without accepting our Terms and Conditions and Privacy Policy. If you change your mind, you can reconsider your decision.", ES: "No puede usar este sitio web sin aceptar nuestros Términos y Condiciones y Política de Privacidad. Si cambia de opinión, puede reconsiderar su decisión." },
   "consent.reconsider": { EN: "Reconsider", ES: "Reconsiderar" },
+
+  // Video Modal
+  "video.title": { EN: "Our Mission & Impact", ES: "Nuestra Misión e Impacto" },
+  "video.description": { EN: "Watch what we do and what we've achieved at Defenders of the CAA and Freedom. This video showcases our commitment to protecting Cuban migrants and defending their rights.", ES: "Mira lo que hacemos y lo que hemos logrado en Defensores de la CAA y la Libertad. Este video muestra nuestro compromiso con la protección de los migrantes cubanos y la defensa de sus derechos." },
+  "header.watchVideo": { EN: "Watch Video", ES: "Ver Video" },
 };
 
 // Detect browser language

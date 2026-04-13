@@ -5,7 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { ConsentPopup } from "@/components/ConsentPopup";
+import { VideoModalProvider } from "@/contexts/VideoModalContext";
+import { VideoModal } from "@/components/VideoModal";
 import Index from "./pages/Index";
 import TakeAction from "./pages/TakeAction";
 import DonationSuccess from "./pages/DonationSuccess";
@@ -30,12 +31,13 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
       <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <ConsentPopup />
-            <Routes>
+        <VideoModalProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <VideoModal />
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/take-action" element={<TakeAction />} />
               <Route path="/donation-success" element={<DonationSuccess />} />
@@ -57,6 +59,7 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
+        </VideoModalProvider>
       </AuthProvider>
     </LanguageProvider>
   </QueryClientProvider>

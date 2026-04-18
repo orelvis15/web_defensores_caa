@@ -11,6 +11,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { TeamSection } from "@/components/about/TeamSection";
 
 export default function About() {
   const { t } = useLanguage();
@@ -35,71 +36,42 @@ export default function About() {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-primary/5 to-background section-padding">
-        <div className="container-wide">
-          <div className="max-w-3xl mx-auto text-center animate-fade-in">
-            <h1 className="heading-1 text-foreground mb-6">{t("about.title")}</h1>
-            <p className="text-xl text-muted-foreground">
-              {t("about.heroDesc")}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Who We Are */}
-      <section className="section-padding">
-        <div className="container-wide">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="heading-2 text-foreground mb-6">{t("about.whoWeAre.title")}</h2>
-              <div className="space-y-4 text-muted-foreground">
-                <p dangerouslySetInnerHTML={{ __html: t("about.whoWeAre.p1") }} />
-                <p>{t("about.whoWeAre.p2")}</p>
-                <p>{t("about.whoWeAre.p3")}</p>
+      {/* Who We Are — opening card */}
+      <section className="relative section-padding bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
+        <div className="absolute -top-32 -left-32 w-[28rem] h-[28rem] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-[28rem] h-[28rem] rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+        <div className="container-wide relative">
+          <div className="max-w-4xl mx-auto animate-fade-in">
+            <div className="relative rounded-3xl border bg-card/80 backdrop-blur-sm shadow-xl shadow-primary/5 overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0" />
+              <div className="p-8 md:p-12 lg:p-16">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <Users className="w-6 h-6 text-primary" />
+                  </div>
+                  <span className="text-xs font-semibold tracking-widest uppercase text-primary">
+                    {t("about.title")}
+                  </span>
+                </div>
+                <h2 className="heading-2 text-foreground mb-6">
+                  {t("about.whoWeAre.title")}
+                </h2>
+                <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+                  <p dangerouslySetInnerHTML={{ __html: t("about.whoWeAre.p1") }} />
+                  <p>{t("about.whoWeAre.p2")}</p>
+                  <p>{t("about.whoWeAre.p3")}</p>
+                </div>
               </div>
-            </div>
-            {/* TODO: Replace src with the actual photo path/URL */}
-            <div className="rounded-2xl overflow-hidden">
-              <img
-                src=""
-                alt="Defensores de la CAA y la Libertad"
-                className="w-full h-full object-cover"
-              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="section-padding bg-section-light">
-        <div className="container-wide">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-card border rounded-xl p-8">
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                <Shield className="w-7 h-7 text-primary" />
-              </div>
-              <h2 className="heading-3 text-foreground mb-4">{t("about.mission.title")}</h2>
-              <p className="text-muted-foreground">
-                {t("about.mission.desc")}
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-xl p-8">
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                <Eye className="w-7 h-7 text-primary" />
-              </div>
-              <h2 className="heading-3 text-foreground mb-4">{t("about.vision.title")}</h2>
-              <p className="text-muted-foreground">
-                {t("about.vision.desc")}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Team: Board, Ambassadors, Companies */}
+      <TeamSection />
 
       {/* Core Objectives */}
-      <section className="section-padding">
+      <section className="section-padding bg-section-light">
         <div className="container-wide">
           <h2 className="heading-2 text-foreground text-center mb-12">
             {t("about.objectives.title")}
@@ -236,6 +208,33 @@ export default function About() {
             <p className="text-muted-foreground mb-8">
               {t("about.chapters.desc")}
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Vision */}
+      <section className="section-padding bg-section-alt">
+        <div className="container-wide">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-card border rounded-xl p-8">
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
+                <Shield className="w-7 h-7 text-primary" />
+              </div>
+              <h2 className="heading-3 text-foreground mb-4">{t("about.mission.title")}</h2>
+              <p className="text-muted-foreground">
+                {t("about.mission.desc")}
+              </p>
+            </div>
+
+            <div className="bg-card border rounded-xl p-8">
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
+                <Eye className="w-7 h-7 text-primary" />
+              </div>
+              <h2 className="heading-3 text-foreground mb-4">{t("about.vision.title")}</h2>
+              <p className="text-muted-foreground">
+                {t("about.vision.desc")}
+              </p>
+            </div>
           </div>
         </div>
       </section>

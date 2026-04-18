@@ -159,6 +159,20 @@ const translations: Record<string, Record<Language, string>> = {
   "about.cta.bylaws": { EN: "Read our bylaws (PDF)", ES: "Lee nuestros estatutos (PDF)" },
   "about.cta.join": { EN: "Join as a member", ES: "Únete como miembro" },
 
+  // Partner Companies (home page)
+  "partners.eyebrow": { EN: "Our Partners", ES: "Nuestros Aliados" },
+  "partners.title": { EN: "Companies that support us", ES: "Compañías que nos apoyan" },
+  "partners.desc": { EN: "Organizations that collaborate with us to amplify our mission and serve the Cuban community.", ES: "Organizaciones que colaboran con nosotros para amplificar nuestra misión y servir a la comunidad cubana." },
+
+  // Team Sections
+  "about.team.eyebrow": { EN: "Our Team", ES: "Nuestro Equipo" },
+  "about.team.board.title": { EN: "Board of Directors", ES: "Junta Directiva" },
+  "about.team.board.desc": { EN: "Volunteer leaders committed to transparency, accountability, and the organization's strategic direction.", ES: "Líderes voluntarios comprometidos con la transparencia, la rendición de cuentas y la dirección estratégica de la organización." },
+  "about.team.ambassadors.title": { EN: "Ambassadors", ES: "Embajadores" },
+  "about.team.ambassadors.desc": { EN: "Our community representatives across the United States, extending our reach and supporting Cuban migrants locally.", ES: "Nuestros representantes comunitarios en Estados Unidos, extendiendo nuestro alcance y apoyando a los migrantes cubanos localmente." },
+  "about.team.companies.title": { EN: "Partner Companies", ES: "Compañías Aliadas" },
+  "about.team.companies.desc": { EN: "Organizations that collaborate with us to amplify our mission and serve the community.", ES: "Organizaciones que colaboran con nosotros para amplificar nuestra misión y servir a la comunidad." },
+
   // Our Work Page
   "ourWork.title": { EN: "Our Work", ES: "Nuestro Trabajo" },
   "ourWork.heroDesc": { EN: "Through education, monitoring, and community support, we protect Cuban migrants and defend the humanitarian principles of the Cuban Adjustment Act.", ES: "A través de la educación, monitoreo y apoyo comunitario, protegemos a los migrantes cubanos y defendemos los principios humanitarios de la Ley de Ajuste Cubano." },

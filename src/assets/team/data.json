@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Latino Consulting And Notary",
+    "position": "",
+    "group": ["comanias"],
+    "picture": "comanias/Latino Consulting And Notary.png"
+  },
+  {
+    "name": "Sun Help",
+    "position": "",
+    "group": ["comanias"],
+    "picture": "comanias/Sun Help.jpg"
+  },
+  {
+    "name": "Daanis Gonzalez",
+    "position": "Tampa",
+    "group": ["embajadores"],
+    "picture": "embajadores/Daanis Gonzalez Tampa.jpeg"
+  },
+  {
+    "name": "Daimara Cruz",
+    "position": "Houston",
+    "group": ["embajadores"],
+    "picture": "embajadores/Daimara Cruz Houston.jpeg"
+  },
+  {
+    "name": "Dreivy Esquijarrosa",
+    "position": "Orlando",
+    "group": ["embajadores"],
+    "picture": "embajadores/Dreivy Esquijarrosa Orlando.jpeg"
+  },
+  {
+    "name": "Elizabeth Dumois",
+    "position": "Directora De Relaciones Publicas",
+    "group": ["embajadores"],
+    "picture": "embajadores/Elizabeth Dumois Directora De Relaciones Publicas.jpeg"
+  },
+  {
+    "name": "Katiuska Lago",
+    "position": "Dallas",
+    "group": ["embajadores", "junta directiva"],
+    "picture": "embajadores/Katiuska Lago Dallas.jpeg"
+  },
+  {
+    "name": "Lianet Estrada",
+    "position": "Austin",
+    "group": ["embajadores"],
+    "picture": "embajadores/Lianet Estrada Austin.jpeg"
+  },
+  {
+    "name": "Luis R Martinez",
+    "position": "Orlando",
+    "group": ["embajadores"],
+    "picture": "embajadores/Luis R Martinez Orlando.jpeg"
+  },
+  {
+    "name": "Yaneisy Diaz",
+    "position": "Brandon",
+    "group": ["embajadores"],
+    "picture": "embajadores/Yaneisy Diaz Brandon.jpeg"
+  },
+  {
+    "name": "Isbel Y Gomez",
+    "position": "Directora Servicios Migratorios",
+    "group": ["junta directiva"],
+    "picture": "junta directiva/Isbel Y Gomez Directora Servicios Migratorios.jpeg"
+  },
+  {
+    "name": "Katiuska Lago",
+    "position": "Directora De Trabajo Comunitario",
+    "group": ["embajadores", "junta directiva"],
+    "picture": "junta directiva/Katiuska Lago DIRECTORA DE TRABAJO COMUNITARIO.jpeg"
+  },
+  {
+    "name": "Magdiel",
+    "position": "Presidente",
+    "group": ["junta directiva"],
+    "picture": "junta directiva/Magdiel Presidente.jpeg"
+  }
+]

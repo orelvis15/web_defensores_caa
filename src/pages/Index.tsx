@@ -4,6 +4,7 @@ import { DonationWizard } from "@/components/donation/DonationWizard";
 import { UrgentHero } from "@/components/home/UrgentHero";
 import { CaravanaLibertad } from "@/components/home/CaravanaLibertad";
 import { PaquetesAyuda } from "@/components/home/PaquetesAyuda";
+import { PartnerCompanies } from "@/components/home/PartnerCompanies";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
@@ -118,6 +119,9 @@ export default function Index() {
 
       {/* Paquetes de ayuda humanitaria */}
       <PaquetesAyuda />
+
+      {/* Partner Companies */}
+      <PartnerCompanies />
 
       {/* CTA Strip */}
       <section className="bg-primary text-primary-foreground py-16">

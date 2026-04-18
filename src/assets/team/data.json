@@ -12,6 +12,12 @@
     "picture": "comanias/Sun Help.jpg"
   },
   {
+    "name": "Neo Mambí",
+    "position": "",
+    "group": ["comanias"],
+    "picture": "comanias/neo_mambi_logo.png"
+  },
+  {
     "name": "Daanis Gonzalez",
     "position": "Tampa",
     "group": ["embajadores"],

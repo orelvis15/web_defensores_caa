@@ -30,15 +30,9 @@
     "picture": "embajadores/Dreivy Esquijarrosa Orlando.jpeg"
   },
   {
-    "name": "Elizabeth Dumois",
-    "position": "Directora De Relaciones Publicas",
-    "group": ["embajadores"],
-    "picture": "embajadores/Elizabeth Dumois Directora De Relaciones Publicas.jpeg"
-  },
-  {
     "name": "Katiuska Lago",
     "position": "Dallas",
-    "group": ["embajadores", "junta directiva"],
+    "group": ["embajadores"],
     "picture": "embajadores/Katiuska Lago Dallas.jpeg"
   },
   {
@@ -60,6 +54,30 @@
     "picture": "embajadores/Yaneisy Diaz Brandon.jpeg"
   },
   {
+    "name": "Isis Sierra",
+    "position": "Corpus Christi",
+    "group": ["embajadores"],
+    "picture": "embajadores/Isis Sierra.jpg"
+  },
+  {
+    "name": "Magdiel Hevia",
+    "position": "Presidente",
+    "group": ["junta directiva"],
+    "picture": "junta directiva/Magdiel Presidente.jpeg"
+  },
+  {
+    "name": "Orelvis Lago",
+    "position": "Vicepresidente",
+    "group": ["junta directiva"],
+    "picture": "junta directiva/Orelvis Lago.jpg"
+  },
+  {
+    "name": "Manuel Valle",
+    "position": "Tesorero",
+    "group": ["junta directiva"],
+    "picture": "junta directiva/Manuel Valle.jpg"
+  },
+  {
     "name": "Isbel Y Gomez",
     "position": "Directora Servicios Migratorios",
     "group": ["junta directiva"],
@@ -68,13 +86,13 @@
   {
     "name": "Katiuska Lago",
     "position": "Directora De Trabajo Comunitario",
-    "group": ["embajadores", "junta directiva"],
+    "group": ["junta directiva"],
     "picture": "junta directiva/Katiuska Lago DIRECTORA DE TRABAJO COMUNITARIO.jpeg"
   },
   {
-    "name": "Magdiel",
-    "position": "Presidente",
+    "name": "Elizabeth Dumois",
+    "position": "Directora De Relaciones Publicas",
     "group": ["junta directiva"],
-    "picture": "junta directiva/Magdiel Presidente.jpeg"
+    "picture": "junta directiva/Elizabeth Dumois Directora De Relaciones Publicas.jpeg"
   }
 ]

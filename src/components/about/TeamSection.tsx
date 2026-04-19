@@ -6,6 +6,7 @@ type TeamMember = {
   position: string;
   group: string[];
   picture: string;
+  url?: string;
 };
 
 const imageModules = import.meta.glob("@/assets/team/**/*.{png,jpg,jpeg,webp}", {
@@ -61,8 +62,10 @@ function PersonCard({ member }: { member: TeamMember }) {
 
 function CompanyCard({ member }: { member: TeamMember }) {
   const src = resolveImage(member.picture);
-  return (
-    <div className="group relative flex flex-col items-center text-center bg-card border rounded-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/30">
+  const baseClasses =
+    "group relative flex flex-col items-center text-center bg-card border rounded-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 hover:border-primary/30";
+  const content = (
+    <>
       <div className="h-24 md:h-28 w-full flex items-center justify-center mb-4">
         {src ? (
           <img
@@ -78,8 +81,24 @@ function CompanyCard({ member }: { member: TeamMember }) {
         )}
       </div>
       <p className="text-sm font-medium text-foreground">{member.name}</p>
-    </div>
+    </>
   );
+
+  if (member.url) {
+    return (
+      <a
+        href={member.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={member.name}
+        className={`${baseClasses} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40`}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return <div className={baseClasses}>{content}</div>;
 }
 
 function SectionHeader({ eyebrow, title, description }: { eyebrow: string; title: string; description?: string }) {

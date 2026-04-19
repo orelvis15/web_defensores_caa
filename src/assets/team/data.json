@@ -3,19 +3,29 @@
     "name": "Latino Consulting And Notary",
     "position": "",
     "group": ["comanias"],
-    "picture": "comanias/Latino Consulting And Notary.png"
+    "picture": "comanias/Latino Consulting And Notary.png",
+    "url": "https://latinonotarygroup.com/"
   },
   {
     "name": "Sun Help",
     "position": "",
     "group": ["comanias"],
-    "picture": "comanias/Sun Help.jpg"
+    "picture": "comanias/Sun Help.jpg",
+    "url": "https://sunhelp.us"
+  },
+  {
+    "name": "Tocado’s Law Firm",
+    "position": "",
+    "group": ["comanias"],
+    "picture": "comanias/Lissett Tocado.jpg",
+    "url": "https://tocadoslaw.com/"
   },
   {
     "name": "Neo Mambí",
     "position": "",
     "group": ["comanias"],
-    "picture": "comanias/neo_mambi_logo.png"
+    "picture": "comanias/neo_mambi_logo.png",
+    "url": "https://web.neomambi.com/"
   },
   {
     "name": "Daanis Gonzalez",
@@ -40,12 +50,6 @@
     "position": "Dallas",
     "group": ["embajadores"],
     "picture": "embajadores/Katiuska Lago Dallas.jpeg"
-  },
-  {
-    "name": "Lianet Estrada",
-    "position": "Austin",
-    "group": ["embajadores"],
-    "picture": "embajadores/Lianet Estrada Austin.jpeg"
   },
   {
     "name": "Luis R Martinez",
@@ -79,7 +83,7 @@
   },
   {
     "name": "Manuel Valle",
-    "position": "Tesorero",
+    "position": "Secretario y Tesorero",
     "group": ["junta directiva"],
     "picture": "junta directiva/Manuel Valle.jpg"
   },
@@ -100,5 +104,11 @@
     "position": "Directora De Relaciones Publicas",
     "group": ["junta directiva"],
     "picture": "junta directiva/Elizabeth Dumois Directora De Relaciones Publicas.jpeg"
+  },
+  {
+    "name": "Evelyn Aimée De Jesús Rodríguez",
+    "position": "Asesora jurídica",
+    "group": ["junta directiva"],
+    "picture": "junta directiva/Evelyn Aimee.jpeg"
   }
 ]

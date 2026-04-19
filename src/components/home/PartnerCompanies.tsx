@@ -6,6 +6,7 @@ type TeamMember = {
   position: string;
   group: string[];
   picture: string;
+  url?: string;
 };
 
 const imageModules = import.meta.glob("@/assets/team/**/*.{png,jpg,jpeg,webp}", {
@@ -24,31 +25,43 @@ const companies = (teamData as TeamMember[]).filter((m) =>
 
 function LogoTile({ member }: { member: TeamMember }) {
   const src = resolveImage(member.picture);
-  return (
-    <div className="group shrink-0 w-56 md:w-64 h-36 md:h-40 mx-3 md:mx-5 flex flex-col items-center justify-center rounded-2xl border border-border/60 bg-white shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary/40 hover:ring-primary/10">
-      {src ? (
-        <>
-          <div className="flex-1 flex items-center justify-center w-full px-5 pt-4">
-            <img
-              src={src}
-              alt={member.name}
-              loading="lazy"
-              className="max-h-16 md:max-h-20 max-w-[85%] object-contain transition-transform duration-300 group-hover:scale-105"
-            />
-          </div>
-          <div className="w-full px-4 pb-3 pt-1">
-            <p className="text-center text-xs md:text-sm font-semibold text-foreground/80 truncate">
-              {member.name}
-            </p>
-          </div>
-        </>
-      ) : (
-        <span className="text-sm font-semibold text-foreground">
+  const baseClasses =
+    "group shrink-0 w-56 md:w-64 h-36 md:h-40 mx-3 md:mx-5 flex flex-col items-center justify-center rounded-2xl border border-border/60 bg-white shadow-sm ring-1 ring-black/[0.02] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary/40 hover:ring-primary/10";
+  const content = src ? (
+    <>
+      <div className="flex-1 flex items-center justify-center w-full px-5 pt-4">
+        <img
+          src={src}
+          alt={member.name}
+          loading="lazy"
+          className="max-h-16 md:max-h-20 max-w-[85%] object-contain transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+      <div className="w-full px-4 pb-3 pt-1">
+        <p className="text-center text-xs md:text-sm font-semibold text-foreground/80 truncate">
           {member.name}
-        </span>
-      )}
-    </div>
+        </p>
+      </div>
+    </>
+  ) : (
+    <span className="text-sm font-semibold text-foreground">{member.name}</span>
   );
+
+  if (member.url) {
+    return (
+      <a
+        href={member.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={member.name}
+        className={`${baseClasses} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40`}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return <div className={baseClasses}>{content}</div>;
 }
 
 export function PartnerCompanies() {

@@ -36,32 +36,28 @@ export default function About() {
 
   return (
     <Layout>
-      {/* Who We Are — opening card */}
-      <section className="relative section-padding bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
-        <div className="absolute -top-32 -left-32 w-[28rem] h-[28rem] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-[28rem] h-[28rem] rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+      {/* Who We Are — page hero */}
+      <section className="relative pt-16 pb-20 md:pt-24 md:pb-28 bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
+        <div className="absolute -top-40 -left-32 w-[30rem] h-[30rem] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-40 -right-32 w-[30rem] h-[30rem] rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         <div className="container-wide relative">
           <div className="max-w-4xl mx-auto animate-fade-in">
-            <div className="relative rounded-3xl border bg-card/80 backdrop-blur-sm shadow-xl shadow-primary/5 overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0" />
-              <div className="p-8 md:p-12 lg:p-16">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <Users className="w-6 h-6 text-primary" />
-                  </div>
-                  <span className="text-xs font-semibold tracking-widest uppercase text-primary">
-                    {t("about.title")}
-                  </span>
-                </div>
-                <h2 className="heading-2 text-foreground mb-6">
-                  {t("about.whoWeAre.title")}
-                </h2>
-                <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-                  <p dangerouslySetInnerHTML={{ __html: t("about.whoWeAre.p1") }} />
-                  <p>{t("about.whoWeAre.p2")}</p>
-                  <p>{t("about.whoWeAre.p3")}</p>
-                </div>
-              </div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase text-primary mb-6">
+              <Users className="w-3.5 h-3.5" />
+              {t("about.title")}
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-[1.1] tracking-tight">
+              {t("about.whoWeAre.title")}
+            </h1>
+            <div className="h-1 w-20 bg-gradient-to-r from-primary to-primary/30 rounded-full mb-8" />
+            <div className="space-y-5 text-base md:text-lg lg:text-xl leading-relaxed">
+              <p
+                className="text-foreground/90 font-medium"
+                dangerouslySetInnerHTML={{ __html: t("about.whoWeAre.p1") }}
+              />
+              <p className="text-muted-foreground">{t("about.whoWeAre.p2")}</p>
+              <p className="text-muted-foreground">{t("about.whoWeAre.p3")}</p>
             </div>
           </div>
         </div>

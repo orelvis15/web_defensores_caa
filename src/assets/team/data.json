@@ -27,8 +27,15 @@
     "picture": "comanias/neo_mambi_logo.png",
     "url": "https://web.neomambi.com/"
   },
+    {
+    "name": "De La Cruz Multiservice",
+    "position": "",
+    "group": ["comanias"],
+    "picture": "comanias/Daimara De La Cruz.png",
+    "url": ""
+  },
   {
-    "name": "Daanis Gonzalez",
+    "name": "Dayanis Gonzalez",
     "position": "Tampa",
     "group": ["embajadores"],
     "picture": "embajadores/Daanis Gonzalez Tampa.jpeg"

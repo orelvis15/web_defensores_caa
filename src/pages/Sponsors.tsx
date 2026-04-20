@@ -2,6 +2,8 @@ import { Layout } from "@/components/layout/Layout";
 import { SponsorWizard } from "@/components/sponsor/SponsorWizard";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import empresa1 from "@/assets/empresa_1.png";
+import empresa2 from "@/assets/empresa_2.png";
 import {
   Handshake,
   Heart,
@@ -174,33 +176,55 @@ export default function Sponsors() {
       {/* What we achieve together */}
       <section className="py-14 md:py-20 bg-section-alt">
         <div className="container-wide">
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-cta/10 text-cta text-sm font-medium rounded-full mb-4">
-              <Globe className="w-4 h-4" />
-              {isSpanish ? "Impacto compartido" : "Shared impact"}
-            </div>
-            <h2 className="heading-2 text-foreground mb-4">
-              {isSpanish
-                ? "¿Qué logramos juntos?"
-                : "What do we achieve together?"}
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              {isSpanish
-                ? "Al convertirte en patrocinador mensual, estás ayudando directamente a:"
-                : "By becoming a monthly sponsor, you are directly helping:"}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            {impactItems.map((item, i) => (
-              <div
-                key={i}
-                className="flex items-start gap-3 bg-card border rounded-xl p-5 hover:shadow-md transition-shadow"
-              >
-                <CheckCircle2 className="w-6 h-6 text-cta shrink-0 mt-0.5" />
-                <span className="text-foreground">{item}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center max-w-6xl mx-auto">
+            {/* Image */}
+            <div className="order-2 lg:order-1">
+              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  src={empresa1}
+                  alt={
+                    isSpanish
+                      ? "Alianza empresarial con Defensores del CAA"
+                      : "Business partnership with Defensores del CAA"
+                  }
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent pointer-events-none" />
               </div>
-            ))}
+            </div>
+
+            {/* Content */}
+            <div className="order-1 lg:order-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-cta/10 text-cta text-sm font-medium rounded-full mb-4">
+                <Globe className="w-4 h-4" />
+                {isSpanish ? "Impacto compartido" : "Shared impact"}
+              </div>
+              <h2 className="heading-2 text-foreground mb-4">
+                {isSpanish
+                  ? "¿Qué logramos juntos?"
+                  : "What do we achieve together?"}
+              </h2>
+              <p className="text-muted-foreground text-lg mb-6">
+                {isSpanish
+                  ? "Al convertirte en patrocinador mensual, estás ayudando directamente a:"
+                  : "By becoming a monthly sponsor, you are directly helping:"}
+              </p>
+
+              <ul className="space-y-3">
+                {impactItems.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 bg-card border rounded-xl p-4 hover:shadow-md transition-shadow"
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-cta shrink-0 mt-0.5" />
+                    <span className="text-foreground text-sm md:text-base">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -245,21 +269,43 @@ export default function Sponsors() {
       {/* Business benefits */}
       <section className="py-14 md:py-20 bg-section-alt">
         <div className="container-wide">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
-              <TrendingUp className="w-4 h-4" />
-              {isSpanish ? "Tu empresa también gana" : "Your business also wins"}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center max-w-6xl mx-auto mb-12">
+            {/* Content */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
+                <TrendingUp className="w-4 h-4" />
+                {isSpanish
+                  ? "Tu empresa también gana"
+                  : "Your business also wins"}
+              </div>
+              <h2 className="heading-2 text-foreground mb-4">
+                {isSpanish
+                  ? "Haz crecer tu negocio mientras apoyas una causa"
+                  : "Grow your business while supporting a cause"}
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                {isSpanish
+                  ? "Hoy los clientes no solo compran productos… apoyan marcas con propósito. Al asociar tu empresa con una causa humanitaria real, construyes lealtad, confianza y crecimiento sostenido."
+                  : "Today, customers don't just buy products… they support brands with purpose. By associating your business with a real humanitarian cause, you build loyalty, trust, and sustained growth."}
+              </p>
             </div>
-            <h2 className="heading-2 text-foreground mb-4">
-              {isSpanish
-                ? "Haz crecer tu negocio mientras apoyas una causa"
-                : "Grow your business while supporting a cause"}
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              {isSpanish
-                ? "Hoy los clientes no solo compran productos… apoyan marcas con propósito."
-                : "Today, customers don't just buy products… they support brands with purpose."}
-            </p>
+
+            {/* Image */}
+            <div>
+              <div className="relative rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  src={empresa2}
+                  alt={
+                    isSpanish
+                      ? "Empresas que crecen mientras apoyan una causa"
+                      : "Businesses that grow while supporting a cause"
+                  }
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent pointer-events-none" />
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">

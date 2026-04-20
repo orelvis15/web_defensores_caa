@@ -11,11 +11,13 @@ import {
   Users,
   BookOpen,
   ArrowRight,
+  Building2,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Index() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isSpanish = language === "ES";
 
   return (
     <Layout>
@@ -119,6 +121,44 @@ export default function Index() {
 
       {/* Paquetes de ayuda humanitaria */}
       <PaquetesAyuda />
+
+      {/* Business Sponsor Highlight */}
+      <section className="py-10 md:py-12 bg-section-alt">
+        <div className="container-wide">
+          <div className="max-w-5xl mx-auto bg-card border border-primary/20 rounded-xl p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
+              <div className="shrink-0">
+                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Building2 className="w-7 h-7 text-primary" />
+                </div>
+              </div>
+
+              <div className="flex-1">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-2 uppercase tracking-wide">
+                  {isSpanish ? "Para empresas" : "For businesses"}
+                </span>
+                <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-1.5">
+                  {isSpanish
+                    ? "Conviértete en patrocinador empresarial"
+                    : "Become a business sponsor"}
+                </h2>
+                <p className="text-sm md:text-base text-muted-foreground">
+                  {isSpanish
+                    ? "Desde $50 USD al mes. Fortalece tu marca mientras apoyas a familias cubanas."
+                    : "From $50 USD per month. Strengthen your brand while supporting Cuban families."}
+                </p>
+              </div>
+
+              <Button asChild size="lg" className="shrink-0 w-full lg:w-auto">
+                <Link to="/sponsors">
+                  {isSpanish ? "Ver beneficios" : "See benefits"}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Partner Companies */}
       <PartnerCompanies />

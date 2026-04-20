@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { VideoModalProvider } from "@/contexts/VideoModalContext";
 import { VideoModal } from "@/components/VideoModal";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import TakeAction from "./pages/TakeAction";
 import DonationSuccess from "./pages/DonationSuccess";
@@ -23,6 +24,7 @@ import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Store from "./pages/Store";
 import Course from "./pages/Course";
+import Sponsors from "./pages/Sponsors";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <VideoModal />
               <Routes>
               <Route path="/" element={<Index />} />
@@ -54,6 +57,8 @@ const App = () => (
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/store" element={<Store />} />
+              <Route path="/sponsors" element={<Sponsors />} />
+              <Route path="/patrocinadores" element={<Navigate to="/sponsors" replace />} />
               <Route path="/curso" element={<Navigate to="/" replace />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

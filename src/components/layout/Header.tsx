@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Play } from "lucide-react";
+import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Play, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -22,6 +22,7 @@ export function Header() {
     { href: "/our-work", label: t("nav.ourWork"), icon: Briefcase },
     { href: "/get-involved", label: t("nav.getInvolved"), icon: HandHeart },
     { href: "https://tienda.defensorescaa.org", label: language === "ES" ? "Tienda" : "Store", icon: ShoppingBag, external: true },
+    { href: "/sponsors", label: language === "ES" ? "Empresas" : "Businesses", icon: Building2, highlight: true },
     { href: "/contact", label: t("nav.contact"), icon: Phone },
   ];
 
@@ -86,7 +87,11 @@ export function Header() {
                   to={link.href}
                   className={cn(
                     "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
-                    location.pathname === link.href
+                    link.highlight
+                      ? location.pathname === link.href
+                        ? "text-primary-foreground bg-primary shadow-sm"
+                        : "text-primary border border-primary/30 bg-primary/5 hover:bg-primary hover:text-primary-foreground"
+                      : location.pathname === link.href
                       ? "text-primary bg-primary/5"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   )}
@@ -202,7 +207,11 @@ export function Header() {
                     to={link.href}
                     className={cn(
                       "px-4 py-3 text-base font-medium rounded-md transition-colors flex items-center gap-2",
-                      location.pathname === link.href
+                      link.highlight
+                        ? location.pathname === link.href
+                          ? "text-primary-foreground bg-primary shadow-sm"
+                          : "text-primary border border-primary/30 bg-primary/5"
+                        : location.pathname === link.href
                         ? "text-primary bg-primary/5"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     )}

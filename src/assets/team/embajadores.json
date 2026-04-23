@@ -3,102 +3,119 @@
     "name": "Dayanis Gonzalez",
     "city": "Tampa",
     "state": "Florida",
+    "email": "dayanis@defensorescaa.org",
     "picture": "embajadores/Daanis Gonzalez Tampa.jpeg"
   },
   {
     "name": "Daimara Cruz",
     "city": "Houston",
     "state": "Texas",
+    "email": "daimara@defensorescaa.org",
     "picture": "embajadores/Daimara Cruz Houston.jpeg"
   },
   {
     "name": "Dreivy Esquijarrosa",
     "city": "Orlando",
     "state": "Florida",
+    "email": "dreivy@defensorescaa.org",
     "picture": "embajadores/Dreivy Esquijarrosa Orlando.jpeg"
   },
   {
     "name": "Luis R Martinez",
     "city": "Orlando",
     "state": "Florida",
+    "email": "luis@defensorescaa.org",
     "picture": "embajadores/Luis R Martinez Orlando.jpeg"
   },
   {
     "name": "Yaneisy Diaz",
     "city": "Brandon",
     "state": "Florida",
+    "email": "yaneisy@defensorescaa.org",
     "picture": "embajadores/Yaneisy Diaz Brandon.jpeg"
   },
   {
     "name": "Regla Lisandra Sosa",
     "city": "Dallas",
     "state": "Texas",
+    "email": "reglals@defensorescaa.org",
     "picture": "embajadores/Regla Lisandra Dallas.jpeg"
   },
   {
     "name": "Yudel Valle",
     "city": "Brandon",
     "state": "Florida",
+    "email": "yudel@defensorescaa.org",
     "picture": "embajadores/yudel valle brandon.jpeg"
   },
   {
     "name": "Ivette B Amaya",
     "city": "Miami",
     "state": "Florida",
+    "email": "Ivetteb@defensorescaa.org",
     "picture": "embajadores/ivette b miami.jpeg"
   },
   {
     "name": "Adrian Yzquierdo",
     "city": "Miami",
     "state": "Florida",
+    "email": "adrian@defensorescaa.org",
     "picture": "embajadores/Adrian izquierdo miami.jpeg"
   },
   {
     "name": "Ivett Rodriguez",
     "city": "Amarillo",
     "state": "Texas",
+    "email": "ivett@defensorescaa.org",
     "picture": "embajadores/ivette rodriguez amarillo.jpeg"
   },
   {
     "name": "Regnier Coto",
     "city": "Miami",
     "state": "Florida",
+    "email": "regnier@defensorescaa.org",
     "picture": "embajadores/regnier miami.jpeg"
   },
   {
     "name": "Frankelys Fernandez",
     "city": "Riverview",
     "state": "Florida",
+    "email": "frankelys@defensorescaa.org",
     "picture": "embajadores/Frankelys Fernandez.png"
   },
   {
     "name": "Lisney Gonzalez",
     "city": "Orlando",
     "state": "Florida",
+    "email": "lisney@defensorescaa.org",
     "picture": "embajadores/LISNEY GONZALEZ ORLANDO.jpeg"
   },
   {
-    "name": "Yarodis Castano",
+    "name": "Yaroldis Castano",
     "city": "Louisville",
     "state": "Kentucky",
+    "email": "yarodis@defensorescaa.org",
     "picture": "embajadores/Yarodis Castano.png"
   },
   {
     "name": "Odalys Diaz Martinez",
     "city": "Orlando",
     "state": "Florida",
+    "email": "odalys@defensorescaa.org",
     "picture": "embajadores/Odalis Orlando.jpeg"
   },
   {
     "name": "Ramon Gonzalez Cadavieco",
     "city": "Miami",
     "state": "Florida",
+    "email": "ramon@defensorescaa.org",
     "picture": "embajadores/Ramon Glez Miami.jpeg"
   },
   {
     "name": "Isis Sierra",
     "city": "Corpus Christi",
     "state": "Texas",
+    "email": "isis@defensorescaa.org",
     "picture": "embajadores/Isis Sierra.jpg"
   }
 ]

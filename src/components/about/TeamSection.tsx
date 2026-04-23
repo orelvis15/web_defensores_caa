@@ -2,11 +2,12 @@ import boardData from "@/assets/team/junta-directiva.json";
 import ambassadorsData from "@/assets/team/embajadores.json";
 import companiesData from "@/assets/team/comanias.json";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 type BoardMember = {
   name: string;
   position?: string;
+  email?: string;
   picture: string;
 };
 
@@ -14,6 +15,7 @@ type Ambassador = {
   name: string;
   city: string;
   state: string;
+  email?: string;
   picture: string;
 };
 
@@ -82,7 +84,7 @@ function Avatar({ picture, name }: { picture: string; name: string }) {
   );
 }
 
-function BoardCard({ member }: { member: BoardMember }) {
+function BoardCard({ member, contactLabel }: { member: BoardMember; contactLabel: string }) {
   return (
     <div className="group relative flex flex-col items-center text-center">
       <Avatar picture={member.picture} name={member.name} />
@@ -94,11 +96,21 @@ function BoardCard({ member }: { member: BoardMember }) {
           {member.position}
         </p>
       )}
+      {member.email && (
+        <a
+          href={`mailto:${member.email}`}
+          aria-label={`${contactLabel} ${member.name}`}
+          className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        >
+          <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+          {contactLabel}
+        </a>
+      )}
     </div>
   );
 }
 
-function AmbassadorCard({ member }: { member: Ambassador }) {
+function AmbassadorCard({ member, contactLabel }: { member: Ambassador; contactLabel: string }) {
   return (
     <div className="group relative flex flex-col items-center text-center">
       <Avatar picture={member.picture} name={member.name} />
@@ -112,6 +124,16 @@ function AmbassadorCard({ member }: { member: Ambassador }) {
           <span className="text-muted-foreground">, {member.state}</span>
         </span>
       </div>
+      {member.email && (
+        <a
+          href={`mailto:${member.email}`}
+          aria-label={`${contactLabel} ${member.name}`}
+          className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        >
+          <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+          {contactLabel}
+        </a>
+      )}
     </div>
   );
 }
@@ -206,7 +228,11 @@ export function TeamSection() {
           />
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 md:gap-10 max-w-5xl mx-auto">
             {board.map((member) => (
-              <BoardCard key={`${member.name}-${member.position}`} member={member} />
+              <BoardCard
+                key={`${member.name}-${member.position}`}
+                member={member}
+                contactLabel={t("about.team.ambassadors.contact")}
+              />
             ))}
           </div>
         </div>
@@ -229,6 +255,7 @@ export function TeamSection() {
                     <AmbassadorCard
                       key={`${member.name}-${member.city}`}
                       member={member}
+                      contactLabel={t("about.team.ambassadors.contact")}
                     />
                   ))}
                 </div>

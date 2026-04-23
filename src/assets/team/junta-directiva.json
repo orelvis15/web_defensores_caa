@@ -2,36 +2,43 @@
   {
     "name": "Magdiel Hevia",
     "position": "Presidente",
+    "email": "magdiel@defensorescaa.org",
     "picture": "junta directiva/Magdiel Presidente.jpeg"
   },
   {
     "name": "Orelvis Lago",
     "position": "Vicepresidente",
+    "email": "orelvis@defensorescaa.org",
     "picture": "junta directiva/Orelvis Lago.jpg"
   },
   {
     "name": "Manuel Valle",
     "position": "Secretario y Tesorero",
+    "email": "manuel@defensorescaa.org",
     "picture": "junta directiva/Manuel Valle.jpg"
   },
   {
     "name": "Isbel Y Gomez",
     "position": "Directora Servicios Migratorios",
+    "email": "isbel@defensorescaa.org",
     "picture": "junta directiva/Isbel Y Gomez Directora Servicios Migratorios.jpeg"
   },
   {
     "name": "Katiuska Lago",
     "position": "Directora De Trabajo Comunitario",
+    "email": "katiuska@defensorescaa.org",
     "picture": "junta directiva/Katiuska Lago DIRECTORA DE TRABAJO COMUNITARIO.jpeg"
   },
   {
     "name": "Elizabeth Dumois",
     "position": "Directora De Relaciones Publicas",
+    "email": "elizabeth@defensorescaa.org",
     "picture": "junta directiva/Elizabeth Dumois Directora De Relaciones Publicas.jpeg"
   },
   {
     "name": "Evelyn Aimée De Jesús Rodríguez",
     "position": "Asesora jurídica",
+    "email": "evelyn@defensorescaa.org",
     "picture": "junta directiva/Evelyn Aimee.jpeg"
   }
 ]

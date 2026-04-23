@@ -170,6 +170,7 @@ const translations: Record<string, Record<Language, string>> = {
   "about.team.board.desc": { EN: "Volunteer leaders committed to transparency, accountability, and the organization's strategic direction.", ES: "Líderes voluntarios comprometidos con la transparencia, la rendición de cuentas y la dirección estratégica de la organización." },
   "about.team.ambassadors.title": { EN: "Ambassadors", ES: "Embajadores" },
   "about.team.ambassadors.desc": { EN: "Our community representatives across the United States, extending our reach and supporting Cuban migrants locally.", ES: "Nuestros representantes comunitarios en Estados Unidos, extendiendo nuestro alcance y apoyando a los migrantes cubanos localmente." },
+  "about.team.ambassadors.contact": { EN: "Contact", ES: "Contactar" },
   "about.team.companies.title": { EN: "Partner Companies", ES: "Compañías Aliadas" },
   "about.team.companies.desc": { EN: "Organizations that collaborate with us to amplify our mission and serve the community.", ES: "Organizaciones que colaboran con nosotros para amplificar nuestra misión y servir a la comunidad." },
 

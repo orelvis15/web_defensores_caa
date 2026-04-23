@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Magdiel Hevia",
+    "position": "Presidente",
+    "picture": "junta directiva/Magdiel Presidente.jpeg"
+  },
+  {
+    "name": "Orelvis Lago",
+    "position": "Vicepresidente",
+    "picture": "junta directiva/Orelvis Lago.jpg"
+  },
+  {
+    "name": "Manuel Valle",
+    "position": "Secretario y Tesorero",
+    "picture": "junta directiva/Manuel Valle.jpg"
+  },
+  {
+    "name": "Isbel Y Gomez",
+    "position": "Directora Servicios Migratorios",
+    "picture": "junta directiva/Isbel Y Gomez Directora Servicios Migratorios.jpeg"
+  },
+  {
+    "name": "Katiuska Lago",
+    "position": "Directora De Trabajo Comunitario",
+    "picture": "junta directiva/Katiuska Lago DIRECTORA DE TRABAJO COMUNITARIO.jpeg"
+  },
+  {
+    "name": "Elizabeth Dumois",
+    "position": "Directora De Relaciones Publicas",
+    "picture": "junta directiva/Elizabeth Dumois Directora De Relaciones Publicas.jpeg"
+  },
+  {
+    "name": "Evelyn Aimée De Jesús Rodríguez",
+    "position": "Asesora jurídica",
+    "picture": "junta directiva/Evelyn Aimee.jpeg"
+  }
+]

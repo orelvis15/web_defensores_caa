@@ -5,6 +5,7 @@ import { UrgentHero } from "@/components/home/UrgentHero";
 import { CaravanaLibertad } from "@/components/home/CaravanaLibertad";
 import { PaquetesAyuda } from "@/components/home/PaquetesAyuda";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
+import { ReportesEnVivo } from "@/components/home/ReportesEnVivo";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
@@ -115,6 +116,9 @@ export default function Index() {
 
       {/* Urgent Hero Section */}
       <UrgentHero />
+
+      {/* Reportes en tiempo real desde Cuba */}
+      <ReportesEnVivo />
 
       {/* Caravana por la Libertad - Tampa */}
       <CaravanaLibertad />

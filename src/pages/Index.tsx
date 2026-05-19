@@ -3,6 +3,7 @@ import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
 import { UrgentHero } from "@/components/home/UrgentHero";
 import { CaravanaLibertad } from "@/components/home/CaravanaLibertad";
+import { ClinicaMigratoria } from "@/components/home/ClinicaMigratoria";
 import { PaquetesAyuda } from "@/components/home/PaquetesAyuda";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
 import { ReportesEnVivo } from "@/components/home/ReportesEnVivo";
@@ -116,6 +117,9 @@ export default function Index() {
 
       {/* Urgent Hero Section */}
       <UrgentHero />
+
+      {/* Clínica Migratoria Comunitaria */}
+      <ClinicaMigratoria />
 
       {/* Reportes en tiempo real desde Cuba */}
       <ReportesEnVivo />

@@ -41,7 +41,7 @@ export function ClinicaMigratoria() {
 
           <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full">
             <MapPin className="w-3.5 h-3.5" />
-            Brandon, Florida · {isSpanish ? "Mayo 2026" : "May 2026"}
+            Clearwater, Florida · {isSpanish ? "Mayo 2026" : "May 2026"}
           </span>
         </div>
 
@@ -76,8 +76,8 @@ export function ClinicaMigratoria() {
 
             <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-4">
               {isSpanish
-                ? "Nace en Brandon la primera jornada CMC"
-                : "First CMC clinic launches in Brandon"}
+                ? "Nace en Clearwater la primera jornada CMC"
+                : "First CMC clinic launches in Clearwater"}
             </h3>
 
             <p className="text-sm text-muted-foreground leading-relaxed mb-6">
@@ -105,7 +105,7 @@ export function ClinicaMigratoria() {
                 <Clock className="w-4 h-4 text-primary shrink-0 mt-1" />
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    8:00 AM – 4:00 PM
+                    {isSpanish ? "Inicio: 9:00 AM" : "Start: 9:00 AM"}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     {isSpanish ? "Entrada gratuita — abierta a toda la comunidad" : "Free admission — open to the entire community"}
@@ -117,10 +117,10 @@ export function ClinicaMigratoria() {
                 <MapPin className="w-4 h-4 text-primary shrink-0 mt-1" />
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    Brandon Chapel
+                    18167 US HWY 19 N
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    2906 John Moore Rd, Brandon, FL 33511
+                    Clearwater, FL
                   </p>
                 </div>
               </div>

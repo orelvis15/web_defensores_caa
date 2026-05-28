@@ -1,9 +1,35 @@
-import { Calendar, Clock, MapPin, Scale, FileText, Users, Heart, Folder, Mic, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { Calendar, Clock, MapPin, Scale, FileText, Users, Heart, Folder, Mic, Sparkles, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+type VideoSlide = {
+  src: string;
+  label: string;
+  labelEn: string;
+};
+
+const videoSlides: VideoSlide[] = [
+  {
+    src: "https://www.youtube.com/embed/z7pa-OjiJ28",
+    label: "Clínica Migratoria Comunitaria — Mensaje",
+    labelEn: "Community Migration Clinic — Message",
+  },
+  {
+    src: "https://www.youtube.com/embed/RbefNOyLhaU",
+    label: "Conoce el programa CMC — Clínica Migratoria Comunitaria",
+    labelEn: "Learn about the CMC — Community Migration Clinic program",
+  },
+];
 
 export function ClinicaMigratoria() {
   const { language } = useLanguage();
   const isSpanish = language === "ES";
+  const [current, setCurrent] = useState(0);
+
+  const total = videoSlides.length;
+  const currentSlide = videoSlides[current];
+  const prev = () => setCurrent((c) => (c === 0 ? total - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === total - 1 ? 0 : c + 1));
 
   return (
     <section className="relative section-padding overflow-hidden bg-gradient-to-b from-primary/5 via-background to-primary/5">
@@ -47,24 +73,65 @@ export function ClinicaMigratoria() {
 
         {/* Two-column: Video + Event details */}
         <div className="grid lg:grid-cols-2 gap-12 items-start mb-12">
-          {/* LEFT — Video */}
+          {/* LEFT — Video carousel */}
           <div className="flex flex-col gap-3">
             <div
               className="relative rounded-xl overflow-hidden shadow-lg bg-black"
               style={{ aspectRatio: "16/9" }}
             >
-              <iframe
-                src="https://www.youtube.com/embed/RbefNOyLhaU"
-                title={isSpanish ? "Clínica Migratoria Comunitaria" : "Community Migration Clinic"}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full border-0"
-              />
+              {videoSlides.map((slide, i) => (
+                <div
+                  key={i}
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    i === current ? "opacity-100 z-10" : "opacity-0 z-0"
+                  }`}
+                >
+                  <iframe
+                    src={slide.src}
+                    title={isSpanish ? slide.label : slide.labelEn}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                  />
+                </div>
+              ))}
+
+              <button
+                onClick={prev}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors z-20"
+                aria-label="Previous"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={next}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors z-20"
+                aria-label="Next"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
+
+            {/* Dots */}
+            <div className="flex items-center justify-center gap-2">
+              {videoSlides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  aria-label={`Slide ${i + 1}`}
+                  className={`flex items-center justify-center transition-all rounded-full ${
+                    i === current
+                      ? "w-7 h-7 bg-primary text-primary-foreground shadow"
+                      : "w-6 h-6 bg-muted hover:bg-muted-foreground/20 text-muted-foreground"
+                  }`}
+                >
+                  <Play className="w-3 h-3" />
+                </button>
+              ))}
+            </div>
+
             <p className="text-center text-xs text-muted-foreground">
-              {isSpanish
-                ? "Conoce el programa CMC — Clínica Migratoria Comunitaria"
-                : "Learn about the CMC — Community Migration Clinic program"}
+              {isSpanish ? currentSlide.label : currentSlide.labelEn}
             </p>
           </div>
 

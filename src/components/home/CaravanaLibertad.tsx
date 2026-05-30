@@ -15,6 +15,7 @@ type Slide =
   | { type: "image"; src: string };
 
 const slides: Slide[] = [
+  { type: "video", videoId: "4b6hcv-t0jw", label: "Caravana por la Libertad — Tampa", labelEn: "Freedom Caravan — Tampa" },
   { type: "video", videoId: "8P8t0nbr-YE", label: "Caravana por la Libertad — Tampa", labelEn: "Freedom Caravan — Tampa" },
   { type: "video", videoId: "WLGmf_WMF-s", label: "Cobertura especial — Tampa", labelEn: "Special coverage — Tampa" },
   { type: "image", src: img1 },

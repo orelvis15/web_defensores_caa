@@ -48,11 +48,15 @@
     "name": "Quattro",
     "picture": "comanias/quattro.png",
     "url": "https://quattro.miami"
-  }
-  ,
+  },
   {
     "name": "immigration solutions for all",
     "picture": "comanias/immigration_solutions_for_all.jpeg",
+    "url": ""
+  },
+  {
+    "name": "FIALLO SERVICES SOLUTIONS",
+    "picture": "comanias/FIALLO SERVICES SOLUTIONS.jpeg",
     "url": ""
   }
 ]

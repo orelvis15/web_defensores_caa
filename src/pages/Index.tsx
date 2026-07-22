@@ -7,6 +7,7 @@ import { ClinicaMigratoria } from "@/components/home/ClinicaMigratoria";
 import { PaquetesAyuda } from "@/components/home/PaquetesAyuda";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
 import { ReportesEnVivo } from "@/components/home/ReportesEnVivo";
+import { PresosPoliticos } from "@/components/home/PresosPoliticos";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
@@ -114,6 +115,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Presos políticos - Ayuda de la ONG */}
+      <PresosPoliticos />
 
       {/* Urgent Hero Section */}
       <UrgentHero />

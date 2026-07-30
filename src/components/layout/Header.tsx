@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Play, Building2 } from "lucide-react";
+import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Play, Building2, LayoutGrid, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { programs } from "@/config/programs";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -20,6 +27,12 @@ export function Header() {
     { href: "/", label: t("nav.home"), icon: Home },
     { href: "/about", label: t("nav.about"), icon: Info },
     { href: "/our-work", label: t("nav.ourWork"), icon: Briefcase },
+    {
+      href: "/programas",
+      label: language === "ES" ? "Programas" : "Programs",
+      icon: LayoutGrid,
+      dropdown: true,
+    },
     { href: "/get-involved", label: t("nav.getInvolved"), icon: HandHeart },
     { href: "https://tienda.defensorescaa.org", label: language === "ES" ? "Tienda" : "Store", icon: ShoppingBag, external: true },
     { href: "/sponsors", label: language === "ES" ? "Empresas" : "Businesses", icon: Building2, highlight: true },
@@ -70,6 +83,47 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
+
+              if (link.dropdown) {
+                const isActive = location.pathname.startsWith("/programas");
+                return (
+                  <DropdownMenu key={link.href}>
+                    <DropdownMenuTrigger
+                      className={cn(
+                        "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1 outline-none",
+                        isActive
+                          ? "text-primary bg-primary/5"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      )}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {link.label}
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-64">
+                      {programs.map((program) => {
+                        const ProgramIcon = program.icon;
+                        return (
+                          <DropdownMenuItem key={program.slug} asChild>
+                            <Link to={program.path} className="cursor-pointer gap-2">
+                              <ProgramIcon className="w-4 h-4 text-primary shrink-0" />
+                              <span className="flex flex-col">
+                                <span className="font-medium">
+                                  {language === "ES" ? program.title : program.titleEn}
+                                </span>
+                                <span className="text-xs text-muted-foreground">
+                                  {language === "ES" ? program.tagline : program.taglineEn}
+                                </span>
+                              </span>
+                            </Link>
+                          </DropdownMenuItem>
+                        );
+                      })}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                );
+              }
+
               return link.external ? (
                 <a
                   key={link.href}
@@ -190,6 +244,36 @@ export function Header() {
 
               {navLinks.map((link) => {
                 const Icon = link.icon;
+
+                if (link.dropdown) {
+                  return (
+                    <div key={link.href} className="pt-2">
+                      <p className="px-4 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-2">
+                        <Icon className="w-3.5 h-3.5" />
+                        {link.label}
+                      </p>
+                      {programs.map((program) => {
+                        const ProgramIcon = program.icon;
+                        return (
+                          <Link
+                            key={program.slug}
+                            to={program.path}
+                            className={cn(
+                              "px-4 py-3 text-base font-medium rounded-md transition-colors flex items-center gap-2",
+                              location.pathname === program.path
+                                ? "text-primary bg-primary/5"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                            )}
+                          >
+                            <ProgramIcon className="w-4 h-4" />
+                            {language === "ES" ? program.title : program.titleEn}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  );
+                }
+
                 return link.external ? (
                   <a
                     key={link.href}

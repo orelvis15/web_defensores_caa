@@ -1,13 +1,9 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
-import { UrgentHero } from "@/components/home/UrgentHero";
-import { CaravanaLibertad } from "@/components/home/CaravanaLibertad";
-import { ClinicaMigratoria } from "@/components/home/ClinicaMigratoria";
-import { PaquetesAyuda } from "@/components/home/PaquetesAyuda";
+import { ProgramasPrincipales } from "@/components/home/ProgramasPrincipales";
+import { ExploraSecciones } from "@/components/home/ExploraSecciones";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
-import { ReportesEnVivo } from "@/components/home/ReportesEnVivo";
-import { PresosPoliticos } from "@/components/home/PresosPoliticos";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
@@ -38,7 +34,7 @@ export default function Index() {
                 {t("hero.title")}
               </h1>
 
-              <p 
+              <p
                 className="text-base md:text-lg text-muted-foreground mb-4 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: t("hero.description") }}
               />
@@ -78,16 +74,27 @@ export default function Index() {
                 </li>
               </ul>
 
-              <Button asChild variant="outline" size="lg">
-                <Link to="/about">
-                  {t("hero.learnMore")}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button asChild size="lg">
+                  <Link to="/#programas">
+                    {isSpanish ? "Ver nuestros programas" : "See our programs"}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link to="/about">
+                    {t("hero.learnMore")}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Los tres programas principales */}
+      <ProgramasPrincipales />
 
       {/* Inscription / Join Section */}
       <section className="py-10 bg-section-alt border-y">
@@ -116,23 +123,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Presos políticos - Ayuda de la ONG */}
-      <PresosPoliticos />
-
-      {/* Urgent Hero Section */}
-      <UrgentHero />
-
-      {/* Clínica Migratoria Comunitaria */}
-      <ClinicaMigratoria />
-
-      {/* Reportes en tiempo real desde Cuba */}
-      <ReportesEnVivo />
-
-      {/* Caravana por la Libertad - Tampa */}
-      <CaravanaLibertad />
-
-      {/* Paquetes de ayuda humanitaria */}
-      <PaquetesAyuda />
+      {/* Accesos directos al resto del sitio */}
+      <ExploraSecciones />
 
       {/* Business Sponsor Highlight */}
       <section className="py-10 md:py-12 bg-section-alt">

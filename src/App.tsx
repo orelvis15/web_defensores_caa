@@ -25,6 +25,9 @@ import Admin from "./pages/Admin";
 import Store from "./pages/Store";
 import Course from "./pages/Course";
 import Sponsors from "./pages/Sponsors";
+import TemaMigratorio from "./pages/programs/TemaMigratorio";
+import AyudaPersonas from "./pages/programs/AyudaPersonas";
+import LibertadCuba from "./pages/programs/LibertadCuba";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +49,10 @@ const App = () => (
               <Route path="/donation-success" element={<DonationSuccess />} />
               <Route path="/about" element={<About />} />
               <Route path="/our-work" element={<OurWork />} />
+              <Route path="/programas/migratorio" element={<TemaMigratorio />} />
+              <Route path="/programas/ayuda" element={<AyudaPersonas />} />
+              <Route path="/programas/libertad-cuba" element={<LibertadCuba />} />
+              <Route path="/programas" element={<Navigate to="/#programas" replace />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<Blog />} />
               <Route path="/resources" element={<Resources />} />

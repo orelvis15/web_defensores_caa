@@ -19,7 +19,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const { openModal } = useVideoModal();
   const location = useLocation();
 
@@ -70,33 +70,30 @@ export function Header() {
               className="w-10 h-10 md:w-12 md:h-12 object-contain"
             />
             <div className="block">
-              <span className="text-xs sm:text-sm md:text-base font-bold text-primary leading-tight block">
+              <span className="text-xs sm:text-sm 2xl:text-base font-bold text-primary leading-tight block whitespace-nowrap">
                 Defenders of the CAA
               </span>
-              <span className="text-xs sm:text-sm md:text-base font-bold text-primary leading-tight block">
+              <span className="text-xs sm:text-sm 2xl:text-base font-bold text-primary leading-tight block whitespace-nowrap">
                 and Freedom, Inc.
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden xl:flex items-center gap-0.5">
             {navLinks.map((link) => {
-              const Icon = link.icon;
-
               if (link.dropdown) {
                 const isActive = location.pathname.startsWith("/programas");
                 return (
                   <DropdownMenu key={link.href}>
                     <DropdownMenuTrigger
                       className={cn(
-                        "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1 outline-none",
+                        "px-2.5 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1 whitespace-nowrap outline-none",
                         isActive
                           ? "text-primary bg-primary/5"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted"
                       )}
                     >
-                      <Icon className="w-3.5 h-3.5" />
                       {link.label}
                       <ChevronDown className="w-3.5 h-3.5" />
                     </DropdownMenuTrigger>
@@ -130,9 +127,8 @@ export function Header() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1 text-muted-foreground hover:text-foreground hover:bg-muted"
+                  className="px-2.5 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap text-muted-foreground hover:text-foreground hover:bg-muted"
                 >
-                  <Icon className="w-3.5 h-3.5" />
                   {link.label}
                 </a>
               ) : (
@@ -140,7 +136,7 @@ export function Header() {
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "px-3 py-2 text-sm font-medium rounded-md transition-colors flex items-center gap-1",
+                    "px-2.5 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
                     link.highlight
                       ? location.pathname === link.href
                         ? "text-primary-foreground bg-primary shadow-sm"
@@ -150,7 +146,6 @@ export function Header() {
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
                   )}
                 >
-                  <Icon className="w-3.5 h-3.5" />
                   {link.label}
                 </Link>
               );
@@ -158,7 +153,7 @@ export function Header() {
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
             {/* Video Button */}
             <Button
               variant="ghost"
@@ -167,8 +162,10 @@ export function Header() {
               className="hidden sm:flex"
               title={t("header.watchVideo")}
             >
-              <Play className="w-4 h-4 mr-1" />
-              <span className="hidden md:inline">{t("header.watchVideo")}</span>
+              <Play className="w-4 h-4 md:mr-1" />
+              <span className="hidden md:inline xl:hidden 2xl:inline whitespace-nowrap">
+                {t("header.watchVideo")}
+              </span>
             </Button>
 
             {/* Language Toggle */}
@@ -200,9 +197,9 @@ export function Header() {
             {/* Login/Dashboard Button */}
             {user ? (
               <Button asChild variant="outline" size="sm" className="hidden sm:flex">
-                <Link to={isAdmin ? "/admin" : "/dashboard"}>
+                <Link to="/dashboard">
                   <User className="w-4 h-4 mr-1" />
-                  {isAdmin ? "Admin" : "Dashboard"}
+                  Dashboard
                 </Link>
               </Button>
             ) : (
@@ -217,7 +214,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-foreground"
+              className="xl:hidden p-2 text-foreground"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? (
@@ -231,7 +228,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden border-t bg-background pb-4 animate-fade-in">
+          <div className="xl:hidden border-t bg-background pb-4 animate-fade-in">
             <div className="flex flex-col gap-1 pt-4">
               {/* Video Button for Mobile */}
               <button
@@ -308,9 +305,9 @@ export function Header() {
               <div className="px-4 pt-4 flex flex-col gap-2">
                 {user ? (
                   <Button asChild variant="outline" className="w-full">
-                    <Link to={isAdmin ? "/admin" : "/dashboard"}>
+                    <Link to="/dashboard">
                       <User className="w-4 h-4 mr-2" />
-                      {isAdmin ? "Admin Panel" : "Dashboard"}
+                      Dashboard
                     </Link>
                   </Button>
                 ) : (

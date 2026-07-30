@@ -70,64 +70,76 @@ const DRAG_THRESHOLD = 6;
 
 export function PartnerCompanies() {
   const { t } = useLanguage();
+  const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const stateRef = useRef({
+    offset: 0,
+    half: 0,
     hovering: false,
     pending: false,
     dragging: false,
     pointerId: 0,
     startX: 0,
-    startScroll: 0,
+    startOffset: 0,
     suppressClick: false,
   });
 
   useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
+    const track = trackRef.current;
+    if (!track) return;
 
     const SPEED = 40; // px per second
+    const s = stateRef.current;
     let last = performance.now();
     let raf = 0;
 
-    const normalize = () => {
-      const half = el.scrollWidth / 2;
-      if (half <= 0) return;
-      if (el.scrollLeft >= half) el.scrollLeft -= half;
-      else if (el.scrollLeft < 0) el.scrollLeft += half;
+    // Half of the track is the duplicated copy: wrapping there is seamless.
+    const measure = () => {
+      s.half = track.scrollWidth / 2;
     };
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
 
     const tick = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.1);
       last = now;
-      const s = stateRef.current;
+
       if (!s.dragging && !s.pending && !s.hovering) {
-        el.scrollLeft += SPEED * dt;
-        normalize();
+        s.offset += SPEED * dt;
       }
+      if (s.half > 0) {
+        s.offset %= s.half;
+        if (s.offset < 0) s.offset += s.half;
+      }
+      track.style.transform = `translate3d(${-s.offset}px, 0, 0)`;
+
       raf = requestAnimationFrame(tick);
     };
 
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+    };
   }, []);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    const el = trackRef.current;
-    if (!el) return;
     const s = stateRef.current;
     s.pending = true;
     s.dragging = false;
     s.pointerId = e.pointerId;
     s.startX = e.clientX;
-    s.startScroll = el.scrollLeft;
+    s.startOffset = s.offset;
     s.suppressClick = false;
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const s = stateRef.current;
     if (!s.pending && !s.dragging) return;
-    const el = trackRef.current;
+    const el = viewportRef.current;
     if (!el) return;
     const delta = e.clientX - s.startX;
 
@@ -143,18 +155,12 @@ export function PartnerCompanies() {
     }
 
     if (s.dragging) {
-      const half = el.scrollWidth / 2;
-      let next = s.startScroll - delta;
-      if (half > 0) {
-        while (next >= half) next -= half;
-        while (next < 0) next += half;
-      }
-      el.scrollLeft = next;
+      s.offset = s.startOffset - delta;
     }
   };
 
   const endPointer = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = trackRef.current;
+    const el = viewportRef.current;
     const s = stateRef.current;
     if (s.dragging && el && el.hasPointerCapture(e.pointerId)) {
       el.releasePointerCapture(e.pointerId);
@@ -190,7 +196,7 @@ export function PartnerCompanies() {
         </div>
 
         <div
-          ref={trackRef}
+          ref={viewportRef}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={endPointer}
@@ -203,9 +209,9 @@ export function PartnerCompanies() {
             stateRef.current.hovering = false;
           }}
           onClickCapture={onClickCapture}
-          className="relative overflow-x-auto overflow-y-hidden py-4 cursor-grab active:cursor-grabbing touch-pan-y select-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+          className="relative overflow-hidden py-4 cursor-grab active:cursor-grabbing touch-pan-y select-none [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
         >
-          <div className="flex w-max">
+          <div ref={trackRef} className="flex w-max will-change-transform">
             {loop.map((member, i) => (
               <LogoTile key={`${member.name}-${i}`} member={member} />
             ))}

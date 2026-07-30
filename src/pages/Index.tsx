@@ -4,6 +4,7 @@ import { DonationWizard } from "@/components/donation/DonationWizard";
 import { ProgramasPrincipales } from "@/components/home/ProgramasPrincipales";
 import { ExploraSecciones } from "@/components/home/ExploraSecciones";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
+import { ReportesEnVivo } from "@/components/programs/ReportesEnVivo";
 import { Button } from "@/components/ui/button";
 import {
   Eye,
@@ -125,6 +126,9 @@ export default function Index() {
 
       {/* Accesos directos al resto del sitio */}
       <ExploraSecciones />
+
+      {/* Reportes en tiempo real desde Cuba */}
+      <ReportesEnVivo />
 
       {/* Business Sponsor Highlight */}
       <section className="py-10 md:py-12 bg-section-alt">

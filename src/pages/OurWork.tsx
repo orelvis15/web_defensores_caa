@@ -319,16 +319,16 @@ export default function OurWork() {
                   <FileText className="w-6 h-6 text-primary" />
                 </div>
                 <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded w-fit mb-3">
-                  {t("docs.report2025.tag")}
+                  {t("docs.economicReport.tag")}
                 </span>
                 <h3 className="font-semibold text-foreground mb-2">
-                  {t("docs.report2025.title")}
+                  {t("docs.economicReport.title")}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-6 flex-1">
-                  {t("docs.report2025.desc")}
+                  {t("docs.economicReport.desc")}
                 </p>
                 <a
-                  href="/documents/informe_financiero.pdf"
+                  href="/documents/informe_economico.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

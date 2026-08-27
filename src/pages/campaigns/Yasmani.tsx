@@ -1,12 +1,34 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Lock, Shield } from "lucide-react";
+import { ArrowLeft, Lock, PlayCircle, Shield } from "lucide-react";
 import { DonationWizard } from "@/components/donation/DonationWizard";
+import { CampaignRaisedCounter } from "@/components/campaign/CampaignRaisedCounter";
+import { TikTokEmbed } from "@/components/media/TikTokEmbed";
 import { useLanguage } from "@/contexts/LanguageContext";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
 
 // Identificador con el que quedan etiquetadas estas donaciones,
 // tanto en la tabla campaign_donations como en la metadata de Stripe.
 export const YASMANI_CAMPAIGN_ID = "yasmani-2026";
+
+// Videos de la comunidad que cuentan el caso de Yasmani.
+const STORY_VIDEOS = [
+  {
+    videoId: "7677644828024376606",
+    username: "karel_gonzalez",
+    caption: {
+      es: "Su situación explicada: entró por la frontera sin parole, está en corte de inmigración y un lipoma intracraneal le impide trabajar.",
+      en: "His situation explained: he crossed the border without parole, is in immigration court, and an intracranial lipoma keeps him from working.",
+    },
+  },
+  {
+    videoId: "7678408944812903711",
+    username: "cortes_services_group",
+    caption: {
+      es: "La historia de Yasmani Prieto contada por la comunidad cubana que se ha unido a la causa.",
+      en: "Yasmani Prieto's story told by the Cuban community that has rallied behind the cause.",
+    },
+  },
+];
 
 export default function CampanaYasmani() {
   const { t, language } = useLanguage();
@@ -76,8 +98,13 @@ export default function CampanaYasmani() {
               </p>
             </div>
 
-            {/* DERECHA — Formulario de donación */}
+            {/* DERECHA — Contador y formulario de donación */}
             <div className="animate-slide-up lg:sticky lg:top-20">
+              <CampaignRaisedCounter
+                campaignId={YASMANI_CAMPAIGN_ID}
+                className="mb-6"
+              />
+
               <DonationWizard variant="full" campaignId={YASMANI_CAMPAIGN_ID} />
 
               <div className="mt-6 text-center space-y-3">
@@ -89,6 +116,39 @@ export default function CampanaYasmani() {
                   {t("takeAction.disclaimer")}
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Videos con el contexto del caso */}
+        <div className="container-wide mt-16 md:mt-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
+                <PlayCircle className="w-4 h-4" />
+                {isSpanish ? "Su historia en video" : "His story on video"}
+              </span>
+              <h2 className="heading-3 text-foreground mb-3">
+                {isSpanish
+                  ? "Conoce el caso de Yasmani"
+                  : "Get to know Yasmani's case"}
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                {isSpanish
+                  ? "Estos videos de la comunidad explican por qué Yasmani necesita ayuda. Pulsa para reproducirlos."
+                  : "These community videos explain why Yasmani needs help. Press play to watch them."}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+              {STORY_VIDEOS.map((video) => (
+                <TikTokEmbed
+                  key={video.videoId}
+                  videoId={video.videoId}
+                  username={video.username}
+                  caption={isSpanish ? video.caption.es : video.caption.en}
+                />
+              ))}
             </div>
           </div>
         </div>

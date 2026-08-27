@@ -43,7 +43,10 @@ export default function Index() {
             </div>
 
             {/* Right - Donation Widget */}
-            <div className="animate-slide-in-right lg:sticky lg:top-20 order-2 lg:order-2 lg:row-span-2">
+            <div
+              id="donar"
+              className="animate-slide-in-right lg:sticky lg:top-20 order-2 lg:order-2 lg:row-span-2 scroll-mt-24"
+            >
               <DonationWizard />
             </div>
 

@@ -1,16 +1,25 @@
+import type { MouseEvent } from "react";
 import { ArrowRight, HeartHandshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
 
 // Campaña destacada en la portada, encima de los tres programas.
-// El GoFundMe lo abrió la familia de Yasmani.
-const GOFUNDME_URL =
-  "https://www.gofundme.com/f/ayudemos-a-yasmany-en-este-dificil-momento";
+// El botón lleva al formulario de donación del propio sitio, que está
+// en el encabezado de la portada.
+const DONATION_ANCHOR = "donar";
 
 export function CampanaYasmani() {
   const { language } = useLanguage();
   const isSpanish = language === "ES";
+
+  // Lleva al formulario de donación de la portada con desplazamiento suave.
+  const scrollToDonation = (event: MouseEvent<HTMLAnchorElement>) => {
+    const target = document.getElementById(DONATION_ANCHOR);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   return (
     <section
@@ -57,13 +66,13 @@ export function CampanaYasmani() {
 
             <p className="text-muted-foreground text-base leading-relaxed mb-8">
               {isSpanish
-                ? "Su familia abrió un GoFundMe para sostener los gastos médicos y del hogar. Cualquier aporte suma, y compartir su historia también ayuda."
-                : "His family opened a GoFundMe to cover medical and household costs. Every contribution counts, and sharing his story helps too."}
+                ? "Puedes acompañarlo donando desde nuestra propia página. Cada aporte, por pequeño que sea, alivia la carga de su familia."
+                : "You can stand with him by donating right here on our site. Every contribution, however small, eases the burden on his family."}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Button asChild size="lg">
-                <a href={GOFUNDME_URL} target="_blank" rel="noopener noreferrer">
+                <a href={`#${DONATION_ANCHOR}`} onClick={scrollToDonation}>
                   {isSpanish ? "Donar a Yasmani" : "Donate to Yasmani"}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </a>

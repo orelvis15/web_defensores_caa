@@ -1,21 +1,14 @@
-import { useEffect } from "react";
 import { X } from "lucide-react";
 import { useVideoModal } from "@/contexts/VideoModalContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+// El modal ya no se abre solo al cargar la página: se queda disponible
+// para quien lo abra con openModal() desde el contexto.
 export function VideoModal() {
-  const { isOpen, closeModal, openModal } = useVideoModal();
+  const { isOpen, closeModal } = useVideoModal();
   const { t } = useLanguage();
 
-  useEffect(() => {
-    const hasWatchedVideo = localStorage.getItem("video-watched");
-    if (hasWatchedVideo !== "true") {
-      openModal();
-    }
-  }, []);
-
   const handleClose = () => {
-    localStorage.setItem("video-watched", "true");
     closeModal();
   };
 

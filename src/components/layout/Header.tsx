@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Play, Building2, LayoutGrid, ChevronDown } from "lucide-react";
+import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Building2, LayoutGrid, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,7 +12,6 @@ import { programs } from "@/config/programs";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { useVideoModal } from "@/contexts/VideoModalContext";
 import logo from "@/assets/logo.png";
 
 export function Header() {
@@ -20,7 +19,6 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const { user } = useAuth();
-  const { openModal } = useVideoModal();
   const location = useLocation();
 
   const navLinks = [
@@ -154,20 +152,6 @@ export function Header() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-2 md:gap-3 shrink-0">
-            {/* Video Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={openModal}
-              className="hidden sm:flex"
-              title={t("header.watchVideo")}
-            >
-              <Play className="w-4 h-4 md:mr-1" />
-              <span className="hidden md:inline xl:hidden 2xl:inline whitespace-nowrap">
-                {t("header.watchVideo")}
-              </span>
-            </Button>
-
             {/* Language Toggle */}
             <div className="flex items-center bg-muted rounded-full p-0.5">
               <button
@@ -230,15 +214,6 @@ export function Header() {
         {isMobileMenuOpen && (
           <div className="xl:hidden border-t bg-background pb-4 animate-fade-in">
             <div className="flex flex-col gap-1 pt-4">
-              {/* Video Button for Mobile */}
-              <button
-                onClick={openModal}
-                className="px-4 py-3 text-base font-medium rounded-md transition-colors flex items-center gap-2 text-muted-foreground hover:text-foreground hover:bg-muted"
-              >
-                <Play className="w-4 h-4" />
-                {t("header.watchVideo")}
-              </button>
-
               {navLinks.map((link) => {
                 const Icon = link.icon;
 

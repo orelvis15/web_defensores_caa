@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { ArrowRight, HeartHandshake, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CampaignRaisedCounter } from "@/components/campaign/CampaignRaisedCounter";
+import { ShareButton } from "@/components/share/ShareButton";
 import { TikTokEmbed } from "@/components/media/TikTokEmbed";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   YASMANI_CAMPAIGN_ID,
   YASMANI_CAMPAIGN_PATH,
+  YASMANI_SHARE,
   YASMANI_VIDEOS,
 } from "@/data/yasmaniCampaign";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
@@ -80,6 +82,13 @@ export function CampanaYasmani() {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
+
+              <ShareButton
+                url={CAMPAIGN_PATH}
+                title={isSpanish ? YASMANI_SHARE.title.es : YASMANI_SHARE.title.en}
+                text={isSpanish ? YASMANI_SHARE.text.es : YASMANI_SHARE.text.en}
+                label={isSpanish ? "Compartir campaña" : "Share campaign"}
+              />
             </div>
           </div>
         </div>

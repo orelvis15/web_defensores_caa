@@ -32,3 +32,15 @@ export const YASMANI_VIDEOS: CampaignVideo[] = [
     },
   },
 ];
+
+// Titular y frase que acompañan al enlace al compartir la campaña.
+export const YASMANI_SHARE = {
+  title: {
+    es: "Apoyemos a Yasmani",
+    en: "Let's support Yasmani",
+  },
+  text: {
+    es: "Yasmani es un cubano con I-220A que vive con un lipoma intracraneal y no puede trabajar. Su estatus lo deja fuera de todo programa de ayuda. Comparte o dona:",
+    en: "Yasmani is a Cuban with an I-220A living with an intracranial lipoma and unable to work. His status leaves him out of every assistance program. Share or donate:",
+  },
+};

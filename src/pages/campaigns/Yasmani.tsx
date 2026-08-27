@@ -2,10 +2,13 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Lock, PlayCircle, Scale, Shield } from "lucide-react";
 import { DonationWizard } from "@/components/donation/DonationWizard";
 import { CampaignRaisedCounter } from "@/components/campaign/CampaignRaisedCounter";
+import { ShareButton } from "@/components/share/ShareButton";
 import { TikTokEmbed } from "@/components/media/TikTokEmbed";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   YASMANI_CAMPAIGN_ID,
+  YASMANI_CAMPAIGN_PATH,
+  YASMANI_SHARE,
   YASMANI_VIDEOS,
 } from "@/data/yasmaniCampaign";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
@@ -125,6 +128,26 @@ export default function CampanaYasmani() {
               />
 
               <DonationWizard variant="full" campaignId={YASMANI_CAMPAIGN_ID} />
+
+              <div className="mt-6 rounded-xl border bg-card p-5 text-center">
+                <p className="font-semibold text-foreground mb-1">
+                  {isSpanish
+                    ? "¿No puedes donar ahora?"
+                    : "Can't donate right now?"}
+                </p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {isSpanish
+                    ? "Compartir su historia también ayuda: mientras más personas la conozcan, más cerca está Yasmani de recibir apoyo."
+                    : "Sharing his story helps too: the more people who know about it, the closer Yasmani is to getting support."}
+                </p>
+                <ShareButton
+                  url={YASMANI_CAMPAIGN_PATH}
+                  title={isSpanish ? YASMANI_SHARE.title.es : YASMANI_SHARE.title.en}
+                  text={isSpanish ? YASMANI_SHARE.text.es : YASMANI_SHARE.text.en}
+                  label={isSpanish ? "Compartir campaña" : "Share campaign"}
+                  className="w-full sm:w-auto"
+                />
+              </div>
 
               <div className="mt-6 text-center space-y-3">
                 <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">

@@ -1,12 +1,19 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, HeartHandshake } from "lucide-react";
+import { ArrowRight, HeartHandshake, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CampaignRaisedCounter } from "@/components/campaign/CampaignRaisedCounter";
+import { TikTokEmbed } from "@/components/media/TikTokEmbed";
 import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  YASMANI_CAMPAIGN_ID,
+  YASMANI_CAMPAIGN_PATH,
+  YASMANI_VIDEOS,
+} from "@/data/yasmaniCampaign";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
 
 // Campaña destacada en la portada, encima de los tres programas.
 // El botón lleva a la página con el formulario de donación de la campaña.
-const CAMPAIGN_PATH = "/campanas/yasmani";
+const CAMPAIGN_PATH = YASMANI_CAMPAIGN_PATH;
 
 export function CampanaYasmani() {
   const { language } = useLanguage();
@@ -61,6 +68,11 @@ export function CampanaYasmani() {
                 : "You can stand with him by donating right here on our site. Every contribution, however small, eases the burden on his family."}
             </p>
 
+            <CampaignRaisedCounter
+              campaignId={YASMANI_CAMPAIGN_ID}
+              className="mb-8 max-w-sm"
+            />
+
             <div className="flex flex-col sm:flex-row gap-3">
               <Button asChild size="lg">
                 <Link to={CAMPAIGN_PATH}>
@@ -69,6 +81,38 @@ export function CampanaYasmani() {
                 </Link>
               </Button>
             </div>
+          </div>
+        </div>
+
+        {/* Videos de la comunidad, en pausa hasta que alguien los reproduzca */}
+        <div className="mt-14 md:mt-20">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
+              <PlayCircle className="w-4 h-4" />
+              {isSpanish ? "Su historia en video" : "His story on video"}
+            </span>
+            <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+              {isSpanish
+                ? "Conoce el caso de Yasmani"
+                : "Get to know Yasmani's case"}
+            </h3>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {isSpanish
+                ? "Estos videos de la comunidad cuentan el caso con más detalle. Pulsa play para reproducirlos."
+                : "These community videos tell the case in more detail. Press play to watch them."}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+            {YASMANI_VIDEOS.map((video) => (
+              <TikTokEmbed
+                key={video.videoId}
+                videoId={video.videoId}
+                username={video.username}
+                caption={isSpanish ? video.caption.es : video.caption.en}
+                lang={isSpanish ? "es" : "en"}
+              />
+            ))}
           </div>
         </div>
       </div>

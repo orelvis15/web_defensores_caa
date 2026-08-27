@@ -1,34 +1,14 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Lock, PlayCircle, Shield } from "lucide-react";
+import { ArrowLeft, Lock, PlayCircle, Scale, Shield } from "lucide-react";
 import { DonationWizard } from "@/components/donation/DonationWizard";
 import { CampaignRaisedCounter } from "@/components/campaign/CampaignRaisedCounter";
 import { TikTokEmbed } from "@/components/media/TikTokEmbed";
 import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  YASMANI_CAMPAIGN_ID,
+  YASMANI_VIDEOS,
+} from "@/data/yasmaniCampaign";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
-
-// Identificador con el que quedan etiquetadas estas donaciones,
-// tanto en la tabla campaign_donations como en la metadata de Stripe.
-export const YASMANI_CAMPAIGN_ID = "yasmani-2026";
-
-// Videos de la comunidad que cuentan el caso de Yasmani.
-const STORY_VIDEOS = [
-  {
-    videoId: "7677644828024376606",
-    username: "karel_gonzalez",
-    caption: {
-      es: "Su situación explicada: entró por la frontera sin parole, está en corte de inmigración y un lipoma intracraneal le impide trabajar.",
-      en: "His situation explained: he crossed the border without parole, is in immigration court, and an intracranial lipoma keeps him from working.",
-    },
-  },
-  {
-    videoId: "7678408944812903711",
-    username: "cortes_services_group",
-    caption: {
-      es: "La historia de Yasmani Prieto contada por la comunidad cubana que se ha unido a la causa.",
-      en: "Yasmani Prieto's story told by the Cuban community that has rallied behind the cause.",
-    },
-  },
-];
 
 export default function CampanaYasmani() {
   const { t, language } = useLanguage();
@@ -91,11 +71,50 @@ export default function CampanaYasmani() {
                   : "Yasmani is a Cuban with an I-220A facing a serious neurological condition that left him unable to work. His immigration status keeps him out of assistance programs, and today the entire burden falls on his family."}
               </p>
 
-              <p className="text-muted-foreground text-base leading-relaxed">
+              <p className="text-muted-foreground text-base leading-relaxed mb-10">
                 {isSpanish
                   ? "Tu donación entra directamente a esta campaña y se destina a los gastos médicos y del hogar de su familia."
                   : "Your donation goes directly to this campaign and covers his family's medical and household costs."}
               </p>
+
+              {/* Resumen del caso */}
+              <div>
+                <h2 className="heading-3 text-foreground mb-4">
+                  {isSpanish ? "Su historia" : "His story"}
+                </h2>
+
+                <div className="space-y-4 text-muted-foreground text-base leading-relaxed">
+                  <p>
+                    {isSpanish
+                      ? "Yasmani vive con un lipoma intracraneal que, por su tamaño, no se puede extirpar. Ha pasado por varias cirugías y hoy lleva un catéter que va desde su cabeza hasta el abdomen para drenar el líquido que su cuerpo debe reabsorber."
+                      : "Yasmani lives with an intracranial lipoma that, because of its size, cannot be removed. He has been through several surgeries and now carries a shunt running from his head to his abdomen to drain the fluid his body has to reabsorb."}
+                  </p>
+                  <p>
+                    {isSpanish
+                      ? "Esa condición lo dejó sin poder trabajar. Al estar bajo un I-220A no puede solicitar disability ni los programas de asistencia pensados justamente para quien ya no puede sostener un empleo, así que las cuentas y la comida siguen corriendo sin ninguna red que las amortigüe."
+                      : "That condition left him unable to work. Because he is under an I-220A, he cannot apply for disability or the assistance programs meant for people who can no longer hold a job, so the bills and the groceries keep coming with no safety net underneath."}
+                  </p>
+                  <p>
+                    {isSpanish
+                      ? "Todo el sostén económico recae sobre su esposa. La familia ya devolvió un carro al banco y todavía debe el único que le queda, que es precisamente el que usan para llevarlo a sus citas médicas."
+                      : "The entire financial weight falls on his wife. The family already returned one car to the bank and still owes money on the only one left — the very car they use to get him to his medical appointments."}
+                  </p>
+                  <p>
+                    {isSpanish
+                      ? "A todo esto se suma su proceso en corte de inmigración, que enfrenta sin fondos para pagar un abogado. Por eso la comunidad cubana se organizó para pedir ayuda: donaciones que alivien la carga de la familia y visibilidad para su caso."
+                      : "On top of all this is his immigration court process, which he faces with no funds for a lawyer. That is why the Cuban community organized to ask for help: donations that ease the family's burden, and visibility for his case."}
+                  </p>
+                </div>
+
+                <div className="mt-6 flex gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4">
+                  <Scale className="w-5 h-5 shrink-0 text-primary mt-0.5" />
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {isSpanish
+                      ? "¿Eres abogado de inmigración? Otra forma de ayudar es ofrecer asesoría a la familia en su proceso migratorio y judicial. Escríbenos y te ponemos en contacto."
+                      : "Are you an immigration attorney? Another way to help is to offer the family guidance in their immigration and court process. Write to us and we'll put you in touch."}
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* DERECHA — Contador y formulario de donación */}
@@ -135,18 +154,19 @@ export default function CampanaYasmani() {
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 {isSpanish
-                  ? "Estos videos de la comunidad explican por qué Yasmani necesita ayuda. Pulsa para reproducirlos."
-                  : "These community videos explain why Yasmani needs help. Press play to watch them."}
+                  ? "Estos videos de la comunidad cuentan el caso con más detalle. Pulsa play para reproducirlos."
+                  : "These community videos tell the case in more detail. Press play to watch them."}
               </p>
             </div>
 
             <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-              {STORY_VIDEOS.map((video) => (
+              {YASMANI_VIDEOS.map((video) => (
                 <TikTokEmbed
                   key={video.videoId}
                   videoId={video.videoId}
                   username={video.username}
                   caption={isSpanish ? video.caption.es : video.caption.en}
+                  lang={isSpanish ? "es" : "en"}
                 />
               ))}
             </div>

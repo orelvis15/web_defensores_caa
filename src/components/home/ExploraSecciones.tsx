@@ -26,7 +26,7 @@ const links: QuickLink[] = [
   { href: "/blog", icon: Newspaper, label: "Noticias", labelEn: "News" },
   { href: "/resources", icon: BookOpen, label: "Recursos", labelEn: "Resources" },
   { href: "/get-involved", icon: HandHeart, label: "Participa", labelEn: "Get involved" },
-  { href: "/sponsors", icon: Building2, label: "Empresas", labelEn: "Businesses" },
+  { href: "/sponsors", icon: Building2, label: "Patrocinadores", labelEn: "Sponsors" },
   {
     href: "https://tienda.defensorescaa.org",
     icon: ShoppingBag,

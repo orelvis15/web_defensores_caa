@@ -33,7 +33,7 @@ export function Header() {
     },
     { href: "/get-involved", label: t("nav.getInvolved"), icon: HandHeart },
     { href: "https://tienda.defensorescaa.org", label: language === "ES" ? "Tienda" : "Store", icon: ShoppingBag, external: true },
-    { href: "/sponsors", label: language === "ES" ? "Empresas" : "Businesses", icon: Building2, highlight: true },
+    { href: "/sponsors", label: language === "ES" ? "Patrocinadores" : "Sponsors", icon: Building2, highlight: true },
     { href: "/contact", label: t("nav.contact"), icon: Phone },
   ];
 

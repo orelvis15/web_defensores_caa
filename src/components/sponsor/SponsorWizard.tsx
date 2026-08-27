@@ -62,8 +62,8 @@ export function SponsorWizard({ variant = "compact" }: SponsorWizardProps) {
     if (!formData.companyName) {
       toast.error(
         isSpanish
-          ? "El nombre de la empresa es requerido"
-          : "Company name is required"
+          ? "El nombre del patrocinador es requerido"
+          : "Sponsor name is required"
       );
       return;
     }
@@ -125,7 +125,7 @@ export function SponsorWizard({ variant = "compact" }: SponsorWizardProps) {
         <div className="flex items-center gap-2 mb-2">
           <Building2 className="w-5 h-5 text-primary" />
           <span className="text-sm font-semibold text-primary uppercase tracking-wide">
-            {isSpanish ? "Patrocinio Empresarial" : "Business Sponsorship"}
+            {isSpanish ? "Programa de Patrocinio" : "Sponsorship Program"}
           </span>
         </div>
         <div className="flex items-center justify-between mb-2">
@@ -150,8 +150,8 @@ export function SponsorWizard({ variant = "compact" }: SponsorWizardProps) {
               ? "Elige tu plan de patrocinio"
               : "Choose your sponsorship plan"
             : isSpanish
-            ? "Información de tu empresa"
-            : "Your company information"}
+            ? "Información del patrocinador"
+            : "Sponsor information"}
         </h3>
       </div>
 
@@ -275,12 +275,12 @@ export function SponsorWizard({ variant = "compact" }: SponsorWizardProps) {
           </div>
         )}
 
-        {/* Step 2: Company Info */}
+        {/* Step 2: Sponsor Info */}
         {step === 2 && (
           <div className="space-y-5 animate-fade-in">
             <div>
               <Label htmlFor="companyName">
-                {isSpanish ? "Nombre de la empresa" : "Company name"} *
+                {isSpanish ? "Nombre del patrocinador" : "Sponsor name"} *
               </Label>
               <Input
                 id="companyName"

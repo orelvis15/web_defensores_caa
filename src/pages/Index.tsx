@@ -134,7 +134,7 @@ export default function Index() {
       {/* Reportes en tiempo real desde Cuba */}
       <ReportesEnVivo />
 
-      {/* Business Sponsor Highlight */}
+      {/* Sponsor Highlight */}
       <section className="py-10 md:py-12 bg-section-alt">
         <div className="container-wide">
           <div className="max-w-5xl mx-auto bg-card border border-primary/20 rounded-xl p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow">
@@ -147,12 +147,12 @@ export default function Index() {
 
               <div className="flex-1">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-2 uppercase tracking-wide">
-                  {isSpanish ? "Para empresas" : "For businesses"}
+                  {isSpanish ? "Para patrocinadores" : "For sponsors"}
                 </span>
                 <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-1.5">
                   {isSpanish
-                    ? "Conviértete en patrocinador empresarial"
-                    : "Become a business sponsor"}
+                    ? "Conviértete en patrocinador"
+                    : "Become a sponsor"}
                 </h2>
                 <p className="text-sm md:text-base text-muted-foreground">
                   {isSpanish

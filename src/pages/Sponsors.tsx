@@ -71,7 +71,7 @@ export default function Sponsors() {
         {
           icon: Award,
           title: "Reconocimiento social",
-          desc: "Reconocimiento como empresa socialmente responsable",
+          desc: "Reconocimiento como patrocinador socialmente responsable",
         },
         {
           icon: Shield,
@@ -103,7 +103,7 @@ export default function Sponsors() {
         {
           icon: Award,
           title: "Social recognition",
-          desc: "Recognition as a socially responsible business",
+          desc: "Recognition as a socially responsible sponsor",
         },
         {
           icon: Shield,
@@ -128,14 +128,14 @@ export default function Sponsors() {
               <span className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
                 <Handshake className="w-4 h-4" />
                 {isSpanish
-                  ? "Patrocinadores Empresariales"
-                  : "Business Sponsors"}
+                  ? "Patrocinadores"
+                  : "Sponsors"}
               </span>
 
               <h1 className="heading-1 text-foreground mb-4">
                 {isSpanish
-                  ? "Tu negocio puede ser la diferencia"
-                  : "Your business can make the difference"}
+                  ? "Tu patrocinio puede ser la diferencia"
+                  : "Your sponsorship can make the difference"}
               </h1>
 
               <p className="text-lg md:text-xl text-primary font-semibold mb-4 leading-relaxed">
@@ -146,8 +146,8 @@ export default function Sponsors() {
 
               <p className="text-base md:text-lg text-muted-foreground mb-6 leading-relaxed">
                 {isSpanish
-                  ? "En un mundo donde muchas familias luchan por salir adelante, tu empresa puede convertirse en un puente hacia una nueva oportunidad."
-                  : "In a world where many families struggle to move forward, your company can become a bridge to a new opportunity."}
+                  ? "En un mundo donde muchas familias luchan por salir adelante, tu patrocinio puede convertirse en un puente hacia una nueva oportunidad."
+                  : "In a world where many families struggle to move forward, your sponsorship can become a bridge to a new opportunity."}
               </p>
 
               <div className="bg-card border rounded-xl p-5 shadow-sm">
@@ -184,8 +184,8 @@ export default function Sponsors() {
                   src={empresa1}
                   alt={
                     isSpanish
-                      ? "Alianza empresarial con Defensores del CAA"
-                      : "Business partnership with Defensores del CAA"
+                      ? "Alianza de patrocinio con Defensores del CAA"
+                      : "Sponsorship partnership with Defensores del CAA"
                   }
                   className="w-full h-auto object-cover"
                   loading="lazy"
@@ -266,7 +266,7 @@ export default function Sponsors() {
         </div>
       </section>
 
-      {/* Business benefits */}
+      {/* Sponsor benefits */}
       <section className="py-14 md:py-20 bg-section-alt">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center max-w-6xl mx-auto mb-12">
@@ -275,18 +275,18 @@ export default function Sponsors() {
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-4">
                 <TrendingUp className="w-4 h-4" />
                 {isSpanish
-                  ? "Tu empresa también gana"
-                  : "Your business also wins"}
+                  ? "Tú también ganas"
+                  : "You also win"}
               </div>
               <h2 className="heading-2 text-foreground mb-4">
                 {isSpanish
-                  ? "Haz crecer tu negocio mientras apoyas una causa"
-                  : "Grow your business while supporting a cause"}
+                  ? "Haz crecer tu marca mientras apoyas una causa"
+                  : "Grow your brand while supporting a cause"}
               </h2>
               <p className="text-muted-foreground text-lg">
                 {isSpanish
-                  ? "Hoy los clientes no solo compran productos… apoyan marcas con propósito. Al asociar tu empresa con una causa humanitaria real, construyes lealtad, confianza y crecimiento sostenido."
-                  : "Today, customers don't just buy products… they support brands with purpose. By associating your business with a real humanitarian cause, you build loyalty, trust, and sustained growth."}
+                  ? "Hoy los clientes no solo compran productos… apoyan marcas con propósito. Al asociar tu marca con una causa humanitaria real, construyes lealtad, confianza y crecimiento sostenido."
+                  : "Today, customers don't just buy products… they support brands with purpose. By associating your brand with a real humanitarian cause, you build loyalty, trust, and sustained growth."}
               </p>
             </div>
 
@@ -297,8 +297,8 @@ export default function Sponsors() {
                   src={empresa2}
                   alt={
                     isSpanish
-                      ? "Empresas que crecen mientras apoyan una causa"
-                      : "Businesses that grow while supporting a cause"
+                      ? "Patrocinadores que crecen mientras apoyan una causa"
+                      : "Sponsors that grow while supporting a cause"
                   }
                   className="w-full h-auto object-cover"
                   loading="lazy"
@@ -347,8 +347,8 @@ export default function Sponsors() {
             </div>
             <p className="text-lg text-muted-foreground">
               {isSpanish
-                ? "Haz que tu negocio no solo genere ingresos… genere cambio."
-                : "Make your business not just generate revenue… generate change."}
+                ? "Haz que tu apoyo no solo genere visibilidad… genere cambio."
+                : "Make your support not just generate visibility… generate change."}
             </p>
           </div>
         </div>

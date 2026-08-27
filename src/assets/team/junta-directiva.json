@@ -18,12 +18,6 @@
     "picture": "junta directiva/Manuel Valle.jpg"
   },
   {
-    "name": "Isbel Y Gomez",
-    "position": "Directora Servicios Migratorios",
-    "email": "isbel@defensorescaa.org",
-    "picture": "junta directiva/Isbel Y Gomez Directora Servicios Migratorios.jpeg"
-  },
-  {
     "name": "Katiuska Lago",
     "position": "Directora De Trabajo Comunitario",
     "email": "katiuska@defensorescaa.org",
@@ -40,5 +34,11 @@
     "position": "Asesora jurídica",
     "email": "evelyn@defensorescaa.org",
     "picture": "junta directiva/Evelyn Aimee.jpeg"
+  },
+  {
+    "name": "Yudel Valle",
+    "position": "Miembro de la Junta Directiva",
+    "email": "yudel@defensorescaa.org",
+    "picture": "junta directiva/Yudel Valle.jpeg"
   }
 ]

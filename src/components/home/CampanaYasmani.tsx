@@ -1,25 +1,16 @@
-import type { MouseEvent } from "react";
+import { Link } from "react-router-dom";
 import { ArrowRight, HeartHandshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
 
 // Campaña destacada en la portada, encima de los tres programas.
-// El botón lleva al formulario de donación del propio sitio, que está
-// en el encabezado de la portada.
-const DONATION_ANCHOR = "donar";
+// El botón lleva a la página con el formulario de donación de la campaña.
+const CAMPAIGN_PATH = "/campanas/yasmani";
 
 export function CampanaYasmani() {
   const { language } = useLanguage();
   const isSpanish = language === "ES";
-
-  // Lleva al formulario de donación de la portada con desplazamiento suave.
-  const scrollToDonation = (event: MouseEvent<HTMLAnchorElement>) => {
-    const target = document.getElementById(DONATION_ANCHOR);
-    if (!target) return;
-    event.preventDefault();
-    target.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
 
   return (
     <section
@@ -72,10 +63,10 @@ export function CampanaYasmani() {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Button asChild size="lg">
-                <a href={`#${DONATION_ANCHOR}`} onClick={scrollToDonation}>
+                <Link to={CAMPAIGN_PATH}>
                   {isSpanish ? "Donar a Yasmani" : "Donate to Yasmani"}
                   <ArrowRight className="w-4 h-4 ml-2" />
-                </a>
+                </Link>
               </Button>
             </div>
           </div>

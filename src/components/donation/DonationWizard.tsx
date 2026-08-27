@@ -21,13 +21,24 @@ type DonationType = "one-time" | "monthly";
 
 interface DonationWizardProps {
   variant?: "compact" | "full";
+  /**
+   * Identificador de la campaña. Cuando se pasa, la donación se registra
+   * contra esa campaña (tabla campaign_donations y metadata en Stripe)
+   * en lugar de ir al fondo general.
+   */
+  campaignId?: string;
 }
 
 const oneTimeAmounts = [10, 20, 50, 100];
 const monthlyAmounts = [10, 20, 30];
 
-export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
+export function DonationWizard({
+  variant = "compact",
+  campaignId,
+}: DonationWizardProps) {
   const { t } = useLanguage();
+  // Las donaciones de campaña solo admiten pago único.
+  const isCampaign = Boolean(campaignId);
   const [step, setStep] = useState(1);
   const [donationType, setDonationType] = useState<DonationType>("one-time");
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
@@ -75,15 +86,25 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke("create-donation-checkout", {
-        body: {
-          donationType,
-          amount: currentAmount,
-          email: formData.email,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-        },
-      });
+      const { data, error } = isCampaign
+        ? await supabase.functions.invoke("create-campaign-donation", {
+            body: {
+              campaignId,
+              amount: currentAmount,
+              email: formData.email,
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+            },
+          })
+        : await supabase.functions.invoke("create-donation-checkout", {
+            body: {
+              donationType,
+              amount: currentAmount,
+              email: formData.email,
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+            },
+          });
 
       if (error) throw error;
 
@@ -140,6 +161,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
         {step === 1 && (
           <div className="space-y-6 animate-fade-in">
             {/* Donation Type Toggle */}
+            {!isCampaign && (
             <div className="flex rounded-lg border p-1 bg-muted/30">
               <button
                 onClick={() => setDonationType("one-time")}
@@ -164,6 +186,7 @@ export function DonationWizard({ variant = "compact" }: DonationWizardProps) {
                 {t("donation.monthly")}
               </button>
             </div>
+            )}
 
             {/* Amount Selection */}
             <div>

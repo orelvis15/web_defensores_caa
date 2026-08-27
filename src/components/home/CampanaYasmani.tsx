@@ -4,12 +4,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import yasmaniFoto from "@/assets/campaign3/yasmani.png";
 
 // Campaña destacada en la portada, encima de los tres programas.
-const TIKTOK_URL =
-  "https://www.tiktok.com/@karel_gonzalez/video/7677644828024376606";
-
-// Cuando la familia comparta el enlace del GoFundMe, se pega aquí
-// y el botón de donar aparece automáticamente.
-const GOFUNDME_URL = "";
+// El GoFundMe lo abrió la familia de Yasmani.
+const GOFUNDME_URL =
+  "https://www.gofundme.com/f/ayudemos-a-yasmany-en-este-dificil-momento";
 
 export function CampanaYasmani() {
   const { language } = useLanguage();
@@ -65,22 +62,9 @@ export function CampanaYasmani() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              {GOFUNDME_URL && (
-                <Button asChild size="lg">
-                  <a
-                    href={GOFUNDME_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {isSpanish ? "Donar a Yasmani" : "Donate to Yasmani"}
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </a>
-                </Button>
-              )}
-
-              <Button asChild variant="outline" size="lg">
-                <a href={TIKTOK_URL} target="_blank" rel="noopener noreferrer">
-                  {isSpanish ? "Conoce su historia" : "See his story"}
+              <Button asChild size="lg">
+                <a href={GOFUNDME_URL} target="_blank" rel="noopener noreferrer">
+                  {isSpanish ? "Donar a Yasmani" : "Donate to Yasmani"}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </a>
               </Button>

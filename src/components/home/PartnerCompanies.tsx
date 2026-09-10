@@ -49,11 +49,12 @@ function LogoTile({ member }: { member: TeamMember }) {
   );
 
   if (member.url) {
+    const isExternal = /^https?:/i.test(member.url);
     return (
       <a
         href={member.url}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
         aria-label={member.name}
         draggable={false}
         className={`${baseClasses} cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40`}

@@ -10,7 +10,6 @@ import { VideoModal } from "@/components/VideoModal";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import TakeAction from "./pages/TakeAction";
-import CampanaYasmani from "./pages/campaigns/Yasmani";
 import DonationSuccess from "./pages/DonationSuccess";
 import About from "./pages/About";
 import OurWork from "./pages/OurWork";
@@ -47,7 +46,6 @@ const App = () => (
               <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/take-action" element={<TakeAction />} />
-              <Route path="/campanas/yasmani" element={<CampanaYasmani />} />
               <Route path="/donation-success" element={<DonationSuccess />} />
               <Route path="/about" element={<About />} />
               <Route path="/our-work" element={<OurWork />} />

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { DonationWizard } from "@/components/donation/DonationWizard";
-import { CampanaYasmani } from "@/components/home/CampanaYasmani";
 import { ProgramasPrincipales } from "@/components/home/ProgramasPrincipales";
 import { ExploraSecciones } from "@/components/home/ExploraSecciones";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
@@ -94,9 +93,6 @@ export default function Index() {
           </div>
         </div>
       </section>
-
-      {/* Campaña urgente: Yasmani, cubano con I-220A */}
-      <CampanaYasmani />
 
       {/* Los tres programas principales */}
       <ProgramasPrincipales />

@@ -18,27 +18,26 @@
     "picture": "junta directiva/Manuel Valle.jpg"
   },
   {
-    "name": "Katiuska Lago",
-    "position": "Directora De Trabajo Comunitario",
-    "email": "katiuska@defensorescaa.org",
-    "picture": "junta directiva/Katiuska Lago DIRECTORA DE TRABAJO COMUNITARIO.jpeg"
-  },
-  {
-    "name": "Odalys Diaz Martinez",
+    "name": "Leydiana Llanes",
     "position": "Directora De Relaciones Publicas",
-    "email": "odalys@defensorescaa.org",
-    "picture": "junta directiva/Odalys Diaz Martinez Directora De Relaciones Publicas.jpeg"
-  },
-  {
-    "name": "Evelyn Aimée De Jesús Rodríguez",
-    "position": "Asesora jurídica",
-    "email": "evelyn@defensorescaa.org",
-    "picture": "junta directiva/Evelyn Aimee.jpeg"
+    "picture": "junta directiva/Leydiana Llanes.jpeg"
   },
   {
     "name": "Yudel Valle",
-    "position": "Miembro de la Junta Directiva",
+    "position": "Vocal",
     "email": "yudel@defensorescaa.org",
     "picture": "junta directiva/Yudel Valle.jpeg"
+  },
+  {
+    "name": "Dayanis Gonzalez",
+    "position": "Vocal",
+    "email": "dayanis@defensorescaa.org",
+    "picture": "junta directiva/Dayanis Gonzalez.jpeg"
+  },
+  {
+    "name": "Evelyn Aimée De Jesús Rodríguez",
+    "position": "Vocal — Asesora jurídica",
+    "email": "evelyn@defensorescaa.org",
+    "picture": "junta directiva/Evelyn Aimee.jpeg"
   }
 ]

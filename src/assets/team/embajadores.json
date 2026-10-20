@@ -1,12 +1,5 @@
 [
   {
-    "name": "Dayanis Gonzalez",
-    "city": "Tampa",
-    "state": "Florida",
-    "email": "dayanis@defensorescaa.org",
-    "picture": "embajadores/Daanis Gonzalez Tampa.jpeg"
-  },
-  {
     "name": "Daimara Cruz",
     "city": "Houston",
     "state": "Texas",
@@ -103,5 +96,11 @@
     "state": "Texas",
     "email": "isis@defensorescaa.org",
     "picture": "embajadores/Isis Sierra.jpg"
+  },
+  {
+    "name": "Diana Espinosa",
+    "city": "Miami",
+    "state": "Florida",
+    "picture": "embajadores/Diana Espinosa Miami.jpeg"
   }
 ]

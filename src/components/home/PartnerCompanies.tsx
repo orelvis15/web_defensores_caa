@@ -19,9 +19,8 @@ function resolveImage(picture: string): string | undefined {
   return imageModules[`/src/assets/team/${picture}`];
 }
 
-const companies = (companiesData as TeamMember[])
-  .slice()
-  .sort((a, b) => a.name.localeCompare(b.name));
+// Order comes from comanias.json: Neo Mambí, then Tocado’s, then the rest.
+const companies = companiesData as TeamMember[];
 
 function LogoTile({ member }: { member: TeamMember }) {
   const src = resolveImage(member.picture);

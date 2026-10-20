@@ -38,9 +38,8 @@ function resolveImage(picture: string): string | undefined {
 
 const board = boardData as BoardMember[];
 const ambassadors = ambassadorsData as Ambassador[];
-const companies = (companiesData as Company[])
-  .slice()
-  .sort((a, b) => a.name.localeCompare(b.name));
+// Order comes from comanias.json: Neo Mambí, then Tocado’s, then the rest.
+const companies = companiesData as Company[];
 
 const ambassadorsByState = (() => {
   const groups = new Map<string, Ambassador[]>();

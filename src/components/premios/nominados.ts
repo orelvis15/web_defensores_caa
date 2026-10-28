@@ -10,7 +10,8 @@ const image = (file: string) =>
 
 export const portadaNominados = image("01_portada_nominados");
 
-export const FECHA_GALA = { es: "20 de noviembre", en: "November 20" };
+export const FECHA_ANIVERSARIO = { es: "20 de noviembre", en: "November 20" };
+export const FECHA_GALA = { es: "22 de noviembre", en: "November 22" };
 
 export type Nominado = {
   name: string;

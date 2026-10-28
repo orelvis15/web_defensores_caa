@@ -7,6 +7,7 @@ import {
   categorias,
   portadaNominados,
   totalNominados,
+  FECHA_ANIVERSARIO,
   FECHA_GALA,
   type Nominado,
 } from "@/components/premios/nominados";
@@ -63,7 +64,9 @@ export default function Premios2026() {
             <div className="text-center lg:text-left">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-300/40 bg-amber-300/10 text-amber-200 text-xs md:text-sm font-semibold uppercase tracking-wider mb-5">
                 <Award className="w-4 h-4" />
-                {isSpanish ? "1.er aniversario" : "1st anniversary"}
+                {isSpanish
+                  ? `1.er aniversario · ${FECHA_ANIVERSARIO.es}`
+                  : `1st anniversary · ${FECHA_ANIVERSARIO.en}`}
               </span>
               <h1 className="font-serif font-bold leading-tight mb-5">
                 <span className="block text-lg md:text-xl tracking-[0.2em] uppercase text-amber-200/90">

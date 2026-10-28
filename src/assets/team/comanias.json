@@ -73,5 +73,10 @@
     "name": "Sabores de mi tierra Cuba",
     "picture": "comanias/sabores_de_mi_tierra_cuba.webp",
     "url": ""
+  },
+  {
+    "name": "Clínica Médica Mundo Latino",
+    "picture": "comanias/clinica_mundo_latino.png",
+    "url": "https://www.clinicamundolatino.com/es/index.html"
   }
 ]

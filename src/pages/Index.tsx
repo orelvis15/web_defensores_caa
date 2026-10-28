@@ -4,6 +4,7 @@ import { DonationWizard } from "@/components/donation/DonationWizard";
 import { ProgramasPrincipales } from "@/components/home/ProgramasPrincipales";
 import { ExploraSecciones } from "@/components/home/ExploraSecciones";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
+import { PremiosNominados } from "@/components/home/PremiosNominados";
 import { ReportesEnVivo } from "@/components/programs/ReportesEnVivo";
 import { Button } from "@/components/ui/button";
 import {
@@ -93,6 +94,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Premio Defensores de la Libertad 2026 */}
+      <PremiosNominados />
 
       {/* Los tres programas principales */}
       <ProgramasPrincipales />

@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import { AuthProvider } from "@/contexts/AuthContext";
 import { VideoModalProvider } from "@/contexts/VideoModalContext";
 import { VideoModal } from "@/components/VideoModal";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -19,11 +18,7 @@ import GetInvolved from "./pages/GetInvolved";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
-import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
-import Admin from "./pages/Admin";
 import Store from "./pages/Store";
-import Course from "./pages/Course";
 import Sponsors from "./pages/Sponsors";
 import Membership from "./pages/Membership";
 import Ambassadors from "./pages/Ambassadors";
@@ -39,51 +34,46 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
-      <AuthProvider>
-        <VideoModalProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop />
-              <VideoModal />
-              <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/take-action" element={<TakeAction />} />
-              <Route path="/donation-success" element={<DonationSuccess />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/our-work" element={<OurWork />} />
-              <Route path="/programas/migratorio" element={<TemaMigratorio />} />
-              <Route path="/programas/ayuda" element={<AyudaPersonas />} />
-              <Route path="/programas/libertad-cuba" element={<LibertadCuba />} />
-              <Route path="/programas" element={<Navigate to="/#programas" replace />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<Blog />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/get-involved" element={<GetInvolved />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/login" element={<Auth />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/store" element={<Store />} />
-              <Route path="/sponsors" element={<Sponsors />} />
-              <Route path="/membresia" element={<Membership />} />
-              <Route path="/membership" element={<Navigate to="/membresia" replace />} />
-              <Route path="/embajadores" element={<Ambassadors />} />
-              <Route path="/galeria" element={<Gallery />} />
-              <Route path="/galeria/:id" element={<Gallery />} />
-              <Route path="/premios-2026" element={<Premios2026 />} />
-              <Route path="/nominados" element={<Navigate to="/premios-2026" replace />} />
-              <Route path="/patrocinadores" element={<Navigate to="/sponsors" replace />} />
-              <Route path="/curso" element={<Navigate to="/" replace />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-        </VideoModalProvider>
-      </AuthProvider>
+      <VideoModalProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <VideoModal />
+            <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/take-action" element={<TakeAction />} />
+            <Route path="/donation-success" element={<DonationSuccess />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/our-work" element={<OurWork />} />
+            <Route path="/programas/migratorio" element={<TemaMigratorio />} />
+            <Route path="/programas/ayuda" element={<AyudaPersonas />} />
+            <Route path="/programas/libertad-cuba" element={<LibertadCuba />} />
+            <Route path="/programas" element={<Navigate to="/#programas" replace />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<Blog />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/get-involved" element={<GetInvolved />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/store" element={<Store />} />
+            <Route path="/sponsors" element={<Sponsors />} />
+            <Route path="/membresia" element={<Membership />} />
+            <Route path="/membership" element={<Navigate to="/membresia" replace />} />
+            <Route path="/embajadores" element={<Ambassadors />} />
+            <Route path="/galeria" element={<Gallery />} />
+            <Route path="/galeria/:id" element={<Gallery />} />
+            <Route path="/premios-2026" element={<Premios2026 />} />
+            <Route path="/nominados" element={<Navigate to="/premios-2026" replace />} />
+            <Route path="/patrocinadores" element={<Navigate to="/sponsors" replace />} />
+            <Route path="/curso" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+      </VideoModalProvider>
     </LanguageProvider>
   </QueryClientProvider>
 );

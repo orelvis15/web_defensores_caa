@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { Lock, Loader2, Building2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { supabase } from "@/integrations/supabase/client";
+import { startCheckout } from "@/config/members";
 import { toast } from "sonner";
 
 type SponsorType = "one-time" | "monthly";
@@ -79,28 +79,15 @@ export function SponsorWizard({ variant = "compact" }: SponsorWizardProps) {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke(
-        "create-donation-checkout",
-        {
-          body: {
-            donationType: sponsorType,
-            amount: currentAmount,
-            email: formData.email,
-            firstName: formData.companyName,
-            lastName: [formData.firstName, formData.lastName]
-              .filter(Boolean)
-              .join(" "),
-          },
-        }
-      );
-
-      if (error) throw error;
-
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("No checkout URL received");
-      }
+      window.location.href = await startCheckout({
+        kind: "sponsorship",
+        recurring: sponsorType === "monthly",
+        amount_cents: Math.round(currentAmount * 100),
+        email: formData.email,
+        company_name: formData.companyName,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      });
     } catch (error) {
       console.error("Checkout error:", error);
       toast.error(t("donation.checkoutError"));

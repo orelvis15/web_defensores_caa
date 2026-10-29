@@ -15,13 +15,15 @@ import {
 import { Mail, MapPin, Send, CheckCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { supabase } from "@/integrations/supabase/client";
+import { MembersApiError, membersPost } from "@/config/members";
 
 export default function Contact() {
   const { toast } = useToast();
   const { t, language } = useLanguage();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Honeypot: hidden from people, so only bots fill it.
+  const [honeypot, setHoneypot] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,29 +45,31 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke("submit-contact", {
-        body: {
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        },
+      // Stored in ong_app; the admin's "Página web" module shows it and
+      // e-mails it to the configured recipients.
+      await membersPost("/api/public/contact", {
+        name: formData.name,
+        email: formData.email,
+        subject: subjects.find((s) => s.value === formData.subject)?.label || formData.subject,
+        message: formData.message,
+        website: honeypot,
       });
-
-      if (error) throw error;
 
       setIsSubmitted(true);
       toast({
         title: t("toast.messageSent"),
         description: t("toast.messageDesc"),
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error submitting contact form:", error);
+      const invalidEmail = error instanceof MembersApiError && error.message === "invalid email address";
       toast({
         title: language === "ES" ? "Error" : "Error",
-        description: language === "ES" 
-          ? "No se pudo enviar el mensaje. Inténtalo de nuevo." 
-          : "Failed to send message. Please try again.",
+        description: invalidEmail
+          ? (language === "ES" ? "Revisa el correo electrónico." : "Please check your email address.")
+          : language === "ES"
+            ? "No se pudo enviar el mensaje. Inténtalo de nuevo."
+            : "Failed to send message. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -165,6 +169,16 @@ export default function Contact() {
             <div className="lg:col-span-2">
               <div className="bg-card border rounded-xl p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  <input
+                    type="text"
+                    name="website"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="hidden"
+                  />
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <Label htmlFor="name">{t("contact.yourName")}</Label>

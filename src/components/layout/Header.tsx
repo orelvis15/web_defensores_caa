@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Building2, LayoutGrid, ChevronDown, UserPlus } from "lucide-react";
+import { Menu, X, LogIn, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Building2, LayoutGrid, ChevronDown, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,14 +11,13 @@ import {
 import { programs } from "@/config/programs";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useAuth } from "@/contexts/AuthContext";
+import { MEMBERS_URL } from "@/config/members";
 import logo from "@/assets/logo.png";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
-  const { user } = useAuth();
   const location = useLocation();
 
   const navLinks = [
@@ -179,22 +178,13 @@ export function Header() {
               </button>
             </div>
 
-            {/* Login/Dashboard Button */}
-            {user ? (
-              <Button asChild variant="outline" size="sm" className="hidden sm:flex">
-                <Link to="/dashboard">
-                  <User className="w-4 h-4 mr-1" />
-                  Dashboard
-                </Link>
-              </Button>
-            ) : (
-              <Button asChild variant="ghost" size="sm" className="hidden sm:flex">
-                <Link to="/login">
-                  <LogIn className="w-4 h-4 mr-1" />
-                  Login
-                </Link>
-              </Button>
-            )}
+            {/* Members portal */}
+            <Button asChild variant="ghost" size="sm" className="hidden sm:flex">
+              <a href={MEMBERS_URL}>
+                <LogIn className="w-4 h-4 mr-1" />
+                Login
+              </a>
+            </Button>
 
             {/* Mobile Menu Button */}
             <button
@@ -279,21 +269,12 @@ export function Header() {
                 );
               })}
               <div className="px-4 pt-4 flex flex-col gap-2">
-                {user ? (
-                  <Button asChild variant="outline" className="w-full">
-                    <Link to="/dashboard">
-                      <User className="w-4 h-4 mr-2" />
-                      Dashboard
-                    </Link>
-                  </Button>
-                ) : (
-                  <Button asChild variant="ghost" className="w-full">
-                    <Link to="/login">
-                      <LogIn className="w-4 h-4 mr-2" />
-                      Login
-                    </Link>
-                  </Button>
-                )}
+                <Button asChild variant="ghost" className="w-full">
+                  <a href={MEMBERS_URL}>
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Login
+                  </a>
+                </Button>
               </div>
             </div>
           </div>

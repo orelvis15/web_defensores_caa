@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { Check, ArrowLeft, Heart, Copy, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { supabase } from "@/integrations/supabase/client";
+import { membersApi } from "@/config/members";
 import { useToast } from "@/hooks/use-toast";
 
 const SHARE_URL = "https://defensorescaa.org";
@@ -21,42 +21,16 @@ export default function DonationSuccess() {
   const isCampaignDonation = !!campaignId;
   const isCoursePurchase = purchaseType === "course";
 
+  // Stripe is the source of truth: confirm the payment with the members
+  // backend (it only answers for checkouts started on this website).
   useEffect(() => {
-    if (sessionId && isCampaignDonation) {
-      verifyCampaignDonation();
-    }
-    if (sessionId && isCoursePurchase) {
-      verifyCoursePurchase();
-    }
+    if (!sessionId || !(isCampaignDonation || isCoursePurchase)) return;
+    setVerifying(true);
+    membersApi<{ payment_status: string }>(`/api/donations/public/sessions/${encodeURIComponent(sessionId)}`)
+      .then((s) => setVerified(s.payment_status === "paid"))
+      .catch((err) => console.error("Verification error:", err))
+      .finally(() => setVerifying(false));
   }, [sessionId, isCampaignDonation, isCoursePurchase]);
-
-  const verifyCampaignDonation = async () => {
-    setVerifying(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('verify-campaign-donation', {
-        body: { sessionId },
-      });
-      if (!error && data?.success) setVerified(true);
-    } catch (err) {
-      console.error("Verification error:", err);
-    } finally {
-      setVerifying(false);
-    }
-  };
-
-  const verifyCoursePurchase = async () => {
-    setVerifying(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('verify-course-purchase', {
-        body: { sessionId },
-      });
-      if (!error && data?.success) setVerified(true);
-    } catch (err) {
-      console.error("Course verification error:", err);
-    } finally {
-      setVerifying(false);
-    }
-  };
 
   const shareMessage = isCoursePurchase
     ? `Acabo de inscribirme en el curso Herramientas de Libertad. ¡Aprende sobre Habeas Corpus Pro Se y únete! ${SHARE_URL}`

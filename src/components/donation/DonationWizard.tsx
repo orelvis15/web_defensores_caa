@@ -14,7 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Lock, Loader2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { supabase } from "@/integrations/supabase/client";
+import { startCheckout } from "@/config/members";
 import { toast } from "sonner";
 
 type DonationType = "one-time" | "monthly";
@@ -23,8 +23,7 @@ interface DonationWizardProps {
   variant?: "compact" | "full";
   /**
    * Identificador de la campaña. Cuando se pasa, la donación se registra
-   * contra esa campaña (tabla campaign_donations y metadata en Stripe)
-   * en lugar de ir al fondo general.
+   * contra esa campaña (metadata en Stripe) en lugar de ir al fondo general.
    */
   campaignId?: string;
 }
@@ -86,33 +85,15 @@ export function DonationWizard({
     setIsLoading(true);
 
     try {
-      const { data, error } = isCampaign
-        ? await supabase.functions.invoke("create-campaign-donation", {
-            body: {
-              campaignId,
-              amount: currentAmount,
-              email: formData.email,
-              firstName: formData.firstName,
-              lastName: formData.lastName,
-            },
-          })
-        : await supabase.functions.invoke("create-donation-checkout", {
-            body: {
-              donationType,
-              amount: currentAmount,
-              email: formData.email,
-              firstName: formData.firstName,
-              lastName: formData.lastName,
-            },
-          });
-
-      if (error) throw error;
-
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("No checkout URL received");
-      }
+      window.location.href = await startCheckout({
+        kind: isCampaign ? "campaign" : "donation",
+        recurring: !isCampaign && donationType === "monthly",
+        campaign_id: campaignId,
+        amount_cents: Math.round(currentAmount * 100),
+        email: formData.email,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+      });
     } catch (error) {
       console.error("Checkout error:", error);
       toast.error(t("donation.checkoutError"));

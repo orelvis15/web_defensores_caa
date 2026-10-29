@@ -28,7 +28,8 @@ npm install
 ### 1. Crear el Payment Link en Stripe
 
 La `STRIPE_SECRET_KEY` **no** está en el repo: cópiala del Dashboard de Stripe
-(Developers → API keys) o de los secrets de Supabase.
+(Developers → API keys). Es la cuenta única de la ONG, la misma que usan la
+tienda y `ong_app` (env `STRIPE_SECRET_KEY` del backend de miembros).
 
 ```bash
 STRIPE_SECRET_KEY=sk_live_xxx npm run stripe:presos-link
@@ -63,5 +64,5 @@ Opciones: `--name otro-nombre`, `--out otra/carpeta`, `--size 4096`.
 - Al terminar el pago, Stripe redirige a `https://defensorescaa.org/donation-success`.
 - El link es de **pago único**. Stripe no permite monto libre en pagos recurrentes,
   así que una versión mensual necesitaría montos fijos y un link aparte.
-- Estas donaciones **no** pasan por las edge functions ni se guardan en la tabla
-  `donations` de Supabase; el registro vive solo en Stripe.
+- Estas donaciones no pasan por el backend de miembros; el registro vive solo en
+  Stripe (el admin de `ong_app` las lista desde ahí).

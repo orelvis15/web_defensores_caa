@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Building2, LayoutGrid, ChevronDown } from "lucide-react";
+import { Menu, X, LogIn, User, ShoppingBag, Home, Info, Briefcase, HandHeart, Phone, Building2, LayoutGrid, ChevronDown, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -32,6 +32,7 @@ export function Header() {
       dropdown: true,
     },
     { href: "/get-involved", label: t("nav.getInvolved"), icon: HandHeart },
+    { href: "/membresia", label: language === "ES" ? "Hazte miembro" : "Join", icon: UserPlus, highlight: true },
     { href: "https://tienda.defensorescaa.org", label: language === "ES" ? "Tienda" : "Store", icon: ShoppingBag, external: true },
     { href: "/sponsors", label: language === "ES" ? "Patrocinadores" : "Sponsors", icon: Building2, highlight: true },
     { href: "/contact", label: t("nav.contact"), icon: Phone },

@@ -15,6 +15,7 @@ import {
   Building2,
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { MEMBERS_URL } from "@/config/members";
 
 export default function Index() {
   const { t, language } = useLanguage();
@@ -113,17 +114,17 @@ export default function Index() {
                 {t("join.description")}
               </p>
             </div>
-            <a
-              href="https://inscription.defensorescaa.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0"
-            >
-              <Button size="lg" className="whitespace-nowrap">
+            <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+              <Link to="/membresia">
+                <Button size="lg" className="whitespace-nowrap">
+                  {language === "ES" ? "Hazte miembro desde $5/mes" : "Become a member from $5/month"}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+              <a href={`${MEMBERS_URL}/inscripcion`} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">
                 {t("join.button")}
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
       </section>

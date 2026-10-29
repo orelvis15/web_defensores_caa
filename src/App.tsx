@@ -25,6 +25,9 @@ import Admin from "./pages/Admin";
 import Store from "./pages/Store";
 import Course from "./pages/Course";
 import Sponsors from "./pages/Sponsors";
+import Membership from "./pages/Membership";
+import Ambassadors from "./pages/Ambassadors";
+import Gallery from "./pages/Gallery";
 import Premios2026 from "./pages/Premios2026";
 import TemaMigratorio from "./pages/programs/TemaMigratorio";
 import AyudaPersonas from "./pages/programs/AyudaPersonas";
@@ -66,6 +69,11 @@ const App = () => (
               <Route path="/admin" element={<Admin />} />
               <Route path="/store" element={<Store />} />
               <Route path="/sponsors" element={<Sponsors />} />
+              <Route path="/membresia" element={<Membership />} />
+              <Route path="/membership" element={<Navigate to="/membresia" replace />} />
+              <Route path="/embajadores" element={<Ambassadors />} />
+              <Route path="/galeria" element={<Gallery />} />
+              <Route path="/galeria/:id" element={<Gallery />} />
               <Route path="/premios-2026" element={<Premios2026 />} />
               <Route path="/nominados" element={<Navigate to="/premios-2026" replace />} />
               <Route path="/patrocinadores" element={<Navigate to="/sponsors" replace />} />

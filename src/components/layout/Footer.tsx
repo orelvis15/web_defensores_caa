@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { aidRequestUrl } from "@/config/members";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -83,7 +84,11 @@ export function Footer() {
           <p className="text-sm opacity-60">
             © {new Date().getFullYear()} {t("footer.brand")} {t("footer.brandSub")} {t("footer.allRights")}
           </p>
-          <div className="flex gap-6 text-sm opacity-60">
+          <div className="flex flex-wrap justify-center gap-6 text-sm opacity-60">
+            <Link to="/membresia" className="hover:opacity-100 transition-opacity">Membresía</Link>
+            <Link to="/embajadores" className="hover:opacity-100 transition-opacity">Embajadores</Link>
+            <Link to="/galeria" className="hover:opacity-100 transition-opacity">Galería</Link>
+            <a href={aidRequestUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">Solicitar ayuda</a>
             <Link to="/privacy" className="hover:opacity-100 transition-opacity">
               {t("footer.privacy")}
             </Link>

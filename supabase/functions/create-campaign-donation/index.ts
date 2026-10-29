@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+import { createCheckout, PaymentsError, returnOrigin } from "../_shared/payments.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -25,15 +25,6 @@ serve(async (req) => {
   try {
     logStep("Function started");
 
-    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
-    if (!stripeKey) {
-      console.error("[CAMPAIGN-DONATION] STRIPE_SECRET_KEY is not configured");
-      return new Response(JSON.stringify({ error: "Payment service unavailable." }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 503,
-      });
-    }
-
     const requestBody = await req.json();
     const { amount, email, firstName, lastName, campaignId = "vazquez-corrales-2025" } = requestBody;
 
@@ -55,60 +46,19 @@ serve(async (req) => {
 
     logStep("Request validated", { amount, campaignId, hasEmail: !!email });
 
-    const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
-    const origin = req.headers.get("origin") || "https://defensorescaa.org";
-    const amountInCents = Math.round(amount * 100);
-
-    // Check if customer exists
-    let customerId: string | undefined;
-    if (email) {
-      try {
-        const customers = await stripe.customers.list({ email, limit: 1 });
-        if (customers.data.length > 0) {
-          customerId = customers.data[0].id;
-          logStep("Found existing customer", { customerId });
-        } else {
-          const customerName = [firstName, lastName].filter(Boolean).join(' ') || undefined;
-          const customer = await stripe.customers.create({
-            email,
-            name: customerName,
-          });
-          customerId = customer.id;
-          logStep("Created new customer", { customerId });
-        }
-      } catch (customerError) {
-        console.error("[CAMPAIGN-DONATION] Customer operation failed", customerError);
-      }
-    }
-
     // Create checkout session with campaign metadata
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : email || undefined,
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            unit_amount: amountInCents,
-            product_data: {
-              name: `Donación Humanitaria - Campaña ${campaignId}`,
-              description: `Donación de $${amount} para apoyo humanitario urgente`,
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `${origin}/donation-success?session_id={CHECKOUT_SESSION_ID}&campaign=${campaignId}`,
-      cancel_url: `${origin}/?campaign_canceled=true`,
-      metadata: {
-        campaignId,
-        amount: amount.toString(),
-        type: "campaign_donation",
-      },
+    const session = await createCheckout({
+      kind: "campaign",
+      amount_cents: Math.round(amount * 100),
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      campaign_id: campaignId,
+      origin: returnOrigin(req),
     });
+    const customerId = session.customer_id;
 
-    logStep("Checkout session created", { sessionId: session.id });
+    logStep("Checkout session created", { sessionId: session.session_id });
 
     // Save to campaign_donations table
     const supabaseClient = createClient(
@@ -118,7 +68,7 @@ serve(async (req) => {
 
     const { error: dbError } = await supabaseClient.from("campaign_donations").insert({
       campaign_id: campaignId,
-      stripe_session_id: session.id,
+      stripe_session_id: session.session_id,
       stripe_customer_id: customerId || null,
       email: email || "anonymous",
       first_name: firstName || null,
@@ -134,11 +84,17 @@ serve(async (req) => {
       logStep("Donation saved to database");
     }
 
-    return new Response(JSON.stringify({ url: session.url, sessionId: session.id }), {
+    return new Response(JSON.stringify({ url: session.url, sessionId: session.session_id }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
+    if (error instanceof PaymentsError && error.status === 400) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
+    }
     console.error("[CAMPAIGN-DONATION] ERROR", error);
     return new Response(JSON.stringify({ error: "Unable to create checkout session." }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

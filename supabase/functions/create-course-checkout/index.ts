@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+import { createCheckout, PaymentsError, returnOrigin } from "../_shared/payments.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -24,14 +24,6 @@ serve(async (req) => {
 
   try {
     logStep("Function started");
-
-    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
-    if (!stripeKey) {
-      return new Response(JSON.stringify({ error: "Payment service unavailable." }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 503,
-      });
-    }
 
     const requestBody = await req.json();
     const { email, firstName, lastName, phone, city, state } = requestBody;
@@ -61,60 +53,19 @@ serve(async (req) => {
 
     logStep("Request validated", { email, firstName, lastName });
 
-    const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
-    const origin = req.headers.get("origin") || "https://defensorescaaorg.lovable.app";
-    const amount = 50;
-    const amountInCents = amount * 100;
-
-    // Check/create Stripe customer
-    let customerId: string | undefined;
-    try {
-      const customers = await stripe.customers.list({ email, limit: 1 });
-      if (customers.data.length > 0) {
-        customerId = customers.data[0].id;
-        logStep("Found existing customer", { customerId });
-      } else {
-        const customer = await stripe.customers.create({
-          email,
-          name: `${firstName} ${lastName}`,
-          phone: phone || undefined,
-        });
-        customerId = customer.id;
-        logStep("Created new customer", { customerId });
-      }
-    } catch (customerError) {
-      console.error("[COURSE-CHECKOUT] Customer operation failed", customerError);
-    }
-
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      customer_email: customerId ? undefined : email,
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            unit_amount: amountInCents,
-            product_data: {
-              name: "Curso: Herramientas de Libertad",
-              description: "Habeas Corpus Pro Se en Detención Migratoria - Inscripción $50",
-            },
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `${origin}/donation-success?session_id={CHECKOUT_SESSION_ID}&type=course`,
-      cancel_url: `${origin}/curso?canceled=true`,
-      metadata: {
-        type: "course_purchase",
-        courseId: "habeas-corpus-2026",
-        firstName,
-        lastName,
-      },
+    // Create checkout session (the course price is set by the payments backend)
+    const session = await createCheckout({
+      kind: "course",
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      phone: phone || undefined,
+      origin: returnOrigin(req),
     });
+    const customerId = session.customer_id;
+    const amount = session.amount_cents / 100;
 
-    logStep("Checkout session created", { sessionId: session.id });
+    logStep("Checkout session created", { sessionId: session.session_id });
 
     // Save to course_purchases table
     const supabaseClient = createClient(
@@ -129,7 +80,7 @@ serve(async (req) => {
       phone: phone || null,
       city: city || null,
       state: state || null,
-      stripe_session_id: session.id,
+      stripe_session_id: session.session_id,
       stripe_customer_id: customerId || null,
       amount,
       currency: "usd",
@@ -142,11 +93,17 @@ serve(async (req) => {
       logStep("Course purchase saved to database");
     }
 
-    return new Response(JSON.stringify({ url: session.url, sessionId: session.id }), {
+    return new Response(JSON.stringify({ url: session.url, sessionId: session.session_id }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
+    if (error instanceof PaymentsError && error.status === 400) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
+    }
     console.error("[COURSE-CHECKOUT] ERROR", error);
     return new Response(JSON.stringify({ error: "Unable to create checkout session." }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

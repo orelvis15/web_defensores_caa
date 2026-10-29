@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@18.5.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
+import { getSession } from "../_shared/payments.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -29,16 +29,7 @@ serve(async (req) => {
       });
     }
 
-    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
-    if (!stripeKey) {
-      return new Response(JSON.stringify({ error: "Payment service unavailable." }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 503,
-      });
-    }
-
-    const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await getSession(sessionId);
     logStep("Session retrieved", { status: session.payment_status, sessionId });
 
     if (session.payment_status === "paid") {

@@ -24,6 +24,9 @@ import Membership from "./pages/Membership";
 import Ambassadors from "./pages/Ambassadors";
 import Gallery from "./pages/Gallery";
 import Premios2026 from "./pages/Premios2026";
+import Events from "./pages/Events";
+import EventDetail from "./pages/EventDetail";
+import MyTickets from "./pages/MyTickets";
 import TemaMigratorio from "./pages/programs/TemaMigratorio";
 import AyudaPersonas from "./pages/programs/AyudaPersonas";
 import LibertadCuba from "./pages/programs/LibertadCuba";
@@ -66,6 +69,10 @@ const App = () => (
             <Route path="/galeria" element={<Gallery />} />
             <Route path="/galeria/:id" element={<Gallery />} />
             <Route path="/premios-2026" element={<Premios2026 />} />
+            <Route path="/eventos" element={<Events />} />
+            <Route path="/eventos/:slug" element={<EventDetail />} />
+            <Route path="/galas" element={<Navigate to="/eventos" replace />} />
+            <Route path="/entradas/:code" element={<MyTickets />} />
             <Route path="/nominados" element={<Navigate to="/premios-2026" replace />} />
             <Route path="/patrocinadores" element={<Navigate to="/sponsors" replace />} />
             <Route path="/curso" element={<Navigate to="/" replace />} />

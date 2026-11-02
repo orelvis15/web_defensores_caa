@@ -92,3 +92,37 @@ export function fmtWhen(iso: string, es: boolean) {
     timeZone: "America/New_York",
   });
 }
+
+const TZ = "America/New_York";
+
+/** "sábado, 14 de marzo de 2027" */
+export function fmtDate(iso: string, es: boolean) {
+  return new Date(iso).toLocaleDateString(es ? "es-US" : "en-US", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: TZ,
+  });
+}
+
+/** "7:00 p. m. – 11:00 p. m. (ET)" */
+export function fmtTimeRange(startIso: string, endIso: string | undefined, es: boolean) {
+  const t = (iso: string) =>
+    new Date(iso).toLocaleTimeString(es ? "es-US" : "en-US", { hour: "numeric", minute: "2-digit", timeZone: TZ });
+  return `${t(startIso)}${endIso ? ` – ${t(endIso)}` : ""} (ET)`;
+}
+
+/** Google Calendar "add event" link (2 h long when there is no end). */
+export function calendarUrl(ev: PublicEvent) {
+  const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const start = new Date(ev.starts_at);
+  const end = ev.ends_at ? new Date(ev.ends_at) : new Date(start.getTime() + 2 * 3600 * 1000);
+  const q = new URLSearchParams({
+    action: "TEMPLATE",
+    text: ev.name,
+    dates: `${stamp(start)}/${stamp(end)}`,
+    details: `${ev.summary ? `${ev.summary}\n\n` : ""}${window.location.origin}/eventos/${ev.slug}`,
+    location: [ev.venue_name, ev.venue_address].filter(Boolean).join(", "),
+  });
+  return `https://calendar.google.com/calendar/render?${q}`;
+}
+
+export const mapsUrl = (ev: PublicEvent) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([ev.venue_name, ev.venue_address].filter(Boolean).join(" "))}`;

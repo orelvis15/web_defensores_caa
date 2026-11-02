@@ -1,14 +1,15 @@
 import { useMemo, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { CalendarDays, MapPin, DoorOpen, Shirt, Minus, Plus, Loader2, Lock, ArrowLeft, Ticket } from "lucide-react";
+import { CalendarDays, CalendarPlus, Clock, ExternalLink, Mail, MapPin, DoorOpen, Shirt, Minus, Plus, Loader2, Lock, ArrowLeft, Ticket, Users, type LucideIcon } from "lucide-react";
+import { Markdown } from "@/components/Markdown";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { MembersApiError } from "@/config/members";
-import { getEvent, startTicketCheckout, money, fmtWhen } from "@/config/tickets";
+import { getEvent, startTicketCheckout, money, fmtDate, fmtTimeRange, calendarUrl, mapsUrl, type PublicEvent } from "@/config/tickets";
 
 export default function EventDetail() {
   const { slug = "" } = useParams();
@@ -86,37 +87,91 @@ export default function EventDetail() {
 
   return (
     <Layout>
-      <section className="bg-gradient-to-b from-primary/10 to-background pb-10 pt-10">
-        <div className="container-wide max-w-5xl">
-          <Link to="/eventos" className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4" />{es ? "Eventos" : "Events"}</Link>
-          <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-center">
+      {/* Hero */}
+      <section className="relative overflow-hidden border-b bg-gradient-to-b from-primary/10 via-primary/5 to-background">
+        <div className="container-wide max-w-6xl pb-12 pt-8 md:pb-16">
+          <Link to="/eventos" className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-primary">
+            <ArrowLeft className="h-4 w-4" />{es ? "Todos los eventos" : "All events"}
+          </Link>
+          <div className={ev.image_url ? "grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-center lg:gap-12" : "max-w-3xl"}>
             <div>
-              {ev.chapter_name && <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-primary">{ev.chapter_name}</p>}
-              <h1 className="text-3xl font-bold text-foreground md:text-5xl">{ev.name}</h1>
-              {ev.summary && <p className="mt-3 text-lg text-muted-foreground">{ev.summary}</p>}
-              <div className="mt-5 space-y-2 text-sm">
-                <p className="flex items-center gap-2"><CalendarDays className="h-4 w-4 text-primary" />{fmtWhen(ev.starts_at, es)}</p>
-                {ev.doors_open && <p className="flex items-center gap-2"><DoorOpen className="h-4 w-4 text-primary" />{es ? "Apertura de puertas" : "Doors open"}: {ev.doors_open}</p>}
-                {(ev.venue_name || ev.venue_address) && (
-                  <p className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" />
-                    <a className="hover:underline" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${ev.venue_name || ""} ${ev.venue_address || ""}`)}`}>
-                      {[ev.venue_name, ev.venue_address].filter(Boolean).join(" · ")}
-                    </a>
-                  </p>
+              <div className="mb-4 flex flex-wrap items-center gap-2">
+                <StatusBadge ev={ev} es={es} />
+                {ev.chapter_name && (
+                  <span className="rounded-full border border-primary/20 bg-background/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">{ev.chapter_name}</span>
                 )}
-                {ev.dress_code && <p className="flex items-center gap-2"><Shirt className="h-4 w-4 text-primary" />{es ? "Vestimenta" : "Dress code"}: {ev.dress_code}</p>}
+              </div>
+              <h1 className="text-balance text-3xl font-bold leading-tight text-foreground md:text-5xl">{ev.name}</h1>
+              {ev.summary && <p className="mt-4 text-lg leading-relaxed text-muted-foreground md:text-xl">{ev.summary}</p>}
+
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-medium">
+                <span className="flex items-center gap-2"><CalendarDays className="h-5 w-5 text-primary" /><span className="first-letter:uppercase">{fmtDate(ev.starts_at, es)}</span></span>
+                {ev.venue_name && <span className="flex items-center gap-2"><MapPin className="h-5 w-5 text-primary" />{ev.venue_name}</span>}
+              </div>
+
+              <div className="mt-7 flex flex-wrap gap-3">
+                {ev.on_sale && (
+                  <Button size="lg" onClick={() => document.getElementById("entradas")?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+                    <Ticket className="h-4 w-4" />
+                    {es ? "Comprar entradas" : "Get tickets"}
+                    {ev.min_price_cents > 0 && <span className="opacity-80">· {es ? "desde" : "from"} {money(ev.min_price_cents)}</span>}
+                  </Button>
+                )}
+                <Button size="lg" variant="outline" asChild>
+                  <a href={calendarUrl(ev)} target="_blank" rel="noopener noreferrer"><CalendarPlus className="h-4 w-4" />{es ? "Añadir al calendario" : "Add to calendar"}</a>
+                </Button>
               </div>
             </div>
-            {ev.image_url && <img src={ev.image_url} alt="" className="w-full rounded-2xl object-cover shadow-lg" />}
+            {ev.image_url && (
+              <div className="relative">
+                <div className="absolute -inset-3 -z-10 rounded-3xl bg-primary/10 blur-2xl" aria-hidden="true" />
+                <img src={ev.image_url} alt={ev.name} className="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl ring-1 ring-black/5" />
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      <section className="py-10">
-        <div className="container-wide grid max-w-5xl gap-8 md:grid-cols-[1.2fr_1fr]">
-          <div className="whitespace-pre-line text-foreground/90">{ev.description}</div>
+      <section className="py-10 md:py-14">
+        <div className="container-wide grid max-w-6xl gap-10 lg:grid-cols-[1fr_380px]">
+          <div className="min-w-0 space-y-10">
+            {/* Key details */}
+            <div>
+              <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted-foreground">{es ? "Detalles del evento" : "Event details"}</h2>
+              <dl className="grid gap-3 sm:grid-cols-2">
+                <Detail icon={CalendarDays} label={es ? "Fecha" : "Date"}>
+                  <span className="first-letter:uppercase">{fmtDate(ev.starts_at, es)}</span>
+                </Detail>
+                <Detail icon={Clock} label={es ? "Horario" : "Time"}>{fmtTimeRange(ev.starts_at, ev.ends_at, es)}</Detail>
+                {ev.doors_open && <Detail icon={DoorOpen} label={es ? "Apertura de puertas" : "Doors open"}>{ev.doors_open}</Detail>}
+                {ev.dress_code && <Detail icon={Shirt} label={es ? "Vestimenta" : "Dress code"}>{ev.dress_code}</Detail>}
+                {(ev.venue_name || ev.venue_address) && (
+                  <Detail icon={MapPin} label={es ? "Lugar" : "Venue"} wide>
+                    {ev.venue_name && <span className="block">{ev.venue_name}</span>}
+                    {ev.venue_address && <span className="block font-normal text-muted-foreground">{ev.venue_address}</span>}
+                    <a href={mapsUrl(ev)} target="_blank" rel="noopener noreferrer" className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                      {es ? "Ver en el mapa" : "View on map"}<ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </Detail>
+                )}
+                {ev.chapter_name && <Detail icon={Users} label={es ? "Organiza" : "Hosted by"}>{ev.chapter_name}</Detail>}
+                {ev.contact_email && (
+                  <Detail icon={Mail} label={es ? "Contacto" : "Contact"}>
+                    <a href={`mailto:${ev.contact_email}`} className="break-all text-primary hover:underline">{ev.contact_email}</a>
+                  </Detail>
+                )}
+              </dl>
+            </div>
 
-          <div className="h-fit rounded-2xl border bg-card p-6 shadow-lg md:sticky md:top-24">
+            {ev.description && (
+              <div>
+                <h2 className="mb-4 text-2xl font-bold text-foreground">{es ? "Sobre el evento" : "About the event"}</h2>
+                <Markdown>{ev.description}</Markdown>
+              </div>
+            )}
+          </div>
+
+          <div id="entradas" className="h-fit scroll-mt-24 rounded-2xl border bg-card p-6 shadow-lg lg:sticky lg:top-24">
             {params.get("cancelado") && (
               <p className="mb-4 rounded-lg bg-muted p-3 text-sm">{es ? "No se completó el pago. Puedes intentarlo de nuevo." : "The payment was not completed. You can try again."}</p>
             )}
@@ -202,4 +257,28 @@ export default function EventDetail() {
       </section>
     </Layout>
   );
+}
+
+function Detail({ icon: Icon, label, wide, children }: { icon: LucideIcon; label: string; wide?: boolean; children: React.ReactNode }) {
+  return (
+    <div className={`flex gap-4 rounded-xl border bg-card p-4 shadow-sm ${wide ? "sm:col-span-2" : ""}`}>
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <Icon className="h-5 w-5" />
+      </div>
+      <div className="min-w-0">
+        <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</dt>
+        <dd className="mt-0.5 font-medium text-foreground">{children}</dd>
+      </div>
+    </div>
+  );
+}
+
+function StatusBadge({ ev, es }: { ev: PublicEvent; es: boolean }) {
+  const [label, cls] =
+    ev.status === "cancelled" ? [es ? "Cancelado" : "Cancelled", "bg-destructive/10 text-destructive"]
+    : ev.status === "finished" ? [es ? "Finalizado" : "Ended", "bg-muted text-muted-foreground"]
+    : ev.sold_out ? [es ? "Agotado" : "Sold out", "bg-amber-500/15 text-amber-700"]
+    : ev.on_sale ? [es ? "Entradas a la venta" : "Tickets on sale", "bg-emerald-500/15 text-emerald-700"]
+    : [es ? "Venta cerrada" : "Sales closed", "bg-muted text-muted-foreground"];
+  return <span className={`rounded-full px-3 py-1 text-xs font-semibold ${cls}`}>{label}</span>;
 }

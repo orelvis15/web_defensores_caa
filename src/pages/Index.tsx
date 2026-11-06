@@ -5,7 +5,6 @@ import { ProgramasPrincipales } from "@/components/home/ProgramasPrincipales";
 import { ExploraSecciones } from "@/components/home/ExploraSecciones";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
 import { PremiosNominados } from "@/components/home/PremiosNominados";
-import { ConferenciaZoom } from "@/components/home/ConferenciaZoom";
 import { ReportesEnVivo } from "@/components/programs/ReportesEnVivo";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,9 +23,6 @@ export default function Index() {
 
   return (
     <Layout>
-      {/* Próxima conferencia (se oculta sola al terminar) */}
-      <ConferenciaZoom />
-
       {/* Original Hero Section with Donation */}
       <section className="bg-gradient-to-b from-section-light to-background pt-12 pb-8 md:pt-12 md:pb-12">
         <div className="container-wide">

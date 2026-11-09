@@ -29,6 +29,7 @@ import EventsArchive from "./pages/EventsArchive";
 import CommunityEvent from "./pages/CommunityEvent";
 import EventDetail from "./pages/EventDetail";
 import MyTickets from "./pages/MyTickets";
+import { TransparencyList, TransparencyReport } from "./pages/Transparency";
 import TemaMigratorio from "./pages/programs/TemaMigratorio";
 import AyudaPersonas from "./pages/programs/AyudaPersonas";
 import LibertadCuba from "./pages/programs/LibertadCuba";
@@ -77,6 +78,8 @@ const App = () => (
             <Route path="/eventos/:slug" element={<EventDetail />} />
             <Route path="/galas" element={<Navigate to="/eventos" replace />} />
             <Route path="/entradas/:code" element={<MyTickets />} />
+            <Route path="/transparencia" element={<TransparencyList />} />
+            <Route path="/transparencia/:slug" element={<TransparencyReport />} />
             <Route path="/nominados" element={<Navigate to="/premios-2026" replace />} />
             <Route path="/patrocinadores" element={<Navigate to="/sponsors" replace />} />
             <Route path="/curso" element={<Navigate to="/" replace />} />

@@ -88,6 +88,7 @@ export function Footer() {
             <Link to="/membresia" className="hover:opacity-100 transition-opacity">Membresía</Link>
             <Link to="/embajadores" className="hover:opacity-100 transition-opacity">Embajadores</Link>
             <Link to="/galeria" className="hover:opacity-100 transition-opacity">Galería</Link>
+            <Link to="/transparencia" className="hover:opacity-100 transition-opacity">Transparencia</Link>
             <a href={aidRequestUrl} target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity">Solicitar ayuda</a>
             <Link to="/privacy" className="hover:opacity-100 transition-opacity">
               {t("footer.privacy")}

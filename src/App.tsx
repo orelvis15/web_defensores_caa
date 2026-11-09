@@ -25,6 +25,8 @@ import Ambassadors from "./pages/Ambassadors";
 import Gallery from "./pages/Gallery";
 import Premios2026 from "./pages/Premios2026";
 import Events from "./pages/Events";
+import EventsArchive from "./pages/EventsArchive";
+import CommunityEvent from "./pages/CommunityEvent";
 import EventDetail from "./pages/EventDetail";
 import MyTickets from "./pages/MyTickets";
 import TemaMigratorio from "./pages/programs/TemaMigratorio";
@@ -70,6 +72,8 @@ const App = () => (
             <Route path="/galeria/:id" element={<Gallery />} />
             <Route path="/premios-2026" element={<Premios2026 />} />
             <Route path="/eventos" element={<Events />} />
+            <Route path="/eventos/archivo" element={<EventsArchive />} />
+            <Route path="/evento/:slug" element={<CommunityEvent />} />
             <Route path="/eventos/:slug" element={<EventDetail />} />
             <Route path="/galas" element={<Navigate to="/eventos" replace />} />
             <Route path="/entradas/:code" element={<MyTickets />} />

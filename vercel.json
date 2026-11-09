@@ -30,6 +30,17 @@
   ],
   "rewrites": [
     {
+      "source": "/evento/:slug",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(facebookexternalhit|facebookcatalog|Facebot|meta-externalagent|Twitterbot|WhatsApp|TelegramBot|LinkedInBot|Slackbot|Discordbot|Pinterestbot|SkypeUriPreview|redditbot|Embedly|Iframely|vkShare).*"
+        }
+      ],
+      "destination": "https://miembro.defensorescaa.org/api/public/events/:slug/og"
+    },
+    {
       "source": "/((?!assets/).*)",
       "destination": "/index.html"
     }

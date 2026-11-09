@@ -29,6 +29,9 @@ import EventsArchive from "./pages/EventsArchive";
 import CommunityEvent from "./pages/CommunityEvent";
 import EventDetail from "./pages/EventDetail";
 import MyTickets from "./pages/MyTickets";
+import Courses from "./pages/Courses";
+import CourseDetail from "./pages/CourseDetail";
+import CourseEnrollment from "./pages/CourseEnrollment";
 import TemaMigratorio from "./pages/programs/TemaMigratorio";
 import AyudaPersonas from "./pages/programs/AyudaPersonas";
 import LibertadCuba from "./pages/programs/LibertadCuba";
@@ -79,7 +82,10 @@ const App = () => (
             <Route path="/entradas/:code" element={<MyTickets />} />
             <Route path="/nominados" element={<Navigate to="/premios-2026" replace />} />
             <Route path="/patrocinadores" element={<Navigate to="/sponsors" replace />} />
-            <Route path="/curso" element={<Navigate to="/" replace />} />
+            <Route path="/cursos" element={<Courses />} />
+            <Route path="/cursos/inscripcion/:code" element={<CourseEnrollment />} />
+            <Route path="/cursos/:slug" element={<CourseDetail />} />
+            <Route path="/curso" element={<Navigate to="/cursos" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

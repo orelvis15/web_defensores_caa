@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { MembersApiError } from "@/config/members";
-import { getEvent, startTicketCheckout, money, fmtDate, fmtTimeRange, calendarUrl, mapsUrl, type PublicEvent } from "@/config/tickets";
+import { getEvent, startTicketCheckout, money, fmtDate, fmtTimeRange, calendarUrl, mapsUrl, seatsOf, kindLabel, quidProQuoNotice, type PublicEvent } from "@/config/tickets";
 
 export default function EventDetail() {
   const { slug = "" } = useParams();
@@ -25,11 +25,30 @@ export default function EventDetail() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-  const count = Object.values(qty).reduce((a, b) => a + b, 0);
+  const count = Object.values(qty).reduce((a, b) => a + b, 0); // units (a full table = 1)
   const total = useMemo(
     () => (ev?.ticket_types || []).reduce((s, t) => s + t.price_cents * (qty[t.id] || 0), 0),
     [ev, qty],
   );
+  // One slot per person, in item order; table guests may stay unnamed.
+  const people = useMemo(() => {
+    const out: { label: string; optional: boolean }[] = [];
+    for (const t of ev?.ticket_types || []) {
+      const n = seatsOf(t);
+      for (let u = 0; u < (qty[t.id] || 0); u++) {
+        for (let k = 1; k <= n; k++) {
+          out.push({ label: n > 1 ? `${t.name} ${u + 1} · ${es ? "persona" : "guest"} ${k}` : t.name, optional: n > 1 });
+        }
+      }
+    }
+    return out;
+  }, [ev, qty, es]);
+  const deductible = useMemo(
+    () => (ev?.ticket_types || []).reduce((s, t) => s + (t.fair_value_cents ? (t.deductible_cents ?? 0) : t.price_cents) * (qty[t.id] || 0), 0),
+    [ev, qty],
+  );
+  const hasFairValue = (ev?.ticket_types || []).some((t) => (t.fair_value_cents || 0) > 0);
+  const disclosure = (ev?.ticket_types || []).some((t) => t.disclosure_required) || (hasFairValue && total > 7500);
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
@@ -60,7 +79,7 @@ export default function EventDetail() {
         email: form.email,
         phone: form.phone,
         notes: form.notes,
-        attendees: ev.collect_names ? [form.name, ...names.slice(1)] : undefined,
+        attendees: ev.collect_names || people.length > count ? [names[0] || (people[0]?.optional ? "" : form.name), ...names.slice(1, people.length)] : undefined,
         accept_terms: accept,
         website: form.website,
       });
@@ -191,7 +210,13 @@ export default function EventDetail() {
                     <div key={t.id} className="flex items-center justify-between gap-3 p-3">
                       <div className="min-w-0">
                         <p className="font-medium">{t.name}</p>
+                        {kindLabel(t, es) && <p className="text-xs font-medium text-primary">{kindLabel(t, es)}</p>}
                         {t.description && <p className="text-xs text-muted-foreground">{t.description}</p>}
+                        {(t.fair_value_cents || 0) > 0 && t.price_cents > 0 && (
+                          <p className="text-xs text-muted-foreground">
+                            {es ? "Valor estimado de lo que recibes" : "Estimated value of what you receive"}: {money(t.fair_value_cents || 0)} · {es ? "parte deducible" : "deductible part"}: {money(t.deductible_cents ?? 0)}
+                          </p>
+                        )}
                         <p className="text-sm">{t.price_cents === 0 ? (es ? "Gratis" : "Free") : money(t.price_cents)}
                           {t.remaining !== null && !t.sold_out && t.remaining <= 20 && <span className="ml-2 text-xs text-amber-600">{es ? `Quedan ${t.remaining}` : `${t.remaining} left`}</span>}
                         </p>
@@ -208,7 +233,19 @@ export default function EventDetail() {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-muted-foreground">{es ? `Máximo ${ev.max_per_order} entradas por compra.` : `Up to ${ev.max_per_order} tickets per order.`}</p>
+                <p className="text-xs text-muted-foreground">{es ? `Máximo ${ev.max_per_order} entradas por compra (una mesa completa cuenta como una).` : `Up to ${ev.max_per_order} tickets per order (a full table counts as one).`}</p>
+                {disclosure && (
+                  <p className="rounded-lg border bg-muted/40 p-3 text-xs leading-relaxed text-muted-foreground">
+                    {quidProQuoNotice(es)}
+                    {ev.ticket_types.filter((t) => (t.fair_value_cents || 0) > 0 && t.price_cents > 0).map((t) => (
+                      <span key={t.id} className="mt-1 block">
+                        {es
+                          ? `«${t.name}» ${money(t.price_cents)}: ${money(t.fair_value_cents || 0)} corresponden a ese valor y ${money(t.deductible_cents ?? 0)} es deducible.`
+                          : `“${t.name}” ${money(t.price_cents)}: ${money(t.fair_value_cents || 0)} is that value and ${money(t.deductible_cents ?? 0)} is deductible.`}
+                      </span>
+                    ))}
+                  </p>
+                )}
 
                 {count > 0 && (
                   <>
@@ -218,13 +255,19 @@ export default function EventDetail() {
                       <Input type="tel" placeholder={es ? "Teléfono" : "Phone"} value={form.phone} onChange={set("phone")} autoComplete="tel" />
                       <input type="text" tabIndex={-1} autoComplete="off" value={form.website} onChange={set("website")} className="hidden" aria-hidden="true" />
                     </div>
-                    {ev.collect_names && count > 1 && (
+                    {(ev.collect_names || people.some((p) => p.optional)) && people.length > 1 && (
                       <div className="space-y-2">
                         <p className="text-sm font-medium">{es ? "Nombre de cada asistente" : "Each attendee's name"}</p>
-                        <p className="text-xs text-muted-foreground">{es ? "Cada persona recibe su propia entrada con QR." : "Each person gets their own QR ticket."}</p>
-                        {Array.from({ length: count - 1 }).map((_, i) => (
-                          <Input key={i} placeholder={`${es ? "Acompañante" : "Guest"} ${i + 1}`} value={names[i + 1] || ""}
-                            onChange={(e) => setNames((n) => { const c = [...n]; c[i + 1] = e.target.value; return c; })} />
+                        <p className="text-xs text-muted-foreground">
+                          {es ? "Cada persona recibe su propia entrada con QR." : "Each person gets their own QR ticket."}
+                          {people.some((p) => p.optional) && (es
+                            ? " Los invitados de pareja o mesa son opcionales: hasta que los nombres aparecen como «Invitado 1 de la mesa…» y puedes completarlos después desde «Mis entradas»."
+                            : " Couple/table guests are optional: until named they show as “Guest 1 of the table…” and you can fill them in later from “My tickets”.")}
+                        </p>
+                        {people.map((p, i) => (
+                          <Input key={i} placeholder={p.optional ? `${p.label} (${es ? "opcional" : "optional"})` : i === 0 ? (es ? "Tu nombre (si asistes)" : "Your name (if attending)") : p.label}
+                            value={names[i] ?? (i === 0 && !p.optional ? form.name : "")}
+                            onChange={(e) => setNames((n) => { const c = [...n]; c[i] = e.target.value; return c; })} />
                         ))}
                       </div>
                     )}
@@ -239,9 +282,15 @@ export default function EventDetail() {
                       </span>
                     </label>
                     <div className="flex items-center justify-between border-t pt-4">
-                      <span className="text-sm text-muted-foreground">{count} {count === 1 ? (es ? "entrada" : "ticket") : (es ? "entradas" : "tickets")}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {count} {count === 1 ? (es ? "entrada" : "ticket") : (es ? "entradas" : "tickets")}
+                        {people.length !== count && ` · ${people.length} ${es ? "personas" : "people"}`}
+                      </span>
                       <span className="text-2xl font-bold">{total === 0 ? (es ? "Gratis" : "Free") : money(total)}</span>
                     </div>
+                    {hasFairValue && total > 0 && (
+                      <p className="text-right text-xs text-muted-foreground">{es ? "Parte deducible" : "Deductible part"}: {money(deductible)}</p>
+                    )}
                   </>
                 )}
                 {error && <p className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}

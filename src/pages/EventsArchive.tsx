@@ -55,7 +55,7 @@ export default function EventsArchive() {
                       <p className="flex items-center gap-2 text-sm text-muted-foreground"><CalendarDays className="h-4 w-4" /><span className="first-letter:uppercase">{eventWhen(ev, es)}</span></p>
                       {ev.address && <p className="flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="h-4 w-4" />{ev.address}</p>}
                       {ev.gallery && (
-                        <Link to={`/galeria/${ev.id}`} className="inline-flex items-center gap-1.5 pt-1 text-sm font-medium text-primary hover:underline">
+                        <Link to={`/memoria/${ev.id}`} className="inline-flex items-center gap-1.5 pt-1 text-sm font-medium text-primary hover:underline">
                           <Images className="h-4 w-4" />{es ? `${ev.gallery.photos} fotos` : `${ev.gallery.photos} photos`}
                         </Link>
                       )}

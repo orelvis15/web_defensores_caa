@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { VideoModalProvider } from "@/contexts/VideoModalContext";
 import { VideoModal } from "@/components/VideoModal";
@@ -22,7 +22,7 @@ import Store from "./pages/Store";
 import Sponsors from "./pages/Sponsors";
 import Membership from "./pages/Membership";
 import Ambassadors from "./pages/Ambassadors";
-import Gallery from "./pages/Gallery";
+import Memory from "./pages/Memory";
 import Premios2026 from "./pages/Premios2026";
 import Events from "./pages/Events";
 import EventsArchive from "./pages/EventsArchive";
@@ -39,6 +39,12 @@ import LibertadCuba from "./pages/programs/LibertadCuba";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+// The old gallery links (/galeria/:id) now open the event album in the Memoria.
+function GalleryRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/memoria/${id}`} replace />;
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -72,8 +78,10 @@ const App = () => (
             <Route path="/membresia" element={<Membership />} />
             <Route path="/membership" element={<Navigate to="/membresia" replace />} />
             <Route path="/embajadores" element={<Ambassadors />} />
-            <Route path="/galeria" element={<Gallery />} />
-            <Route path="/galeria/:id" element={<Gallery />} />
+            <Route path="/memoria" element={<Memory />} />
+            <Route path="/memoria/:eventId" element={<Memory />} />
+            <Route path="/galeria" element={<Navigate to="/memoria" replace />} />
+            <Route path="/galeria/:id" element={<GalleryRedirect />} />
             <Route path="/premios-2026" element={<Premios2026 />} />
             <Route path="/eventos" element={<Events />} />
             <Route path="/eventos/archivo" element={<EventsArchive />} />

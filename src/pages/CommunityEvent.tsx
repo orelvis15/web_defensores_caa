@@ -148,7 +148,7 @@ export default function CommunityEvent() {
             {past && ev.gallery && (
               <div>
                 <h2 className="mb-4 text-2xl font-bold text-foreground">{es ? "Fotos del evento" : "Event photos"}</h2>
-                <Link to={`/galeria/${ev.id}`} className="group block overflow-hidden rounded-2xl border bg-card">
+                <Link to={`/memoria/${ev.id}`} className="group block overflow-hidden rounded-2xl border bg-card">
                   {ev.gallery.cover_url && <img src={ev.gallery.cover_url} alt="" className="aspect-[16/9] w-full object-cover" loading="lazy" />}
                   <span className="flex items-center gap-2 p-4 font-medium text-primary group-hover:underline">
                     <Images className="h-4 w-4" />

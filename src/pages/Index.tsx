@@ -5,6 +5,7 @@ import { ProgramasPrincipales } from "@/components/home/ProgramasPrincipales";
 import { ExploraSecciones } from "@/components/home/ExploraSecciones";
 import { PartnerCompanies } from "@/components/home/PartnerCompanies";
 import { PremiosNominados } from "@/components/home/PremiosNominados";
+import { NuestraMemoria } from "@/components/home/NuestraMemoria";
 import { ReportesEnVivo } from "@/components/programs/ReportesEnVivo";
 import { Button } from "@/components/ui/button";
 import {
@@ -101,6 +102,9 @@ export default function Index() {
 
       {/* Los tres programas principales */}
       <ProgramasPrincipales />
+
+      {/* Nuestra Memoria: fotos y videos de los eventos (Memoria del sistema) */}
+      <NuestraMemoria />
 
       {/* Inscription / Join Section */}
       <section className="py-10 bg-section-alt border-y">
